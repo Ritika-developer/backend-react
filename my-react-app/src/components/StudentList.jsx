@@ -4,12 +4,16 @@ function StudentList({ students, setStudents, setEditStudent }) {
   const navigate = useNavigate();
 
   const deleteStudent = (id) => {
-    setStudents(students.filter(s => s.id !== id));
+    fetch(`http://localhost:8080/api/del/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      setStudents(students.filter((s) => s.id !== id));
+    });
   };
 
   const editStudentData = (student) => {
     setEditStudent(student);
-    navigate("/"); // form page open
+    navigate("/");
   };
 
   return (
@@ -19,6 +23,7 @@ function StudentList({ students, setStudents, setEditStudent }) {
       <table className="table">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Class</th>
             <th>Address</th>
@@ -29,21 +34,27 @@ function StudentList({ students, setStudents, setEditStudent }) {
         <tbody>
           {students.map((s) => (
             <tr key={s.id}>
+              <td>{s.id}</td>
               <td>{s.name}</td>
               <td>{s.clas}</td>
               <td>{s.address}</td>
               <td>
-                <button className="edit" onClick={() => editStudentData(s)}>
+                <button
+                  className="btn edit"
+                  onClick={() => editStudentData(s)}
+                >
                   Edit
                 </button>
-                <button className="delete" onClick={() => deleteStudent(s.id)}>
+                <button
+                  className="btn delete"
+                  onClick={() => deleteStudent(s.id)}
+                >
                   Delete
                 </button>
               </td>
             </tr>
           ))}
         </tbody>
-
       </table>
     </div>
   );

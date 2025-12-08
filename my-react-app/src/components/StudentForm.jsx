@@ -5,7 +5,6 @@ function StudentForm({ students, setStudents, editStudent, setEditStudent }) {
   const [clas, setClas] = useState("");
   const [address, setAddress] = useState("");
 
-  // Prefill when editing
   useEffect(() => {
     if (editStudent) {
       setName(editStudent.name);
@@ -17,37 +16,38 @@ function StudentForm({ students, setStudents, editStudent, setEditStudent }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !clas || !address) {
-      alert("All fields are required!");
-      return;
-    }
-
     if (editStudent) {
-      // Update student data
-      const updated = students.map((s) =>
-        s.id === editStudent.id ? { ...s, name, clas, address } : s
-      );
-
-      setStudents(updated);
-      setEditStudent(null);
-      alert("Student Updated!");
-    } 
-    else {
-      // Add new student
-      const newStudent = {
-        id: Date.now(),
-        name,
-    clas,
-        address
-      };
-
-      setStudents([...students, newStudent]);
-      alert("Student Added!");
+      // UPDATE
+      fetch(`http://localhost:8080/api/update/${editStudent.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, clas, address }),
+      })
+        .then((res) => res.json())
+        .then((updated) => {
+          setStudents(
+            students.map((s) => (s.id === updated.id ? updated : s))
+          );
+          setEditStudent(null);
+          setName("");
+          setClas("");
+          setAddress("");
+        });
+    } else {
+      // ADD
+      fetch("http://localhost:8080/api/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, clas, address }),
+      })
+        .then((res) => res.json())
+        .then((saved) => {
+          setStudents([...students, saved]);
+          setName("");
+          setClas("");
+          setAddress("");
+        });
     }
-
-    setName("");
-    setClas("");
-    setAddress("");
   };
 
   return (
@@ -55,32 +55,28 @@ function StudentForm({ students, setStudents, editStudent, setEditStudent }) {
       <h2>{editStudent ? "Edit Student" : "Add Student"}</h2>
 
       <form onSubmit={handleSubmit}>
-
         <label>Name</label>
         <input
-          required
-          placeholder="Enter Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
 
         <label>Class</label>
         <input
-          required
-          placeholder="Enter Class"
           value={clas}
           onChange={(e) => setClas(e.target.value)}
+          required
         />
 
         <label>Address</label>
         <input
-          required
-          placeholder="Enter Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          required
         />
 
-        <button className="btn" type="submit">
+        <button type="submit" className="btn">
           {editStudent ? "Update" : "Save"}
         </button>
       </form>
