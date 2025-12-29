@@ -1,0 +1,29 @@
+.orders-page {
+  min-height: 100vh;
+  background: #fffaf2;
+  padding: 40px 30px;
+}
+
+.orders-page h2 {
+  font-family: "Playfair Display", serif;
+  color: #6b0f1a;
+  margin-bottom: 25px;
+}
+
+.order-card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+}
+
+.status {
+  color: #8a6d3b;
+  font-weight: 500;
+}

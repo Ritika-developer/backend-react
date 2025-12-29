@@ -1,0 +1,38 @@
+.navbar {
+  background: #6b0f1a;
+  color: #d4af37;
+  padding: 14px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Playfair Display", serif;
+}
+
+.nav-left {
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.nav-right span {
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.nav-right span:hover {
+  text-decoration: underline;
+}
+
+.nav-right button {
+  background: transparent;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.nav-right button:hover {
+  background: #d4af37;
+  color: #6b0f1a;
+}

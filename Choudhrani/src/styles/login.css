@@ -1,0 +1,157 @@
+/* BRAND */
+.brand {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b0f1a;
+  margin-bottom: 6px;
+}
+
+/* BRAND ANIMATION */
+.animate-brand {
+  animation: brandFade 1.2s ease;
+}
+
+@keyframes brandFade {
+  from {
+    opacity: 0;
+    letter-spacing: 6px;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 1px;
+  }
+}
+
+.tagline {
+  font-size: 14px;
+  color: #8a6d3b;
+  margin-bottom: 26px;
+}
+
+/* ✅ FIELD SPACING FIX (IMPORTANT) */
+.field-wrapper {
+  margin-bottom: 14px;
+}
+
+/* neutralize bootstrap margin */
+.field-wrapper .form-control {
+  margin-bottom: 0 !important;
+}
+
+/* INPUTS */
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  border-color: #6b0f1a;
+  box-shadow: 0 0 0 0.15rem rgba(107, 15, 26, 0.25);
+}
+
+/* BUTTON */
+.primary-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6b0f1a, #a12a3c);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(107, 15, 26, 0.35);
+}
+
+.primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* INFO */
+.info-text {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6b0f1a;
+}
+
+/* ERROR SHAKE */
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+/* DIVIDER */
+.divider {
+  margin: 18px 0;
+  font-size: 13px;
+  color: #999;
+}
+
+/* FORGOT PASSWORD */
+.forgot {
+  font-size: 13px;
+  color: #6b0f1a;
+  cursor: pointer;
+}
+
+.forgot-inline {
+  margin-top: 4px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+/* REGISTER LINK */
+.register-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link span {
+  color: #6b0f1a;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.register-link span:hover {
+  color: #a12a3c;
+  transform: translateY(-1px);
+}
+
+.register-link span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background-color: #a12a3c;
+  transition: width 0.3s ease;
+}
+
+.register-link span:hover::after {
+  width: 100%;
+}
+
+.register-link span:active {
+  transform: scale(0.96);
+  color: #6b0f1a;
+}

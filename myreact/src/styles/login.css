@@ -1,0 +1,86 @@
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fffaf2, #f5e6d3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-card {
+  background: #ffffff;
+  padding: 42px 32px;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+.brand {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b0f1a;
+  margin-bottom: 6px;
+}
+
+.tagline {
+  font-size: 14px;
+  color: #8a6d3b;
+  margin-bottom: 26px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #6b0f1a, #a12a3c);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.primary-btn:hover {
+  opacity: 0.95;
+}
+
+.divider {
+  margin: 18px 0;
+  font-size: 13px;
+  color: #999;
+}
+
+.info-text {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #6b0f1a;
+}
+
+.forgot {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #6b0f1a;
+  cursor: pointer;
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link span {
+  color: #6b0f1a;
+  font-weight: 500;
+  cursor: pointer;
+}

@@ -1,0 +1,59 @@
+.footer {
+  background: linear-gradient(135deg, #4a0c13, #6b0f1a);
+  color: #f5e6c8;
+  padding-top: 40px;
+  margin-top: 60px;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  padding: 0 40px 30px;
+}
+
+.footer-brand h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  color: #d4af37;
+  margin-bottom: 8px;
+}
+
+.footer-brand p {
+  font-size: 14px;
+  color: #f1e3c6;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  color: #d4af37;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.footer-links a {
+  display: block;
+  color: #f5e6c8;
+  font-size: 14px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #d4af37;
+}
+
+.footer-contact p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 14px;
+  background: #3a080e;
+  font-size: 13px;
+  color: #e7d7b1;
+}
