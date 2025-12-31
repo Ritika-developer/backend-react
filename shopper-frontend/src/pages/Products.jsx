@@ -1,5 +1,5 @@
 // // pages/Products.jsx
-// import ProductCard from "../components/ProductCard";
+// // import ProductCard from "../components/ProductCard";
 
 // const sarees = [
 //   { id: 1, name: "Banarasi Silk", price: 4999, image: "/s1.jpg" },

@@ -23,7 +23,7 @@ export default function Login() {
     try {
       const res = await loginUser({ email: value, password });
       localStorage.setItem("token", res.data);
-      navigate("/dashboard");
+      navigate("/products");
     } catch (err) {
       setInfo(err.response?.data || "Invalid credentials");
     } finally {
