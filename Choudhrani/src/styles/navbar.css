@@ -1,38 +1,151 @@
-.navbar {
-  background: #6b0f1a;
-  color: #d4af37;
-  padding: 14px 28px;
+/* ===== FONTS ===== */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap");
+
+/* ===== WRAPPER ===== */
+.luxury-navbar {
+  width: 100%;
+  background: radial-gradient(circle at top, #fffafa, #f2e6e6);
+}
+
+/* ===== MENU ROW ===== */
+.menu-row {
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Playfair Display", serif;
+  border-top: 1px solid #ead3d3;
+  border-bottom: 1px solid #ead3d3;
 }
 
-.nav-left {
+/* ===== LEFT MENU ===== */
+.menu-left span {
+  margin-right: 34px;
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  letter-spacing: 1.6px;
+  color: #6b2d2d;
+  cursor: pointer;
+}
+
+.menu-left span:hover {
+  color: #8a3a3a;
+}
+
+/* ===== TEXT LOGO (CENTER) ===== */
+.text-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* ===== CH (TOP) ===== */
+.logo-ch {
+  font-family: "Cinzel", serif;
   font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  background: linear-gradient(
+    180deg,
+    #eb0d0d 0%,
+    #ec5417 35%,
+    #720707 65%,
+    #e60d0d 100%
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.6),
+    0 2px 4px rgba(0,0,0,0.25);
+
+  margin-bottom: 2px;
+}
+
+/* ===== CHOUDHRANI (BOTTOM) ===== */
+.logo-name {
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #f11414;
+
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+/* ===== RIGHT BUTTONS ===== */
+.menu-right button {
+  margin-left: 12px;
+  padding: 7px 22px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.nav-right span {
-  margin-right: 20px;
-  cursor: pointer;
-  font-size: 15px;
-}
-
-.nav-right span:hover {
-  text-decoration: underline;
-}
-
-.nav-right button {
+.btn-outline {
   background: transparent;
-  border: 1px solid #d4af37;
-  color: #d4af37;
-  padding: 6px 14px;
-  border-radius: 20px;
-  cursor: pointer;
+  border: 1px solid #6b2d2d;
+  color: #6b2d2d;
 }
 
-.nav-right button:hover {
-  background: #d4af37;
-  color: #6b0f1a;
+.btn-outline:hover {
+  background: #6b2d2d;
+  color: #fff;
+}
+
+.btn-solid {
+  background: #6b2d2d;
+  border: 1px solid #6b2d2d;
+  color: #fff;
+}
+
+.btn-solid:hover {
+  background: #7d3333;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .menu-row {
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px 16px;
+  }
+
+  .menu-left {
+    display: flex;
+    justify-content: center;
+  }
+
+  .menu-left span {
+    margin: 0 14px;
+  }
+
+  .menu-right {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .menu-right button {
+    padding: 8px 26px;
+  }
+
+  .logo-ch {
+    font-size: 22px;
+  }
+
+  .logo-name {
+    font-size: 9px;
+    letter-spacing: 2.5px;
+  }
 }

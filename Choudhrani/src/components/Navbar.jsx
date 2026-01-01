@@ -4,23 +4,32 @@ import "../styles/navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
-
   return (
-    <nav className="navbar">
-      <div className="nav-left" onClick={() => navigate("/dashboard")}>
-        👑 CHOUDHRANI
+    <header className="luxury-navbar">
+
+      {/* ===== MENU ROW ===== */}
+      <div className="menu-row">
+        <div className="menu-left">
+          <span onClick={() => navigate("/collections")}>COLLECTION</span>
+          <span onClick={() => navigate("/contact")}>CONTACT</span>
+        </div>
+<div className="text-logo" onClick={() => navigate("/")}>
+  <span className="logo-ch">CH</span>
+  <span className="logo-name">CHOUDHRANI</span>
+</div>
+
+
+
+        <div className="menu-right">
+          <button className="btn-outline" onClick={() => navigate("/login")}>
+            LOGIN
+          </button>
+          <button className="btn-solid" onClick={() => navigate("/register")}>
+            REGISTER
+          </button>
+        </div>
       </div>
 
-      <div className="nav-right">
-        <span onClick={() => navigate("/products")}>Sarees</span>
-        <span onClick={() => navigate("/cart")}>🛒 Cart</span>
-        <span onClick={() => navigate("/profile")}>👤 Profile</span>
-        <button onClick={logout}>Logout</button>
-      </div>
-    </nav>
+    </header>
   );
 }

@@ -12,11 +12,12 @@ import Products from "./pages/Products";
 import Cart from "./pages/Carts";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
-
+import Navbar from "./components/Navbar";
 
 export default function App() {
   return (
     <BrowserRouter>
+    <Navbar/>
       <Routes>
         {/* 🌐 PUBLIC PAGES */}
         <Route path="/" element={<Home />} />
