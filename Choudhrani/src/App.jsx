@@ -13,11 +13,13 @@ import Cart from "./pages/Carts";
 import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import "./styles/Choudhrani.css";
 
 export default function App() {
   return (
     <BrowserRouter>
-    <Navbar/>
+   <Navbar/>
       <Routes>
         {/* 🌐 PUBLIC PAGES */}
         <Route path="/" element={<Home />} />
@@ -43,6 +45,7 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/orders" element={<Orders />} />
       </Routes>
+      <Footer/>
     </BrowserRouter>
   );
 }

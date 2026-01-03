@@ -1,35 +1,27 @@
-import { useNavigate } from "react-router-dom";
-import "../styles/navbar.css";
+import { Link } from "react-router-dom";
+import "../styles/navbar.css"
 
 export default function Navbar() {
-  const navigate = useNavigate();
-
   return (
-    <header className="luxury-navbar">
+    <nav className="ch-navbar">
+      <div className="container">
 
-      {/* ===== MENU ROW ===== */}
-      <div className="menu-row">
-        <div className="menu-left">
-          <span onClick={() => navigate("/collections")}>COLLECTION</span>
-          <span onClick={() => navigate("/contact")}>CONTACT</span>
+        <div className="nav-left">
+          <Link to="/">Home</Link>
+          <Link to="/products">Products</Link>
         </div>
-<div className="text-logo" onClick={() => navigate("/")}>
-  <span className="logo-ch">CH</span>
-  <span className="logo-name">CHOUDHRANI</span>
-</div>
 
+        <Link to="/" className="nav-logo">
+          CHOUDHRANI
+        </Link>
 
-
-        <div className="menu-right">
-          <button className="btn-outline" onClick={() => navigate("/login")}>
-            LOGIN
-          </button>
-          <button className="btn-solid" onClick={() => navigate("/register")}>
-            REGISTER
-          </button>
+        <div className="nav-right">
+          <Link to="/cart">Cart</Link>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
         </div>
+
       </div>
-
-    </header>
+    </nav>
   );
 }
