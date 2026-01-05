@@ -1,10 +1,10 @@
-import Navbar from "../components/Navbar";
+
 import "../styles/profile.css";
 
 export default function Profile() {
   return (
     <>
-      <Navbar />
+      
       <div className="profile-page">
         <div className="profile-card">
           <h2>My Profile</h2>

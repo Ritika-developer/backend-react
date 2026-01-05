@@ -1,7 +1,5 @@
-import Navbar from "../components/Navbar";
+
 import "../styles/cart.css";
-import Footer from "../components/Footer";
-import BackToTop from "../components/BackToTop";
 
 const cartItems = [
   { id: 1, name: "Banarasi Silk Saree", price: 12999 },
@@ -13,7 +11,7 @@ export default function Cart() {
 
   return (
     <>
-      <Navbar />
+     
       <div className="cart-page">
         <h2>Your Cart</h2>
 
@@ -29,8 +27,8 @@ export default function Cart() {
           <button>Proceed to Checkout</button>
         </div>
       </div>
-       <Footer />
-       <BackToTop />
+       
+      
     </>
   );
 }

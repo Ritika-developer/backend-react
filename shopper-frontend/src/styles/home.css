@@ -1,221 +1,394 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap');
+/* ===============================
+   GOOGLE FONTS
+================================ */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap");
 
-:root {
-  --maroon:#6b0f1a;
-  --cream:#fffaf5;
+/* ===============================
+   GLOBAL
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: Poppins, sans-serif;
-  background: var(--cream);
+  font-family: "Poppins", sans-serif;
+  background: #f6f1eb;
+  color: #3a1f1f;
 }
 
-/* RESET */
-ul { list-style:none; padding:0; margin:0; }
-a { text-decoration:none; }
-
-/* NAVBAR */
-.ch-navbar {
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(0,0,0,.06);
-  padding: 16px 40px;
+.home-page {
+  background-color: #fbf8f3;
 }
 
-.brand-center {
-  font-family: "Playfair Display", serif;
-  letter-spacing: 6px;
-  font-size: 24px;
-  color: var(--maroon);
+section {
+  padding: 110px 0;
 }
 
-.ch-navbar .nav-link {
-  font-size: 14px;
+.container {
+  max-width: 1140px;
+  margin: auto;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.hero-btn {
+  display: inline-block;
+  background: #efe1c2;
+  color: #6b1a24;
+  padding: 12px 32px;
+  font-size: 13px;
+  border-radius: 30px;
   letter-spacing: 1px;
-  color: var(--maroon);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
-/* HERO SLIDER */
-.hero-slider {
+.hero-btn:hover {
+  background: #6b1a24;
+  color: #e8d6b0;
+}
+
+.small-btn {
+  margin-top: 20px;
+  background: #6b1a24;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ===============================
+   SECTION TITLES
+================================ */
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #6b1a24;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: #d6c2a4;
+  margin: 0 12px;
+  vertical-align: middle;
+}
+
+/* ===============================
+   HERO SLIDER
+================================ */
+.hero-section {
   position: relative;
   height: 90vh;
   overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 80px;
 }
 
 .hero-slide {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
   opacity: 0;
-  animation: heroFade 18s infinite;
-  transform: scale(1.08);
+  transition: opacity 1.2s ease-in-out;
+  background-size: cover;
+  background-position: top;
 }
 
-.slide1 { background-image:url("https://images.unsplash.com/photo-1618354691515-ec6f2f2c0b33"); animation-delay:0s; }
-.slide2 { background-image:url("https://images.unsplash.com/photo-1598514982361-3a2c8f5c4c4a"); animation-delay:6s; }
-.slide3 { background-image:url("https://images.unsplash.com/photo-1610030469983-98e550d6193c"); animation-delay:12s; }
-
-@keyframes heroFade {
-  0%{opacity:0} 10%{opacity:1} 30%{opacity:1}
-  40%{opacity:0} 100%{opacity:0}
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
 }
 
-.hero-overlay-content {
+.slide-women {
+  background-image:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.15)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png");
+}
+
+.slide-men {
+  background-image:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.15)),
+    url("men.jpg");
+}
+
+.hero-text {
   position: relative;
   z-index: 2;
-  height: 100%;
-  background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.2));
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding-left:10%;
-  color:#fff;
+  max-width: 520px;
+  margin-left: 10%;
+  padding-bottom: 80px;
+  color: #fff;
 }
 
-.hero-overlay-content h1 {
-  font-family:"Playfair Display", serif;
-  font-size:64px;
-  line-height:1.2;
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.15;
 }
 
-.hero-overlay-content p {
-  margin-top:16px;
-  letter-spacing:2px;
-  font-size:16px;
+.hero-text p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 26px;
 }
 
-/* SECTIONS */
-.section-padding { padding:100px 0; }
-.section-title {
-  text-align:center;
-  font-family:"Playfair Display", serif;
-  font-size:40px;
-  margin-bottom:60px;
+/* ===============================
+   MEN'S WEAR
+================================ */
+.mens-section {
+  padding-top: 80px;
+  padding-bottom: 0;
 }
 
-/* PRODUCT CARD */
+.mens-image {
+  height: 420px;
+  background:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.1)),
+    url("men.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+}
+
+.mens-text h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b1a24;
+  margin-bottom: 18px;
+}
+
+.mens-text p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+  margin-bottom: 26px;
+}
+
+/* ===============================
+   WOMEN'S WEAR
+================================ */
+.womens-section {
+  padding-top: 80px;
+  padding-bottom: 0;
+}
+
+.womens-image {
+  height: 420px;
+  background:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.1)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+}
+
+.womens-text h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b1a24;
+  margin-bottom: 18px;
+}
+
+.womens-text p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+  margin-bottom: 26px;
+}
+
+
+/* ===============================
+   COLLECTIONS
+================================ */
+.collections {
+  padding-top: 80px;
+}
+
+.collection-card {
+  position: relative;
+  background: #fff;
+  padding: 16px;
+  transition: 0.4s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-6px);
+}
+
+.collection-img {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+}
+
+.collection-card h5 {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 18px;
+  font-family: "Playfair Display", serif;
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
+
+/* ===============================
+   PRODUCTS (MEN + WOMEN)
+================================ */
+.products {
+  padding-top: 80px;
+}
+
 .product-card {
-  background:#fff;
-  border-radius:20px;
-  box-shadow:0 20px 40px rgba(0,0,0,.05);
-  overflow:hidden;
-  transition:.4s;
+  background: #fff;
+  border: 1px solid #eadfce;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+  transition: 0.4s ease;
 }
-.product-card:hover { transform:translateY(-6px); }
 
-.product-img { position:relative; overflow:hidden; }
-.product-img img {
-  width:100%;
-  height:300px;
-  object-fit:cover;
-  transition:.5s;
+.product-card:hover {
+  box-shadow: 0 25px 40px rgba(0,0,0,.12);
 }
-.product-card:hover img { transform:scale(1.1); }
 
-.wishlist {
-  position:absolute;
-  top:14px;
-  right:14px;
-  background:rgba(0,0,0,.6);
-  color:#fff;
-  padding:6px 8px;
-  border-radius:50%;
-  opacity:0;
-  transition:.3s;
+.product-img {
+  height: 260px;
+  background-size: cover;
+  background-position: top;
+  border-radius: 4px;
+  transition: transform 0.6s ease;
 }
-.product-card:hover .wishlist { opacity:1; }
 
-.price-cart {
-  position:relative;
-  height:40px;
-  margin-top:10px;
-  overflow:hidden;
+.product-card:hover .product-img {
+  transform: scale(1.03);
 }
-.price, .add-cart {
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:.35s;
+
+.price {
+  font-size: 13px;
+  color: #6b1a24;
+  transition: opacity .4s ease;
 }
+
 .add-cart {
-  background:var(--maroon);
-  color:#fff;
-  transform:translateY(100%);
-  opacity:0;
-}
-.product-card:hover .price { transform:translateY(-100%); opacity:0; }
-.product-card:hover .add-cart { transform:translateY(0); opacity:1; }
-
-/* CATEGORY */
-.category-box {
-  height:380px;
-  border-radius:18px;
-  position:relative;
-  display:flex;
-  align-items:flex-end;
-  padding:30px;
-  color:#fff;
-  font-family:"Playfair Display", serif;
-}
-.category-box::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.6));
-}
-.category-box h2 { position:relative; z-index:2; font-size:36px; }
-.silk { background:url("https://images.unsplash.com/photo-1610030469983-98e550d6193c") center/cover; }
-.bridal { background:url("https://images.unsplash.com/photo-1598514982361-3a2c8f5c4c4a") center/cover; }
-
-/* EDITORIAL */
-.editorial-full {
-  height:100vh;
-  background:url("https://images.unsplash.com/photo-1600185365483-26d7a4cc7519") center/cover;
-  display:flex;
-  align-items:center;
-}
-.editorial-content {
-  background:rgba(255,255,255,.88);
-  padding:60px;
-  margin-left:10%;
-  max-width:420px;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  background: #6b1a24;
+  color: #fff;
+  padding: 8px 20px;
+  font-size: 12px;
+  border-radius: 20px;
+  border: none;
 }
 
-/* STORY */
-.story-image {
-  height:420px;
-  border-radius:16px;
-  background:url("https://images.unsplash.com/photo-1618354691373-d851c5c3a990") center/cover;
+.product-card:hover .price {
+  opacity: 0;
 }
 
-/* TESTIMONIALS */
-.testimonial-section {
-  padding:120px 20px;
-  background:#fff;
-  text-align:center;
-}
-.testimonial-card {
-  background:var(--cream);
-  padding:40px;
-  border-radius:18px;
+.product-card:hover .add-cart {
+  opacity: 1;
 }
 
-/* LOOKBOOK */
-.lookbook {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-}
-.lookbook-img {
-  height:280px;
-  background:url("https://images.unsplash.com/photo-1610030469983-98e550d6193c") center/cover;
+/* ===============================
+   WEDDING
+================================ */
+.wedding-section {
+  height: 80vh;
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.25)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767355024/wedding_f78zs9.png")
+    top / cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-left: 250px;
+  color: #fff;
 }
 
-/* FOOTER */
-.footer {
-  background:var(--maroon);
-  color:#fff;
-  padding:80px 0;
+.wedding-text {
+  max-width: 500px;
 }
+
+.wedding-text h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+}
+
+.wedding-text p {
+  margin: 16px 0 26px;
+}
+
+/* ===============================
+   INSTAGRAM
+================================ */
+.instagram {
+  padding-bottom: 80px;
+}
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.insta-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.insta-img:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 16px;
+  }
+
+  .hero-section {
+    height: 80vh;
+  }
+
+  .hero-text {
+    margin-left: 0;
+    text-align: center;
+    padding: 0 16px 60px;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+

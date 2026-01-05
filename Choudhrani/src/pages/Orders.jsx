@@ -1,7 +1,4 @@
-import Navbar from "../components/Navbar";
 import "../styles/orders.css";
-import Footer from "../components/Footer";
-import BackToTop from "../components/BackToTop";
 
 const orders = [
   { id: "ORD123", item: "Banarasi Saree", status: "Delivered" },
@@ -11,7 +8,7 @@ const orders = [
 export default function Orders() {
   return (
     <>
-      <Navbar />
+      
       <div className="orders-page">
         <h2>My Orders</h2>
 
@@ -26,8 +23,7 @@ export default function Orders() {
           </div>
         ))}
       </div>
-       <Footer />
-       <BackToTop />
+       
     </>
   );
 }

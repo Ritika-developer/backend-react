@@ -1,8 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import BackToTop from "../components/BackToTop";
 export default function Dashboard() {
   const navigate = useNavigate();
 
@@ -13,7 +10,7 @@ export default function Dashboard() {
 
   return (
     <>
-    <Navbar />
+   
     <div className="dashboard-page">
       {/* TOP BAR */}
       {/* <div className="dashboard-header">
@@ -54,8 +51,7 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-     <Footer />
-     <BackToTop />
+     
     </>
 
   );

@@ -1,21 +1,35 @@
-
 /* ===============================
    NAVBAR
 ================================ */
+
 .ch-navbar {
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 999;
-  background: linear-gradient(to right, #6b1a24, #8a2431);
-  padding: 16px 0;
+  background: linear-gradient(
+    to right,
+    rgba(107, 26, 36, 0.92),
+    rgba(138, 36, 49, 0.92)
+  );
+  backdrop-filter: blur(6px);
+  padding: 12px 0;
 }
 
+/* BODY OFFSET FOR FIXED NAVBAR */
+body {
+  padding-top: 60px;
+}
+
+/* ===============================
+   LINKS
+================================ */
 
 .nav-left a,
 .nav-right a {
   margin: 0 14px;
   font-size: 13px;
+  font-weight: 500;
   letter-spacing: 1px;
   color: #f5e6c8;
   text-decoration: none;
@@ -23,7 +37,7 @@
   transition: color 0.3s ease;
 }
 
-
+/* UNDERLINE */
 .nav-left a::after,
 .nav-right a::after {
   content: "";
@@ -37,14 +51,21 @@
 }
 
 .nav-left a:hover::after,
-.nav-right a:hover::after {
+.nav-right a:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
 .nav-left a:hover,
-.nav-right a:hover {
+.nav-right a:hover,
+.nav-link.active {
   color: #ffffff;
 }
+
+/* ===============================
+   LAYOUT
+================================ */
+
 .ch-navbar .container {
   display: flex;
   align-items: center;
@@ -57,14 +78,92 @@
   align-items: center;
 }
 
+/* LOGO */
 .nav-logo {
   font-family: "Playfair Display", serif;
-  font-size: 28px;
-  letter-spacing: 3px;
+  font-size: 30px;
+  letter-spacing: 4px;
   color: #f0efef;
   text-decoration: none;
 }
 
+/* ===============================
+   HAMBURGER
+================================ */
 
+.hamburger {
+  width: 26px;
+  height: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
 
+.hamburger span {
+  height: 2px;
+  width: 100%;
+  background: #f5e6c8;
+  transition: all 0.4s ease;
+}
 
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ===============================
+   MOBILE MENU
+================================ */
+
+.mobile-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background: #6b1a24;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 40px 0;
+  z-index: 998;
+}
+
+.mobile-menu.show {
+  display: flex;
+}
+
+.mobile-menu a {
+  color: #f5e6c8;
+  text-decoration: none;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.mobile-menu a:hover {
+  color: #ffffff;
+}
+
+/* ===============================
+   MOBILE BREAKPOINT
+================================ */
+
+@media (max-width: 768px) {
+  .nav-left,
+  .nav-right {
+    display: none;
+  }
+
+  .nav-logo {
+    margin: auto;
+    font-size: 24px;
+  }
+}

@@ -3,6 +3,12 @@
 ================================ */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap");
 
+
+/* ===== GLOBAL WIDTH CONTROL (IMAGE FEEL) ===== */
+.container {
+  max-width: 1140px;
+}
+
 /* ===============================
    GLOBAL
 ================================ */
@@ -10,6 +16,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+ 
 }
 
 body {
@@ -19,9 +26,34 @@ body {
 }
 
 section {
-  padding: 90px 0;
+  padding: 110px 0;
 }
 
+.heritage {
+  padding-top: 80px;
+  padding-bottom:0px;
+}
+
+.collections {
+  padding-top: 80px;
+  padding-bottom:0px;
+
+}
+
+.products {
+  padding-top: 80px;
+}
+
+.stories{
+  padding-bottom: 0px;
+}
+
+.instagram{
+  padding-bottom: 80px;
+}
+.home-page{
+background-color: #fbf8f3;
+}
 
 
 
@@ -29,27 +61,43 @@ section {
    HERO
 ================================ */
 .hero-section {
-  height: 100vh;
+  height: 90vh;
   background:
-    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.2)),
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.15)),
     url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png")
     top / cover no-repeat;
   display: flex;
-  align-items: center;
-  padding-top: 120px;
+  align-items: flex-end;
 }
 
 .hero-text {
   max-width: 520px;
-  margin-left: 8%;
+  margin-left: 10%;
   color: #fff;
 }
 
-.hero-text h1 {
+/* .hero-text h1 {
   font-family: "Playfair Display", serif;
   font-size: 46px;
   margin-bottom: 16px;
+} */
+
+.hero-text h1 {
+  font-size: 52px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.5px;
 }
+
+/* .hero-text h1::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, #d6b77c, #f5e6c8);
+  margin: 18px 0;
+} */
+
 
 .hero-text p {
   font-size: 15px;
@@ -72,8 +120,24 @@ section {
 }
 
 .hero-btn:hover {
-  background: #e8d6b0;
+    background: #6b1a24;
+  color: #e8d6b0;
+}
+
+/* ===== HERO EXACT POSITION ===== */
+.hero-section {
+  padding-top: 140px;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.hero-btn {
+  background: #efe1c2;
   color: #6b1a24;
+  font-weight: 500;
 }
 
 
@@ -100,6 +164,7 @@ section {
   padding: 10px 24px;
   font-size: 12px;
   border-radius: 20px;
+  text-decoration: none;
 }
 
 .heritage-img {
@@ -120,6 +185,19 @@ section {
   margin-bottom: 60px;
   color: #6b1a24;
 }
+
+/* ===== SECTION DIVIDER LINE (IMAGE LIKE) ===== */
+.section-title::before,
+.section-title::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: #d6c2a4;
+  vertical-align: middle;
+  margin: 0 12px;
+}
+
 
 /* ===============================
    COLLECTIONS
@@ -172,6 +250,27 @@ section {
   border-radius: 4px;
 }
 
+/* .collection-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6), transparent);
+} */
+
+/* ===== COLLECTION CARD TEXT OVER IMAGE ===== */
+.collection-card {
+  position: relative;
+}
+
+.collection-card h5 {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  color: #f5f4f4;
+  font-size: 18px;
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
 
 /* ===============================
    PRODUCTS
@@ -223,6 +322,21 @@ section {
   opacity: 1;
 }
 
+.product-card:hover .product-img {
+  transform: scale(1.03);
+}
+
+.product-card {
+  transition: all .4s ease;
+}
+
+
+
+.product-card:hover {
+  box-shadow: 0 25px 40px rgba(0,0,0,.12);
+}
+
+
 /* ===== NEW ARRIVALS IMAGES ===== */
 .p-1 {
   background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767356138/new-arrival1_xpeze0.png");
@@ -247,6 +361,17 @@ section {
   background-position: top;
   border-radius: 4px;
   transition: transform 0.6s ease;
+}
+
+
+/* ===== PRODUCT CARD EXACT ===== */
+.product-card {
+  border: 1px solid #eadfce;
+}
+
+.add-cart {
+  background: #6b1a24;
+  font-weight: 500;
 }
 
 
@@ -276,6 +401,12 @@ section {
   margin: 16px 0 26px;
 }
 
+/* ===== WEDDING SECTION TEXT ALIGN ===== */
+.wedding-text {
+  max-width: 500px;
+  
+}
+
 /* ===============================
    STORIES
 ================================ */
@@ -286,6 +417,7 @@ section {
 .story-box {
   max-width: 700px;
   margin: auto;
+ 
 }
 
 .story-img {
@@ -305,6 +437,17 @@ blockquote {
   line-height: 1.7;
 }
 
+/* ===== STORIES GRID (LEFT IMAGES + RIGHT TEXT FEEL) ===== */
+.story-box {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.story-img {
+  flex-shrink: 0;
+}
+
 /* ===============================
    INSTAGRAM
 ================================ */
@@ -319,29 +462,35 @@ blockquote {
   background: #ddd;
 }
 
+/* ===== INSTAGRAM SAME HEIGHT ===== */
+.insta-img {
+  height: 180px;
+}
+
+
 /* ===== INSTAGRAM IMAGES ===== */
 .i-1 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("insta1.jpg");
 }
 
 .i-2 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("insta2.jpg");
 }
 
 .i-3 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("insta3.jpg");
 }
 
 .i-4 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("2.jpg");
 }
 
 .i-5 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("3.jpg");
 }
 
 .i-6 {
-  background-image: url("https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/woman.jpg");
+  background-image: url("homepageimage1.jpg");
 }
 
 /* Common Instagram image styling */
@@ -388,81 +537,12 @@ blockquote {
   }
 }
 
-/* ===== GLOBAL WIDTH CONTROL (IMAGE FEEL) ===== */
-.container {
-  max-width: 1140px;
-}
 
-/* ===== HERO EXACT POSITION ===== */
-.hero-section {
-  padding-top: 140px;
-}
 
-.hero-text h1 {
-  font-size: 48px;
-  font-weight: 600;
-}
 
-.hero-btn {
-  background: #efe1c2;
-  color: #6b1a24;
-  font-weight: 500;
-}
 
-/* ===== SECTION DIVIDER LINE (IMAGE LIKE) ===== */
-.section-title::before,
-.section-title::after {
-  content: "";
-  display: inline-block;
-  width: 40px;
-  height: 1px;
-  background: #d6c2a4;
-  vertical-align: middle;
-  margin: 0 12px;
-}
 
-/* ===== COLLECTION CARD TEXT OVER IMAGE ===== */
-.collection-card {
-  position: relative;
-}
 
-.collection-card h5 {
-  position: absolute;
-  bottom: 12px;
-  left: 0;
-  right: 0;
-  color: #f5f4f4;
-  font-size: 18px;
-  text-shadow: 0 2px 6px rgba(0,0,0,.6);
-}
 
-/* ===== PRODUCT CARD EXACT ===== */
-.product-card {
-  border: 1px solid #eadfce;
-}
 
-.add-cart {
-  background: #6b1a24;
-  font-weight: 500;
-}
 
-/* ===== WEDDING SECTION TEXT ALIGN ===== */
-.wedding-text {
-  max-width: 500px;
-}
-
-/* ===== STORIES GRID (LEFT IMAGES + RIGHT TEXT FEEL) ===== */
-.story-box {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.story-img {
-  flex-shrink: 0;
-}
-
-/* ===== INSTAGRAM SAME HEIGHT ===== */
-.insta-img {
-  height: 180px;
-}

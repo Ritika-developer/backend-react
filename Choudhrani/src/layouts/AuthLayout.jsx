@@ -1,10 +1,24 @@
+// import "../styles/authLayout.css";
+
+// export default function AuthLayout({ children }) {
+//   return (
+//     <div className="auth-page">
+//       <div className="auth-card animate-card">
+//         {children}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+import { Outlet } from "react-router-dom";
 import "../styles/authLayout.css";
 
-export default function AuthLayout({ children }) {
+export default function AuthLayout() {
   return (
     <div className="auth-page">
       <div className="auth-card animate-card">
-        {children}
+        <Outlet />
       </div>
     </div>
   );

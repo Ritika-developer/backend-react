@@ -1,7 +1,5 @@
-import Navbar from "../components/Navbar";
 import "../styles/products.css";
-import Footer from "../components/Footer";
-import BackToTop from "../components/BackToTop";
+
 
 const products = [
   {
@@ -74,7 +72,7 @@ const products = [
 export default function Products() {
   return (
     <>
-      <Navbar />
+     
 
       <div className="products-page">
         <h2>Our Royal Collection</h2>
@@ -90,8 +88,8 @@ export default function Products() {
           ))}
         </div>
       </div>
-       <Footer />
-       <BackToTop />
+     
+    
     </>
   );
 }

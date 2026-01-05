@@ -1,0 +1,446 @@
+/* =================================================
+   1. GOOGLE FONTS
+================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap");
+
+
+/* =================================================
+   2. GLOBAL RESET & BASE
+================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f6f1eb;
+  color: #3a1f1f;
+}
+
+.home-page {
+  background: #fbf8f3;
+}
+
+.container {
+  max-width: 1140px;
+}
+
+
+/* =================================================
+   3. GLOBAL SECTION SPACING
+================================================= */
+section {
+  padding: 90px 0;
+}
+
+/* section-specific fine tuning */
+.heritage,
+.collections,
+.products {
+  padding-top: 80px;
+}
+
+.instagram {
+  padding-bottom: 80px;
+}
+
+.stories {
+  padding-bottom: 0;
+}
+
+
+/* =================================================
+   4. COMMON TYPOGRAPHY
+================================================= */
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #6b1a24;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: #d6c2a4;
+  vertical-align: middle;
+  margin: 0 12px;
+}
+
+
+/* =================================================
+   5. BUTTONS
+================================================= */
+.hero-btn {
+  display: inline-block;
+  background: #efe1c2;
+  color: #6b1a24;
+  padding: 12px 32px;
+  font-size: 13px;
+  border-radius: 30px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: #6b1a24;
+  color: #e8d6b0;
+}
+
+.small-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: #6b1a24;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 12px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+
+/* =================================================
+   6. HERO SECTION
+================================================= */
+.hero-section {
+  height: 90vh;
+  background:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.15)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png")
+    top / cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 140px;
+}
+
+.hero-text {
+  max-width: 520px;
+  margin-left: 10%;
+  color: #fff;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.5px;
+}
+
+.hero-text p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 26px;
+}
+
+
+/* =================================================
+   7. HERITAGE SECTION
+================================================= */
+.heritage h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  margin-bottom: 18px;
+}
+
+.heritage p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+}
+
+.heritage-img {
+  height: 320px;
+  background:
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767353076/our-heritage_ruef7t.png")
+    center / cover no-repeat;
+  border-radius: 4px;
+}
+
+
+/* =================================================
+   8. COLLECTIONS
+================================================= */
+.collection-card {
+  position: relative;
+  background: #fff;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+}
+
+.collection-img {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+}
+
+.collection-card h5 {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: #f5f4f4;
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
+
+/* collection images */
+.img-0 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png"); }
+.img-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354509/signature-collection2_ne95wo.png"); }
+.img-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767355024/wedding_f78zs9.png"); }
+.img-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354517/signature-collection4_vrwhb5.png"); }
+
+
+/* =================================================
+   9. PRODUCTS
+================================================= */
+.product-card {
+  background: #fff;
+  border: 1px solid #eadfce;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 18px 35px rgba(0,0,0,.12);
+}
+
+.product-img {
+  height: 260px;
+  background-size: cover;
+  background-position: top;
+  border-radius: 4px;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.03);
+}
+
+.product-card h6 {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-size: 13px;
+  color: #6b1a24;
+}
+
+.add-cart {
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background: #6b1a24;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 12px;
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .add-cart {
+  opacity: 1;
+}
+
+/* product images */
+.p-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767356138/new-arrival1_xpeze0.png"); }
+.p-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767356140/new-arrival2_hxlm9w.png"); }
+.p-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354512/signature-collection3_ll6em9.png"); }
+.p-4 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354509/signature-collection2_ne95wo.png"); }
+
+
+/* =================================================
+   10. WEDDING SECTION
+================================================= */
+.wedding-section {
+  height: 80vh;
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.25)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767355024/wedding_f78zs9.png")
+    top / cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-left: 250px;
+  color: #fff;
+}
+
+.wedding-text h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+}
+
+.wedding-text p {
+  margin: 16px 0 26px;
+}
+
+
+/* =================================================
+   11. STORIES
+================================================= */
+.stories {
+  text-align: center;
+}
+
+.story-box {
+  max-width: 700px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.story-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+  background:
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767357867/review-story_nunmzk.png")
+    center / cover no-repeat;
+}
+
+blockquote {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  line-height: 1.7;
+}
+
+
+/* =================================================
+   12. INSTAGRAM
+================================================= */
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.insta-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.insta-img:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+
+/* ===============================
+   INSTAGRAM
+================================ */
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.insta-img {
+  height: 160px;
+  background: #ddd;
+}
+
+/* ===== INSTAGRAM SAME HEIGHT ===== */
+.insta-img {
+  height: 180px;
+}
+
+
+/* ===== INSTAGRAM IMAGES ===== */
+.i-1 {
+  background-image: url("insta1.jpg");
+}
+
+.i-2 {
+  background-image: url("insta2.jpg");
+}
+
+.i-3 {
+  background-image: url("insta3.jpg");
+}
+
+.i-4 {
+  background-image: url("2.jpg");
+}
+
+.i-5 {
+  background-image: url("3.jpg");
+}
+
+.i-6 {
+  background-image: url("homepageimage1.jpg");
+}
+
+/* Common Instagram image styling */
+.insta-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.insta-img:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+
+/* =================================================
+   13. MOBILE
+================================================= */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 16px;
+  }
+
+  .hero-text {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .story-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wedding-section {
+    padding-left: 20px;
+  }
+}

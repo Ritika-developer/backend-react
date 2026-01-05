@@ -1,186 +1,213 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../styles/home.css";
-
-const products = [
-  {
-    name: "Royal Banarasi Saree",
-    price: "₹14,999",
-    img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-  {
-    name: "Kanjeevaram Silk Saree",
-    price: "₹18,500",
-    img: "https://images.unsplash.com/photo-1610030469983-98e550d6193c",
-  },
-  {
-    name: "Handwoven Chanderi",
-    price: "₹11,200",
-    img: "https://images.unsplash.com/photo-1618354691515-ec6f2f2c0b33",
-  },
-  {
-    name: "Designer Bridal Saree",
-    price: "₹25,000",
-    img: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
-  },
-];
+import OfferStrip from "../components/OfferStrip";
 
 export default function Home() {
+  const items = [
+    "Bridal Heritage",
+    "Banarasi Silk",
+    "Festive Classics",
+    "Everyday Grace",
+  ];
+  const slides = [
+    {
+      type: "women",
+      title: "Every Saree Tells Her Story",
+      desc: "Heritage woven with emotion and crafted for timeless grace.",
+      // link: "/products?category=women",
+      link: "/products",
+      className: "slide-women"
+    },
+    {
+      type: "men",
+      title: "Royal Wear for the Modern Maharaja",
+      desc: "Timeless kurtas & sherwanis crafted with power and pride.",
+      link: "/products?category=men",
+      className: "slide-men"
+    }
+  ];
+
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <>
-      {/* NAVBAR */}
-      <nav className="navbar navbar-expand-lg sticky-top ch-navbar">
-        <div className="container-fluid">
-          <ul className="navbar-nav d-none d-lg-flex">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/products">Products</Link>
-            </li>
-          </ul>
+       <OfferStrip />
+      <div className="home-page">
 
-          <span className="navbar-brand mx-auto brand-center">
-            CHAUDHRANI
-          </span>
 
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Search</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Cart</Link>
-            </li>
-          </ul>
-        </div>
-      </nav>
 
-      {/* HERO SLIDER */}
-      <section className="hero-slider">
-        <div className="hero-slide slide1"></div>
-        <div className="hero-slide slide2"></div>
-        <div className="hero-slide slide3"></div>
 
-        <div className="hero-overlay-content">
-          <h1>Every Saree Tells<br />Her Story</h1>
-          <p>ROYAL • INDIAN • TIMELESS</p>
-        </div>
-      </section>
 
-      {/* FEATURED PRODUCTS */}
-      <section className="container section-padding">
-        <h2 className="section-title">Featured Collection</h2>
-        <div className="row g-4">
-          {products.map((p, i) => (
-            <div className="col-12 col-md-6 col-lg-3" key={i}>
-              <div className="product-card">
-                <div className="product-img">
-                  <img src={p.img} alt={p.name} />
-                  <span className="wishlist">❤</span>
-                </div>
+        {/* HERO SLIDER */}
+        <section className="hero-section">
 
-                <div className="product-info text-center">
-                  <h5>{p.name}</h5>
-                  <div className="price-cart">
-                    <span className="price">{p.price}</span>
-                    <button className="add-cart">Add to Cart</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* BACKGROUND SLIDES */}
+          {slides.map((slide, index) => (
+            <Link
+              key={index}
+              to={slide.link}
+              className={`hero-slide ${slide.className} ${
+                current === index ? "active" : ""
+              }`}
+            />
           ))}
-        </div>
-      </section>
 
-      {/* CATEGORY STORY */}
-      <section className="container section-padding">
-        <div className="row g-4">
-          <div className="col-md-6">
-            <div className="category-box silk">
-              <h2>Pure Silk Sarees</h2>
+          {/* HERO TEXT */}
+          <div className="hero-text">
+            <h1>{slides[current].title}</h1>
+            <p>{slides[current].desc}</p>
+
+            <Link to={slides[current].link} className="hero-btn">
+              Explore Collection
+            </Link>
+          </div>
+
+        </section>
+
+
+{/* MEN'S WEAR */}
+<section className="mens-section container">
+  <h2 className="section-title" data-aos="fade-up">Men’s Royal Edit</h2>
+
+  <div className="row g-4 align-items-center">
+    {/* Left Image */}
+    <div className="col-md-6" data-aos="fade-right">
+      <div className="mens-image"></div>
+    </div>
+
+    {/* Right Content */}
+    <div className="col-md-6 mens-text" data-aos="fade-left">
+      <h3>For the Modern Maharaja</h3>
+      <p>
+        Handcrafted kurtas, sherwanis, and festive wear designed
+        for elegance, strength, and timeless Indian royalty.
+      </p>
+      {/* <Link to="/products?category=men" className="hero-btn">
+        Explore Men’s Collection
+      </Link> */}
+       <Link to="/products" className="hero-btn">
+        Explore Men’s Collection
+      </Link>
+    </div>
+  </div>
+</section>
+
+{/* WOMEN'S WEAR */}
+<section className="womens-section container">
+  <h2 className="section-title" data-aos="fade-up">Women’s Royal Edit</h2>
+
+  <div className="row g-4 align-items-center">
+
+    {/* Left Content */}
+    <div className="col-md-6 womens-text" data-aos="fade-right">
+      <h3>Elegance Woven in Every Thread</h3>
+      <p>
+        Luxurious sarees and festive wear crafted to celebrate
+        grace, tradition, and the timeless beauty of Indian women.
+      </p>
+      <Link to="/products" className="hero-btn">
+        Explore Women’s Collection
+      </Link>
+    </div>
+
+    {/* Right Image */}
+    <div className="col-md-6" data-aos="fade-left">
+      <div className="womens-image"></div>
+    </div>
+
+  </div>
+</section>
+
+
+
+      {/* <Collections /> */}
+        <section className="collections container">
+      <h2 className="section-title" data-aos="fade-up">Signature Collections</h2>
+      <div className="row">
+        {items.map((item, i) => (
+          <div className="col-md-3" key={i} data-aos="zoom-in"
+              data-aos-delay={i * 120}>
+            <div className="collection-card">
+              <div className={`collection-img img-${i}`}></div>
+              <h5>{item}</h5>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="category-box bridal">
-              <h2>Bridal Heirlooms</h2>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* EDITORIAL */}
-      <section className="editorial-full">
-        <div className="editorial-content">
-          <h2>Woven With Heritage</h2>
-          <p>
-            Crafted by Indian artisans, every Chaudhrani saree
-            preserves tradition, emotion, and timeless beauty.
-          </p>
-        </div>
-      </section>
-
-      {/* STORY */}
-      <section className="container section-padding">
-        <div className="row align-items-center g-5">
-          <div className="col-md-6">
-            <h2>Rooted in Indian Heritage</h2>
-            <p>
-              Chaudhrani celebrates the soul of Indian womanhood —
-              grace, strength, and elegance passed through generations.
-            </p>
-          </div>
-          <div className="col-md-6">
-            <div className="story-image"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      <section className="testimonial-section">
-        <h2>Voices of Chaudhrani</h2>
-        <div className="container">
-          <div className="row g-4">
-            {["Elegant", "Royal", "Authentic"].map((t, i) => (
-              <div className="col-md-4" key={i}>
-                <div className="testimonial-card">
-                  <p>“Absolutely {t}. A true luxury experience.”</p>
-                  <strong>— Chaudhrani Woman</strong>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* LOOKBOOK */}
-      <section className="lookbook">
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="lookbook-img"></div>
         ))}
-      </section>
+      </div>
+    </section>
 
-      {/* FOOTER */}
-      <footer className="footer">
-        <div className="container">
-          <div className="row g-4">
-            <div className="col-md-4">
-              <h5>About</h5>
-              <p>Luxury Indian sarees inspired by heritage & emotion.</p>
-            </div>
-            <div className="col-md-4">
-              <h5>Quick Links</h5>
-              <ul>
-                <li>Home</li>
-                <li>Collections</li>
-                <li>Cart</li>
-              </ul>
-            </div>
-            <div className="col-md-4">
-              <h5>Newsletter</h5>
-              <input className="form-control" placeholder="Your email" />
+
+{/* MEN PRODUCTS */}
+<section className="products container text-center">
+  <h2 className="section-title" data-aos="fade-up">Men’s New Arrivals</h2>
+
+  <div className="row g-4">
+    {[1,2,3,4].map(i => (
+      <div className="col-md-3" key={i} data-aos="fade-up">
+        <div className="product-card">
+          <div className={`product-img men-${i}`}></div>
+          <h6>Royal Sherwani</h6>
+          <span className="price">₹28,000</span>
+          <button className="add-cart">Add to Cart</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
+{/* NEW ARRIVALS */}
+          <section className="products container text-center">
+      <h2 className="section-title" data-aos="fade-up">Women's New Arrivals</h2>
+      <div className="row g-4">
+        {[1,2,3,4].map(i => (
+          <div className="col-md-3" key={i}  data-aos="fade-up"
+              data-aos-delay={i * 120}>
+            <div className="product-card">
+              <div className={`product-img p-${i}`}></div>
+              <h6>Regal Silk Saree</h6>
+              <span className="price">₹19,000</span>
+              <button className="add-cart">Add to Cart</button>
             </div>
           </div>
-        </div>
-      </footer>
+        ))}
+      </div>
+    </section>
+
+      {/* <Wedding /> */}
+       <section className="wedding-section">
+      <div className="wedding-text" data-aos="fade-right">
+        <h2>Wedding Collection</h2>
+        <p>For the day she becomes CHOUDHRANI</p>
+        <Link to="/products" className="hero-btn gold">Explore Wedding Collection</Link>
+      </div>
+    </section>
+
+  
+
+{/*  <Instagram /> */}
+ <section className="instagram container">
+      <h2 className="section-title" data-aos="fade-up">@choudhrani</h2>
+      <div className="insta-grid">
+        {[1,2,3,4,5,6].map(i => (
+          <div className={`insta-img i-${i}`} key={i}
+          data-aos="zoom-in"
+              data-aos-delay={i * 80}></div>
+        ))}
+      </div>
+    </section>
+
+   </div>
+    
     </>
   );
 }

@@ -1,38 +1,60 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import AOS from "aos";
+
+/* layouts */
+import AuthLayout from "./layouts/AuthLayout";
+import MainLayout from "./layouts/MainLayout";
+
+/* pages */
 import Home from "./pages/Home";
-import Register from "./pages/Register";
 import Login from "./pages/Login";
-import EmailOtpVerify from "./pages/EmailOtpVerify";
-import PhoneOtpVerify from "./pages/PhoneOtpVerify";
+import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import EmailOtpVerify from "./pages/EmailOtpVerify";
+import PhoneOtpVerify from "./pages/PhoneOtpVerify";
 import Products from "./pages/Products";
 import Cart from "./pages/Carts";
-import Profile from "./pages/Profile";
 import Orders from "./pages/Orders";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import "./styles/Choudhrani.css";
+import Profile from "./pages/Profile";
+import Dashboard from "./pages/Dashboard";
+
+/* routes */
+import ProtectedRoute from "./routes/ProtectedRoute";
+
+import "./styles/Choudhrani1.css";
 
 export default function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+      once: true,
+    });
+  }, []);
+
   return (
-    <BrowserRouter>
-   <Navbar/>
-      <Routes>
-        {/* 🌐 PUBLIC PAGES */}
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+
+      {/* 🔐 AUTH PAGES */}
+      <Route element={<AuthLayout />}>
         <Route path="/login" element={<Login />} />
-        <Route path="/verify-email" element={<EmailOtpVerify />} />
-        <Route path="/verify-phone" element={<PhoneOtpVerify />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<EmailOtpVerify />} />
+        <Route path="/verify-phone" element={<PhoneOtpVerify />} />
+      </Route>
+
+      {/* 🌐 MAIN WEBSITE */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
 
-        {/* 🔐 PROTECTED */}
+        {/* 🔒 PROTECTED */}
         <Route
           path="/dashboard"
           element={
@@ -41,11 +63,8 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+      </Route>
 
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/orders" element={<Orders />} />
-      </Routes>
-      <Footer/>
-    </BrowserRouter>
+    </Routes>
   );
 }

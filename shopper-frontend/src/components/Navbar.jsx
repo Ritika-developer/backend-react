@@ -1,38 +1,67 @@
-<nav className="navbar navbar-expand-lg bg-maroon sticky-top px-4 ch-navbar">
-  <div className="container-fluid">
+import { NavLink, Link } from "react-router-dom";
+import { useState } from "react";
+import "../styles/navbar.css";
 
-    {/* LEFT LINKS */}
-    <div className="collapse navbar-collapse w-25" id="navMenu">
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link className="nav-link text-white" to="/products">Sarees</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link text-white" to="/collections">Collections</Link>
-        </li>
-      </ul>
-    </div>
+export default function Navbar() {
+  const [open, setOpen] = useState(false);
 
-    {/* CENTER BRAND */}
-    <Link className="navbar-brand mx-auto brand-center text-gold" to="/">
-      👑 CHOUDHRANI
-    </Link>
+  const navClass = ({ isActive }) =>
+    `nav-link ${isActive ? "active" : ""}`;
 
-    {/* RIGHT ICONS */}
-    <div className="d-flex align-items-center gap-4 w-25 justify-content-end">
-      <Link to="/login" className="text-white">Login</Link>
+  return (
+    <nav className="ch-navbar">
+      <div className="container">
 
-      <div className="cart-wrapper">
-        🛒 <span className="cart-count">2</span>
+        {/* LEFT LINKS (DESKTOP) */}
+        <div className="nav-left d-none d-md-flex">
+          <NavLink to="/" className={navClass}>
+            Home
+          </NavLink>
 
-        {/* MINI CART */}
-        <div className="mini-cart">
-          <p>Kanjeevaram Saree</p>
-          <p className="price">₹8,999</p>
-          <button className="btn btn-sm btn-maroon w-100">View Cart</button>
+          <NavLink to="/products" className={navClass}>
+            Products
+          </NavLink>
+        </div>
+
+        {/* LOGO */}
+        <NavLink to="/" className="nav-logo">
+          CHOUDHRANI
+        </NavLink>
+
+        {/* RIGHT LINKS (DESKTOP) */}
+        <div className="nav-right d-none d-md-flex">
+          <NavLink to="/cart" className={navClass}>
+            Cart
+          </NavLink>
+
+          <NavLink to="/login" className={navClass}>
+            Login
+          </NavLink>
+
+          <NavLink to="/register" className={navClass}>
+            Register
+          </NavLink>
+        </div>
+
+        {/* HAMBURGER (MOBILE) */}
+        <div
+          className={`hamburger d-md-none ${open ? "active" : ""}`}
+          onClick={() => setOpen(!open)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
-    </div>
 
-  </div>
-</nav>
+      {/* MOBILE MENU */}
+      <div className={`mobile-menu ${open ? "show" : ""}`}>
+        <Link onClick={() => setOpen(false)} to="/">Home</Link>
+        <Link onClick={() => setOpen(false)} to="/products">Products</Link>
+        <Link onClick={() => setOpen(false)} to="/cart">Cart</Link>
+        <Link onClick={() => setOpen(false)} to="/login">Login</Link>
+        <Link onClick={() => setOpen(false)} to="/register">Register</Link>
+      </div>
+    </nav>
+  );
+}

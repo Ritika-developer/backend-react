@@ -1,17 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Categories from "./components/Categories";
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import AOS from "aos";
+import Home from "../src/pages/Home";
+import Navbar from "../src/components/Navbar";
+export default function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+      easing: "ease-out-cubic",
+      once: true,
+    });
+  }, []);
 
-function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="products" element={<Categories />} />
+    <>
+    <Navbar/>
+    <Routes>
 
-      </Routes>
-    </BrowserRouter>
+      <Route path="/" element={<Home />} />
+      <Route path="/products" element={<div>Products Page</div>} />
+    </Routes>
+    </>
   );
 }
-
-export default App;
