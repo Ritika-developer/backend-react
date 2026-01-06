@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { forgotPassword } from "../services/authServices";
 import "../styles/forgotPassword.css";
-import AuthLayout from "../layouts/AuthLayout";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [info, setInfo] = useState("");
@@ -24,7 +23,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <AuthLayout>
+   
     <div className="forgot-page">
       <div className="forgot-card">
         <h1>CHOUDHRANI</h1>
@@ -44,6 +43,6 @@ export default function ForgotPassword() {
         {info && <p className="info-text">{info}</p>}
       </div>
     </div>
-    </AuthLayout>
+   
   );
 }

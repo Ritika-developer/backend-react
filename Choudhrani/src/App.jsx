@@ -20,10 +20,11 @@ import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 
+
 /* routes */
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-import "./styles/Choudhrani1.css";
+import "./styles/Choudhrani.css";
 
 export default function App() {
   useEffect(() => {

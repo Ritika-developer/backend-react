@@ -1,4 +1,10 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import OfferStrip from "../pages/OfferStrip";
+import Heritage from "./Heritage";
+
+export default function Home() {
+
 
 const items = [
   "Bridal Heritage",
@@ -8,28 +14,70 @@ const items = [
  
 ];
 
-export default function Home() {
+  const slides = [
+    {
+      type: "women",
+      title: "Every Saree Tells Her Story",
+      desc: "Heritage woven with emotion and crafted for timeless grace.",
+      // link: "/products?category=women",
+      link: "/products",
+      className: "slide-women"
+    },
+    {
+      type: "men",
+      title: "Royal Wear for the Modern Maharaja",
+      desc: "Timeless kurtas & sherwanis crafted with power and pride.",
+      link: "/products?category=men",
+      className: "slide-men"
+    }
+  ];
+
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <>
+
+   
 <div className="home-page">
 
-     {/* hero section */}
-      <section className="hero-section">
-  <div className="hero-text" data-aos="fade-up">
-    <h1>Every Saree Tells Her Story</h1>
-    <p>Heritage woven with emotion and crafted for timeless grace.</p>
-    <Link to="/products" className="hero-btn">
-      Explore Collection
-    </Link>
-  </div>
-</section>
+
+        {/* HERO SLIDER */}
+        <section className="hero-section">
+
+          {/* BACKGROUND SLIDES */}
+          {slides.map((slide, index) => (
+            <Link
+              key={index}
+              to={slide.link}
+              className={`hero-slide ${slide.className} ${
+                current === index ? "active" : ""
+              }`}
+            />
+          ))}
+
+          {/* HERO TEXT */}
+          <div className="hero-text" data-aos="fade-up">
+            <h1>{slides[current].title}</h1>
+            <p>{slides[current].desc}</p>
+
+            <Link to={slides[current].link} className="hero-btn">
+              Explore Collection
+            </Link>
+          </div>
+
+        </section>
 
 
-
-
+<Heritage/>
       {/* HERITAGE */}
 
-        <section className="heritage container">
+        {/* <section className="heritage container">
       <div className="row align-items-center">
         <div className="col-md-5" data-aos="fade-right">
           <h2>Our Heritage</h2>
@@ -41,20 +89,63 @@ export default function Home() {
         </div>
         <div className="col-md-7 heritage-img" data-aos="fade-left"></div>
       </div>
-    </section>
+    </section> */}
 
-{/* <section className="heritage">
-  <div className="container section-box">
-    <div className="row align-items-center">
-      <div className="col-md-5">
-        <h2>Our Heritage</h2>
-        <p>CHOUDHRANI celebrates generations...</p>
-        <Link className="small-btn">Explore More</Link>
-      </div>
-      <div className="col-md-7 heritage-img"></div>
+
+
+{/* MEN'S WEAR */}
+<section className="mens-section container">
+  <h2 className="section-title" data-aos="fade-up">Men’s Royal Edit</h2>
+
+  <div className="row g-4 align-items-center">
+    {/* Left Image */}
+    <div className="col-md-6" data-aos="fade-right">
+      <div className="mens-image"></div>
+    </div>
+
+    {/* Right Content */}
+    <div className="col-md-6 mens-text" data-aos="fade-left">
+      <h3>For the Modern Maharaja</h3>
+      <p>
+        Handcrafted kurtas, sherwanis, and festive wear designed
+        for elegance, strength, and timeless Indian royalty.
+      </p>
+      {/* <Link to="/products?category=men" className="hero-btn">
+        Explore Men’s Collection
+      </Link> */}
+       <Link to="/products" className="hero-btn">
+        Explore Men’s Collection
+      </Link>
     </div>
   </div>
-</section> */}
+</section>
+
+{/* WOMEN'S WEAR */}
+<section className="womens-section container">
+  <h2 className="section-title" data-aos="fade-up">Women’s Royal Edit</h2>
+
+  <div className="row g-4 align-items-center">
+
+    {/* Left Content */}
+    <div className="col-md-6 womens-text" data-aos="fade-right">
+      <h3>Elegance Woven in Every Thread</h3>
+      <p>
+        Luxurious sarees and festive wear crafted to celebrate
+        grace, tradition, and the timeless beauty of Indian women.
+      </p>
+      <Link to="/products" className="hero-btn">
+        Explore Women’s Collection
+      </Link>
+    </div>
+
+    {/* Right Image */}
+    <div className="col-md-6" data-aos="fade-left">
+      <div className="womens-image"></div>
+    </div>
+
+  </div>
+</section>
+
 
 
       {/* <Collections /> */}
@@ -73,9 +164,30 @@ export default function Home() {
       </div>
     </section>
 
+<OfferStrip />
+
+{/* MEN PRODUCTS */}
+<section className="products container text-center">
+  <h2 className="section-title" data-aos="fade-up">Men’s New Arrivals</h2>
+
+  <div className="row g-4">
+    {[1,2,3,4].map(i => (
+      <div className="col-md-3" key={i} data-aos="fade-up">
+        <div className="product-card">
+          <div className={`product-img men-${i}`}></div>
+          <h6>Royal Sherwani</h6>
+          <span className="price">₹28,000</span>
+          <button className="add-cart">Add to Cart</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+
 {/* NEW ARRIVALS */}
           <section className="products container text-center">
-      <h2 className="section-title" data-aos="fade-up">New Arrivals</h2>
+      <h2 className="section-title" data-aos="fade-up">Women's New Arrivals</h2>
       <div className="row g-4">
         {[1,2,3,4].map(i => (
           <div className="col-md-3" key={i}  data-aos="fade-up"
@@ -103,7 +215,7 @@ export default function Home() {
   
 
       {/* <Reviews /> */}
-       <section className="stories container">
+       {/* <section className="stories container">
       <h2 className="section-title" data-aos="fade-up">Her Stories</h2>
       <div className="story-box" data-aos="fade-up">
         <div className="story-img"></div>
@@ -113,7 +225,7 @@ export default function Home() {
         </blockquote>
         <button className="small-btn mt-3">View Her Story</button>
       </div>
-    </section>
+    </section> */}
 
 {/*  <Instagram /> */}
  <section className="instagram container">

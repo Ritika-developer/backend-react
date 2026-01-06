@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authServices";
 import GoogleLoginButton from "../components/GoogleLoginButton";
-import AuthLayout from "../layouts/AuthLayout";
 import "../styles/register.css";
 
 export default function Register() {
@@ -42,7 +41,7 @@ export default function Register() {
   };
 
   return (
-    <AuthLayout>
+    <>
       <h1 className="brand animate-brand">CHOUDHRANI</h1>
 
       {/* 🔥 GOOGLE SIGN-IN FIRST */}
@@ -110,6 +109,6 @@ export default function Register() {
         Already have an account?{" "}
         <span onClick={() => navigate("/login")}>Login</span>
       </p>
-    </AuthLayout>
+      </>
   );
 }

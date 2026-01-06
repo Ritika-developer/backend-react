@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../services/authServices";
 import GoogleLoginButton from "../components/GoogleLoginButton";
-import AuthLayout from "../layouts/AuthLayout";
 import "../styles/login.css";
 
 export default function Login() {
@@ -32,7 +31,7 @@ export default function Login() {
   };
 
   return (
-    <AuthLayout>
+    <>
       <h1 className="brand animate-brand">CHOUDHRANI</h1>
       <p className="tagline">Every Saree Tells Her Story</p>
 
@@ -85,6 +84,7 @@ export default function Login() {
           Create Account
         </span>
       </p>
-    </AuthLayout>
+      </>
+    // </AuthLayout>
   );
 }

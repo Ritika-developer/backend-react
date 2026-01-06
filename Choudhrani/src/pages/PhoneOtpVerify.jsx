@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { verifyPhoneOtp } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../layouts/AuthLayout";
 
 export default function PhoneOtpVerify() {
   const [phone, setPhone] = useState("");
@@ -20,12 +19,10 @@ export default function PhoneOtpVerify() {
 
   return (
     <>
-    <AuthLayout>
       <h2>Phone OTP</h2>
       <input placeholder="Phone" onChange={e=>setPhone(e.target.value)} />
       <input placeholder="OTP" onChange={e=>setOtp(e.target.value)} />
       <button onClick={submit}>Verify</button>
-      </AuthLayout>
     </>
   );
 }

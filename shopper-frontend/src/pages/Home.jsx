@@ -39,11 +39,8 @@ export default function Home() {
 
   return (
     <>
-       <OfferStrip />
+       
       <div className="home-page">
-
-
-
 
 
         {/* HERO SLIDER */}
@@ -61,7 +58,7 @@ export default function Home() {
           ))}
 
           {/* HERO TEXT */}
-          <div className="hero-text">
+          <div className="hero-text" data-aos="fade-up">
             <h1>{slides[current].title}</h1>
             <p>{slides[current].desc}</p>
 
@@ -143,7 +140,7 @@ export default function Home() {
         ))}
       </div>
     </section>
-
+<OfferStrip />
 
 {/* MEN PRODUCTS */}
 <section className="products container text-center">

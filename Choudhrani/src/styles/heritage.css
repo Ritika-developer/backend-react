@@ -1,0 +1,134 @@
+/* =================================================
+   HERITAGE SECTION – ROYAL AESTHETIC
+================================================= */
+
+.heritage-section {
+  background: linear-gradient(135deg, #fbf4eb, #f2e6d6);
+  padding: 130px 0;
+  position: relative;
+}
+
+/* ===== CONTENT AREA ===== */
+.heritage-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== HEADING ===== */
+.heritage-heading {
+  font-family: "Playfair Display", serif;
+  font-size: 38px;
+  font-weight: 700;
+  margin-bottom: 6px;
+
+  background: linear-gradient(
+    180deg,
+    #c9a227 0%,
+    #f0c96b 30%,
+    #d8a23a 60%,
+    #8d5f16 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== DIVIDER ===== */
+.heritage-divider {
+  width: 120px;
+  height: 2px;
+  background: #d4af37;      /* royal gold */
+  margin-bottom: 10px;
+}
+
+/* ===== PARAGRAPH ===== */
+.heritage-text {
+  font-size: 15px;
+  line-height: 2;
+  color: #3a1f1f;
+  max-width: 460px;
+}
+
+/* ===== QUOTE ===== */
+.heritage-quote {
+  font-style: italic;
+  font-size: 16px;
+  color: #6b1a24;
+  border-left: 3px solid #d4af37;
+  padding-left: 14px;
+  margin: 12px 0;
+}
+
+/* ===== BUTTON ===== */
+.heritage-btn {
+  background: #6b1a24;
+  color: #fff;
+  padding: 10px 32px;
+  border-radius: 30px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: fit-content;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.heritage-btn:hover {
+  background: #8b2230;
+  transform: translateY(-2px);
+}
+
+/* ===== IMAGE WRAPPER ===== */
+.heritage-img-wrapper {
+  padding: 12px;
+  border: 2px solid #d4af37;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* ===== IMAGE ===== */
+.heritage-img {
+  height: 360px;
+  background:
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767353076/our-heritage_ruef7t.png")
+    center / cover no-repeat;
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Subtle overlay for royal depth */
+.heritage-img::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(107,26,36,0.12);
+  border-radius:12px;
+}
+
+/* ===== BLOCKQUOTE ===== */
+.heritage-quote {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width:768px){
+
+  .heritage-section{
+    padding: 100px 0;
+  }
+
+  .heritage-heading{
+    font-size: 30px;
+  }
+
+  .heritage-img{
+    height: 260px;
+  }
+
+  .heritage-text{
+    max-width: 100%;
+  }
+
+}

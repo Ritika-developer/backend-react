@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { verifyEmailOtp } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../layouts/AuthLayout";
 
 export default function EmailOtpVerify() {
   const [email, setEmail] = useState("");
@@ -20,12 +19,10 @@ export default function EmailOtpVerify() {
 
   return (
     <>
-     <AuthLayout>
       <h2>Email OTP</h2>
       <input placeholder="Email" onChange={e=>setEmail(e.target.value)} />
       <input placeholder="OTP" onChange={e=>setOtp(e.target.value)} />
       <button onClick={submit}>Verify</button>
-      </AuthLayout>
     </>
   );
 }

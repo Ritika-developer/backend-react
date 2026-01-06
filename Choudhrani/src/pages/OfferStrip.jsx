@@ -1,4 +1,4 @@
-import "../offerStrip.css";
+import "../styles/OfferStrip.css";
 
 export default function OfferSection() {
   return (

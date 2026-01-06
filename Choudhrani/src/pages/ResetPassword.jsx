@@ -1,7 +1,6 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { resetPassword } from "../services/authServices";
-import AuthLayout from "../layouts/AuthLayout";
 
 export default function ResetPassword() {
 
@@ -46,7 +45,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <AuthLayout>
+   <>
       <h2>Reset Password</h2>
 
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -60,6 +59,6 @@ export default function ResetPassword() {
       <button onClick={submit} disabled={!token}>
         Reset
       </button>
-    </AuthLayout>
+ </>
   );
 }
