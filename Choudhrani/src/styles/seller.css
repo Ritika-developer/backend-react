@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap");
+
+body {
+  background: #fbf8f3;
+  font-family: "Poppins", sans-serif;
+  color: #3a1f1f;
+}
+
+.sidebar {
+  background: #f5e6c8;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.sidebar h4 {
+  font-family: "Cinzel", serif;
+  color: #6b1a24;
+  text-align: center;
+}
+
+.sidebar .step {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sidebar .step.active {
+  background: #6b1a24;
+  color: white;
+}
+
+.content-area {
+  padding: 20px;
+}

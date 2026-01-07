@@ -1,0 +1,114 @@
+/* ===============================
+   CHOUDHRANI SELLER PANEL THEME
+================================ */
+
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap");
+
+/* Layout Wrapper */
+.seller-panel {
+  display: flex;
+  min-height: 100vh;
+  background-color: #fbf8f3;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background-color: #6b1a24;
+  color: white;
+  padding: 25px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #b68d40;
+  padding-bottom: 12px;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.sidebar-menu li {
+  padding: 12px 15px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Hover Effect */
+.sidebar-menu li:hover {
+  background-color: #f5e6c8;
+  color: #6b1a24;
+  font-weight: 600;
+}
+
+/* Active Step Highlight */
+.sidebar-menu li.active {
+  background-color: white;
+  color: #6b1a24;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding: 30px 35px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Content Card Container */
+.create-product-container {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Headers */
+.main-content h1,
+.main-content h2,
+.main-content h3 {
+  font-family: "Playfair Display", serif;
+  color: #6b1a24;
+  letter-spacing: 1px;
+}
+
+/* Buttons */
+.btn-sm {
+  background-color: #6b1a24;
+  color: white;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 30px;
+  font-size: 13px;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.btn-sm:hover {
+  background-color: #b68d40;
+  color: white;
+}
+
+/* Cards inside steps */
+.card {
+  border-radius: 18px;
+  border: 1px solid #ead7b3;
+}

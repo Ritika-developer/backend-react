@@ -24,7 +24,7 @@ import Dashboard from "./pages/Dashboard";
 /* routes */
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-import "./styles/Choudhrani.css";
+import SellerPanel from "./pages/sellerPanel";
 
 export default function App() {
   useEffect(() => {
@@ -35,6 +35,7 @@ export default function App() {
   }, []);
 
   return (
+    <>
     <Routes>
 
       {/* 🔐 AUTH PAGES */}
@@ -64,8 +65,12 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-      </Route>
+</Route>
 
+
+    
+<Route path="/seller-product-create" element={<SellerPanel />} />
     </Routes>
+    </>
   );
 }
