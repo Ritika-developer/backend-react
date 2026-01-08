@@ -1,17 +1,41 @@
-import React, { useState } from "react";
-import "../../styles/seller.css";
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  Divider
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import axios from "axios";
+import { useProduct } from "../../services/ProductContext";
 
 export default function ProductSpecificationStep({ onNext }) {
+  const { productState } = useProduct();
+  const productId = productState.productId;
 
   const [specs, setSpecs] = useState([
     { specKey: "", specValue: "" }
   ]);
 
-  const productId = localStorage.getItem("currentProductId");
-
-  const addRow = () => {
-    setSpecs([...specs, { specKey: "", specValue: "" }]);
-  };
+  // 🔹 Load existing specifications (edit mode)
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:8080/auth/products/${productId}/specifications`
+      )
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setSpecs(
+            res.data.map(s => ({
+              specKey: s.specKey,
+              specValue: s.specValue
+            }))
+          );
+        }
+      });
+  }, [productId]);
 
   const handleChange = (index, field, value) => {
     const updated = [...specs];
@@ -19,60 +43,88 @@ export default function ProductSpecificationStep({ onNext }) {
     setSpecs(updated);
   };
 
+  const addSpec = () => {
+    setSpecs([...specs, { specKey: "", specValue: "" }]);
+  };
+
+  const removeSpec = index => {
+    setSpecs(specs.filter((_, i) => i !== index));
+  };
+
   const saveSpecs = async () => {
+    const validSpecs = specs.filter(
+      s => s.specKey.trim() && s.specValue.trim()
+    );
 
-    const token = localStorage.getItem("token");
+    if (validSpecs.length === 0) {
+      alert("Add at least one specification");
+      return;
+    }
 
-    await fetch(`http://localhost:8080/auth/products/${productId}/specifications/bulk`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(specs)
-    });
+    await axios.post(
+      `http://localhost:8080/auth/products/${productId}/specifications/bulk`,
+      validSpecs
+    );
 
+    alert("Specifications saved");
     onNext();
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center mb-3">Step 7 – Product Specifications</h2>
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        Product Specifications
+      </Typography>
 
-      <div className="card p-4 mx-auto" style={{ maxWidth: "800px" }}>
+      {specs.map((spec, index) => (
+        <Box
+          key={index}
+          sx={{
+            display: "flex",
+            gap: 2,
+            mb: 2,
+            alignItems: "center"
+          }}
+        >
+          <TextField
+            label="Specification Name"
+            value={spec.specKey}
+            onChange={e =>
+              handleChange(index, "specKey", e.target.value)
+            }
+            fullWidth
+          />
 
-        {specs.map((row, i) => (
-          <div className="row mb-2" key={i}>
-            <div className="col-md-5">
-              <input
-                className="form-control"
-                placeholder="Specification Key"
-                onChange={(e) => handleChange(i, "specKey", e.target.value)}
-              />
-            </div>
+          <TextField
+            label="Specification Value"
+            value={spec.specValue}
+            onChange={e =>
+              handleChange(index, "specValue", e.target.value)
+            }
+            fullWidth
+          />
 
-            <div className="col-md-5">
-              <input
-                className="form-control"
-                placeholder="Specification Value"
-                onChange={(e) => handleChange(i, "specValue", e.target.value)}
-              />
-            </div>
-          </div>
-        ))}
+          <IconButton
+            color="error"
+            onClick={() => removeSpec(index)}
+            disabled={specs.length === 1}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      ))}
 
-        <button onClick={addRow} className="btn btn-sm mt-2 mb-3">
-          + Add More
-        </button>
+      <Button variant="outlined" onClick={addSpec}>
+        Add Specification
+      </Button>
 
-        <div className="text-center">
-          <button onClick={saveSpecs} className="btn btn-sm">
-            Save Specs & Next
-          </button>
-        </div>
+      <Divider sx={{ my: 4 }} />
 
-      </div>
-
-    </div>
+      <Box textAlign="right">
+        <Button variant="contained" onClick={saveSpecs}>
+          Save & Continue
+        </Button>
+      </Box>
+    </Box>
   );
 }

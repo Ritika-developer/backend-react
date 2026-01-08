@@ -1,114 +1,102 @@
-import React, { useState, useEffect } from "react";
-import axiosInstance from "../../utils/axiosInstance";
-import "../../styles/seller.css";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Button
+} from "@mui/material";
+import axios from "axios";
+import { useProduct } from "../../services/ProductContext";
 
 export default function BrandStep({ onNext }) {
 
-  const [brandName, setBrandName] = useState("");
-  const [subBrand, setSubBrand] = useState("");
+  const { productState, setProductState } = useProduct();
 
-  const [existingBrands, setExistingBrands] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [selectedBrand, setSelectedBrand] = useState(null);
 
-  const [loading, setLoading] = useState(true);
-
-  // Load existing brands from backend
+  // 🔹 fetch brands on load (same as image)
   useEffect(() => {
-
-    const loadBrands = async () => {
-
-      try {
-        const res = await axiosInstance.get("/auth/brands");
-        setExistingBrands(res.data);
-      } catch (err) {
-        alert("Failed to load brands from backend");
-      } finally {
-        setLoading(false);
-      }
-
-    };
-
-    loadBrands();
-
+    fetchBrands();
   }, []);
 
-  const handleNext = async () => {
+  const fetchBrands = async () => {
+    const res = await axios.get(
+      "http://localhost:8080/auth/brands"
+    );
+    setBrands(res.data);
+  };
 
-    if (!brandName) {
-      alert("Please enter Brand Name");
+  // 🔹 confirm brand (same logic as image)
+  const handleConfirm = () => {
+    if (!selectedBrand) {
+      alert("Please select a brand");
       return;
     }
 
-    try {
+    setProductState({
+      ...productState,
+      brandId: selectedBrand.id
+    });
 
-      const payload = [
-        {
-          name: brandName,
-          subBrand: subBrand
-        }
-      ];
-
-      // call backend bulk create API
-      await axiosInstance.post("/auth/brands/bulk", payload);
-
-      localStorage.setItem("brandName", brandName);
-      localStorage.setItem("subBrand", subBrand);
-
-      alert("Brand information saved successfully");
-
-      onNext();
-
-    } catch (err) {
-      alert("Error while saving brand data to backend");
-    }
-
+    onNext();
+    alert("Brand selected successfully");
   };
 
-  if (loading) return <p className="text-center">Loading Brands...</p>;
-
   return (
-    <div className="seller-panel-wrapper p-4">
+    <Box>
 
-      <h2 className="seller-heading text-center">
-        Add New Product – Brand Information
-      </h2>
+      <Typography variant="h5" gutterBottom>
+        Select Brand
+      </Typography>
 
-      <div className="card seller-card p-4 mx-auto" style={{ maxWidth: "600px" }}>
+      <Grid container spacing={2}>
+        {brands.map((brand) => (
+          <Grid item xs={12} md={4} key={brand.id}>
+            <Card
+              onClick={() => setSelectedBrand(brand)}
+              sx={{
+                cursor: "pointer",
+                border:
+                  selectedBrand?.id === brand.id
+                    ? "2px solid #1976d2"
+                    : "1px solid #ddd"
+              }}
+            >
+              <CardMedia
+                component="img"
+                height="120"
+                image={brand.logoUrl}
+                alt={brand.name}
+                sx={{ objectFit: "contain", p: 2 }}
+              />
 
-        <input
-          className="form-control mb-3"
-          placeholder="Brand Name"
-          value={brandName}
-          onChange={(e) => setBrandName(e.target.value)}
-        />
+              <CardContent>
+                <Typography
+                  align="center"
+                  fontWeight="bold"
+                >
+                  {brand.name}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-        <input
-          className="form-control mb-3"
-          placeholder="Sub Brand"
-          value={subBrand}
-          onChange={(e) => setSubBrand(e.target.value)}
-        />
+      {/* 🔒 CONFIRM BRAND – DO NOT CHANGE (IMAGE SAME) */}
+      <Box sx={{ mt: 4 }}>
+        <Button
+          variant="contained"
+          onClick={handleConfirm}
+        >
+          Confirm Brand
+        </Button>
+      </Box>
 
-        <h5 className="mt-3">Existing Brands in System:</h5>
-
-        {existingBrands.length === 0 ? (
-          <p>No brands available</p>
-        ) : (
-          <ul className="brand-list">
-            {existingBrands.map((b) => (
-              <li key={b.id}>{b.name} – {b.subBrand}</li>
-            ))}
-          </ul>
-        )}
-
-        <div className="text-center mt-3">
-          <button onClick={handleNext} className="btn btn-sm">
-            Next
-          </button>
-        </div>
-
-      </div>
-
-    </div>
+    </Box>
   );
-
 }

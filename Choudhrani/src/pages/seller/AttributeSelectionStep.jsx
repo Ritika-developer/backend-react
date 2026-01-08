@@ -1,73 +1,103 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Button
+} from "@mui/material";
+
 import axiosInstance from "../../utils/axiosInstance";
+import { useProduct } from "../../services/ProductContext";
 
 export default function AttributeSelectionStep({ onNext }) {
 
+  const { productState } = useProduct(); // productId yahin se aayega
+
   const [attributes, setAttributes] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState([]);
 
+  /* ---------------- FETCH ATTRIBUTES ---------------- */
   useEffect(() => {
-
-    const load = async () => {
-
-      try {
-        // CORRECT BACKEND URL
-        const res = await axiosInstance.get("/auth/attributes");
-        setAttributes(res.data);
-      } catch (err) {
-        alert("Failed to load attributes from backend");
-      } finally {
-        setLoading(false);
-      }
-
-    };
-
-    load();
-
+    fetchAttributes();
   }, []);
 
-  const assignAll = async () => {
-
+  const fetchAttributes = async () => {
     try {
-
-      const ids = attributes.map(a => a.id);
-
-      const productId = localStorage.getItem("currentProductId");
-
-      if (!productId) {
-        alert("Product ID not found in localStorage");
-        return;
-      }
-
-      // ASSIGNED ENDPOINT – assuming this API exists in your backend
-      await axiosInstance.post(`/auth/products/${productId}/attributes`, {
-        attributeIds: ids
-      });
-
-      alert("Attributes assigned successfully");
-
-      onNext();
-
+      const res = await axiosInstance.get("/auth/attributes");
+      setAttributes(res.data);
     } catch (err) {
-      alert("Error assigning attributes to product");
+         console.error("Load attributes error:", err.response?.status);
+      alert("Failed to load attributes");
     }
-
   };
 
-  if (loading) return <p className="text-center">Loading Attributes...</p>;
+  /* ---------------- TOGGLE ---------------- */
+  const toggleAttribute = (id) => {
+    setSelected((prev) =>
+      prev.includes(id)
+        ? prev.filter((x) => x !== id)
+        : [...prev, id]
+    );
+  };
+
+  /* ---------------- SAVE ---------------- */
+  const handleSave = async () => {
+    if (selected.length === 0) {
+      alert("Select at least one attribute");
+      return;
+    }
+
+    if (!productState.productId) {
+      alert("Product ID not found");
+      return;
+    }
+
+    try {
+      await axiosInstance.post(
+        `/auth/products/${productState.productId}/attributes`,
+        {
+       attributeIds: selected   // 👈 backend expects List<Long>
+        }
+      );
+
+      onNext();
+    } catch (err) {
+      console.error("Assign attribute error:", err.response?.data);
+      console.error("Status:", err.response?.status);
+      alert("Failed to assign attribute");
+    }
+  };
 
   return (
-    <div className="card p-4 mx-auto text-center" style={{ maxWidth: "700px" }}>
+    <Box>
 
-      <h3>Step 4 – Attribute Selection</h3>
+      <Typography variant="h5" gutterBottom>
+        Select Attributes
+      </Typography>
 
-      <p>Total Available Attributes: {attributes.length}</p>
+      <FormGroup>
+        {attributes.map((attr) => (
+          <FormControlLabel
+            key={attr.id}
+            control={
+              <Checkbox
+                checked={selected.includes(attr.id)}
+                onChange={() => toggleAttribute(attr.id)}
+              />
+            }
+            label={attr.name}
+          />
+        ))}
+      </FormGroup>
 
-      <button onClick={assignAll} className="btn btn-sm">
-        Assign All & Next
-      </button>
+      <Box sx={{ mt: 4 }}>
+        <Button variant="contained" onClick={handleSave}>
+          Save & Continue
+        </Button>
+      </Box>
 
-    </div>
+    </Box>
   );
-
 }

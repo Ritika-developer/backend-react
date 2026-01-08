@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import axiosInstance from "../../utils/axiosInstance";
-import "../../styles/seller.css";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography
+} from "@mui/material";
+import axios from "axios";
+import { useProduct } from "../../services/ProductContext";
 
 export default function ProductInfoStep({ onNext }) {
+
+  const { productState, setProductState } = useProduct();
 
   const [form, setForm] = useState({
     name: "",
     slug: "",
-    description: "",
-    categoryId: "",
-    brandId: ""
+    description: ""
   });
 
+  // 🔹 handle input change
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -19,91 +26,84 @@ export default function ProductInfoStep({ onNext }) {
     });
   };
 
-  const saveProduct = async () => {
+  // 🔹 submit product info
+  const handleSubmit = async () => {
 
-    if (!form.name || !form.categoryId) {
-      alert("Please fill required fields: Product Name and Category ID");
+    if (!form.name || !form.slug || !form.description) {
+      alert("All fields are required");
       return;
     }
 
     try {
+      const res = await axios.post(
+        "http://localhost:8080/auth/products",
+        {
+          name: form.name,
+          slug: form.slug,
+          description: form.description,
+          categoryId: productState.categoryId,
+          brandId: productState.brandId
+        }
+      );
 
-      const payload = {
-        name: form.name,
-        slug: form.slug || form.name.toLowerCase().replace(/\s+/g, "-"),
-        description: form.description,
-        categoryId: Number(form.categoryId),
-        brandId: Number(form.brandId)
-      };
+      // 🔹 save productId + slug for next steps
+      setProductState({
+        ...productState,
+        productId: res.data.id,
+        slug: res.data.slug
+      });
 
-      const res = await axiosInstance.post("/seller/products", payload);
-
-      localStorage.setItem("currentProductId", res.data.id);
-
-      onNext();
-
+      onNext(); // go to next step
     } catch (err) {
-      console.log(err);
-      alert("Failed to save product. Please check backend API.");
+      alert("Product creation failed");
     }
-
   };
 
   return (
-    <div className="seller-panel-wrapper p-4">
+    <Box>
 
-      <h2 className="seller-heading text-center">
-        Step 3 – Add New Product Information
-      </h2>
+      <Typography variant="h5" gutterBottom>
+        Product Information
+      </Typography>
 
-      <div
-        className="card seller-card p-4 mx-auto"
-        style={{ maxWidth: "700px" }}
+      <TextField
+        label="Product Name"
+        name="name"
+        value={form.name}
+        onChange={handleChange}
+        fullWidth
+        sx={{ mb: 3 }}
+      />
+
+      <TextField
+        label="Slug (URL-friendly)"
+        name="slug"
+        value={form.slug}
+        onChange={handleChange}
+        helperText="URL friendly name (e.g. samsung-led-tv)"
+        fullWidth
+        sx={{ mb: 3 }}
+      />
+
+      <TextField
+        label="Product Description"
+        name="description"
+        value={form.description}
+        onChange={handleChange}
+        multiline
+        rows={4}
+        fullWidth
+        sx={{ mb: 4 }}
+      />
+
+      {/* 🔒 SAME AS IMAGE */}
+      <Button
+        variant="contained"
+        onClick={handleSubmit}
       >
+        Save & Continue
+      </Button>
 
-        <input
-          name="name"
-          onChange={handleChange}
-          className="form-control mb-3"
-          placeholder="Product Name"
-        />
-
-        <input
-          name="slug"
-          onChange={handleChange}
-          className="form-control mb-3"
-          placeholder="Slug (optional)"
-        />
-
-        <textarea
-          name="description"
-          onChange={handleChange}
-          className="form-control mb-3"
-          placeholder="Description"
-        ></textarea>
-
-        <input
-          name="categoryId"
-          onChange={handleChange}
-          className="form-control mb-3"
-          placeholder="Category ID"
-        />
-
-        <input
-          name="brandId"
-          onChange={handleChange}
-          className="form-control mb-3"
-          placeholder="Brand ID"
-        />
-
-        <div className="text-center">
-          <button onClick={saveProduct} className="btn btn-sm">
-            Save & Next
-          </button>
-        </div>
-
-      </div>
-
-    </div>
+    </Box>
   );
 }

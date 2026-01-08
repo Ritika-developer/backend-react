@@ -1,78 +1,236 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  MenuItem,
+  Divider
+} from "@mui/material";
+import axios from "axios";
+import { useProduct } from "../../services/ProductContext";
 
 export default function VariantPricingStep({ onNext }) {
+  const { productState } = useProduct();
 
-  const [pricing, setPricing] = useState({
+  // 🔹 variants list from context
+  const variants = productState.variants || [];
+
+  // 🔹 selected variant
+  const [variantId, setVariantId] = useState("");
+
+  // 🔹 price form
+  const [priceForm, setPriceForm] = useState({
     mrp: "",
-    sellingPrice: "",
+    sellingPrice: ""
+  });
+
+  // 🔹 discount form
+  const [discountForm, setDiscountForm] = useState({
     discountType: "PERCENT",
     discountValue: ""
   });
 
-  const [finalPrice, setFinalPrice] = useState(0);
+  // 🔹 pricing preview
+  const [pricingPreview, setPricingPreview] = useState(null);
 
-  const handleChange = (e) => {
-    setPricing({
-      ...pricing,
-      [e.target.name]: e.target.value
-    });
+  // 🔹 load pricing when variant changes
+  useEffect(() => {
+    if (!variantId) return;
+
+    loadPricing();
+  }, [variantId]);
+
+  const loadPricing = async () => {
+    const res = await axios.get(
+      `http://localhost:8080/auth/variants/${variantId}/pricing`
+    );
+
+    setPricingPreview(res.data);
+
+    if (res.data) {
+      setPriceForm({
+        mrp: res.data.mrp || "",
+        sellingPrice: res.data.sellingPrice || ""
+      });
+
+      setDiscountForm(prev => ({
+        ...prev,
+        discountValue: res.data.discount || ""
+      }));
+    }
   };
 
-  useEffect(() => {
+  // 🔹 save price
+  const savePrice = async () => {
+    if (!variantId) return;
 
-    let discount = 0;
+    await axios.post(
+      `http://localhost:8080/auth/variants/${variantId}/pricing/price`,
+      {
+        mrp: Number(priceForm.mrp),
+        sellingPrice: Number(priceForm.sellingPrice)
+      }
+    );
 
-    if (pricing.discountType === "PERCENT") {
-      discount = (pricing.mrp * pricing.discountValue) / 100;
-    } else if (pricing.discountType === "FLAT") {
-      discount = pricing.discountValue;
-    }
+    loadPricing();
+  };
 
-    setFinalPrice(pricing.sellingPrice - discount);
+  // 🔹 apply discount
+  const saveDiscount = async () => {
+    if (!variantId) return;
 
-  }, [pricing]);
+    await axios.post(
+      `http://localhost:8080/auth/variants/${variantId}/pricing/discount`,
+      {
+        discountType: discountForm.discountType,
+        discountValue: Number(discountForm.discountValue)
+      }
+    );
 
-  const applyPricing = async () => {
-
-    const variantId = localStorage.getItem("currentVariantId");
-    const token = localStorage.getItem("token");
-
-    await fetch(`http://localhost:8080/auth/variants/${variantId}/pricing`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify({
-        mrp: Number(pricing.mrp),
-        sellingPrice: Number(pricing.sellingPrice)
-      })
-    });
-
-    onNext();
+    loadPricing();
   };
 
   return (
-    <div className="card p-4 mx-auto text-center" style={{ maxWidth: "700px" }}>
-      <h3>Step 5 – Pricing Step</h3>
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        Variant Pricing & Discount
+      </Typography>
 
-      <input name="mrp" onChange={handleChange} className="form-control mb-3" placeholder="MRP" />
+      {/* 🔹 SELECT VARIANT */}
+      <TextField
+        select
+        label="Select Variant"
+        value={variantId}
+        onChange={e => setVariantId(e.target.value)}
+        fullWidth
+        sx={{ mb: 3 }}
+      >
+        {variants.map(v => (
+          <MenuItem key={v.id} value={v.id}>
+            {v.sku}
+          </MenuItem>
+        ))}
+      </TextField>
 
-      <input name="sellingPrice" onChange={handleChange} className="form-control mb-3" placeholder="Selling Price" />
+      {!variantId && (
+        <Typography color="text.secondary">
+          Please select a variant to set pricing
+        </Typography>
+      )}
 
-      <select name="discountType" onChange={handleChange} className="form-select mb-3">
-        <option value="PERCENT">Percent</option>
-        <option value="FLAT">Flat</option>
-      </select>
+      {variantId && (
+        <>
+          {/* 🔹 PRICE SECTION */}
+          <Typography fontWeight="bold" sx={{ mt: 2 }}>
+            Base Pricing
+          </Typography>
 
-      <input name="discountValue" onChange={handleChange} className="form-control mb-3" placeholder="Discount Value" />
+          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <TextField
+              label="MRP"
+              value={priceForm.mrp}
+              onChange={e =>
+                setPriceForm({ ...priceForm, mrp: e.target.value })
+              }
+              fullWidth
+            />
 
-      <h4>Final Selling Price: ₹{finalPrice}</h4>
+            <TextField
+              label="Selling Price"
+              value={priceForm.sellingPrice}
+              onChange={e =>
+                setPriceForm({
+                  ...priceForm,
+                  sellingPrice: e.target.value
+                })
+              }
+              fullWidth
+            />
+          </Box>
 
-      <button onClick={applyPricing} className="btn btn-sm mt-3">
-        Apply & Next
-      </button>
+          <Button
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={savePrice}
+          >
+            Save Price
+          </Button>
 
-    </div>
+          <Divider sx={{ my: 4 }} />
+
+          {/* 🔹 DISCOUNT SECTION */}
+          <Typography fontWeight="bold">
+            Discount
+          </Typography>
+
+          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+            <TextField
+              select
+              label="Discount Type"
+              value={discountForm.discountType}
+              onChange={e =>
+                setDiscountForm({
+                  ...discountForm,
+                  discountType: e.target.value
+                })
+              }
+              fullWidth
+            >
+              <MenuItem value="PERCENT">Percentage (%)</MenuItem>
+              <MenuItem value="FLAT">Flat (₹)</MenuItem>
+            </TextField>
+
+            <TextField
+              label="Discount Value"
+              value={discountForm.discountValue}
+              onChange={e =>
+                setDiscountForm({
+                  ...discountForm,
+                  discountValue: e.target.value
+                })
+              }
+              fullWidth
+            />
+          </Box>
+
+          <Button
+            variant="contained"
+            sx={{ mt: 2 }}
+            onClick={saveDiscount}
+          >
+            Apply Discount
+          </Button>
+
+          {/* 🔹 PREVIEW */}
+          {pricingPreview && (
+            <Box sx={{ mt: 4 }}>
+              <Typography variant="h6">
+                Pricing Preview
+              </Typography>
+
+              <Typography>MRP: ₹{pricingPreview.mrp}</Typography>
+              <Typography>
+                Selling Price: ₹{pricingPreview.sellingPrice}
+              </Typography>
+              <Typography>
+                Discount: ₹{pricingPreview.discount}
+              </Typography>
+
+              <Typography fontWeight="bold">
+                Final Price: ₹{pricingPreview.finalPrice}
+              </Typography>
+            </Box>
+          )}
+
+          {/* 🔹 CONTINUE */}
+          <Box sx={{ mt: 4 }}>
+            <Button variant="outlined" onClick={onNext}>
+              Continue
+            </Button>
+          </Box>
+        </>
+      )}
+    </Box>
   );
 }

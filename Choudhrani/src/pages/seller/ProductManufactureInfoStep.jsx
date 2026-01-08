@@ -1,45 +1,93 @@
-import React, { useState } from "react";
-import "../../styles/seller.css";
+import { useEffect, useState } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button
+} from "@mui/material";
+import axios from "axios";
+import { useProduct } from "../../services/ProductContext";
 
-export default function ProductManufacturerInfoStep({ onNext }) {
+export default function ProductManufacturer({ onNext }) {
+
+  const { productState } = useProduct();
+  const productId = productState.productId;
 
   const [content, setContent] = useState("");
-  const productId = localStorage.getItem("currentProductId");
+  const [loading, setLoading] = useState(false);
 
-  const save = async () => {
+  // 🔁 Load existing manufacturer info (EDIT MODE)
+  useEffect(() => {
+    if (!productId) return;
 
-    const token = localStorage.getItem("token");
+    axios
+      .get(`http://localhost:8080/auth/products/${productId}/manufacturer`)
+      .then(res => {
+        if (res.data?.content) {
+          setContent(res.data.content);
+        }
+      })
+      .catch(() => {});
+  }, [productId]);
 
-    await fetch(`http://localhost:8080/auth/products/${productId}/manufacturer`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
-      body: JSON.stringify(content)
-    });
+  // 💾 Save manufacturer info
+  const saveManufacturerInfo = async () => {
+    if (!content.trim()) {
+      alert("Manufacturer description cannot be empty");
+      return;
+    }
 
+    setLoading(true);
+
+    await axios.post(
+      `http://localhost:8080/auth/products/${productId}/manufacturer`,
+      content,
+      {
+        headers: {
+          "Content-Type": "text/plain"
+        }
+      }
+    );
+
+    setLoading(false);
+    alert("Manufacturer info saved");
     onNext();
   };
 
   return (
-    <div className="container text-center">
-      <h2 className="mb-3">Step 8 – Manufacturer Info</h2>
+    <Box>
+      <Typography variant="h5" gutterBottom>
+        From the Manufacturer
+      </Typography>
 
-      <div className="card p-4 mx-auto" style={{ maxWidth: "700px" }}>
+      <Typography
+        color="text.secondary"
+        sx={{ mb: 2 }}
+      >
+        Add brand description, product story, or detailed explanation
+        shown on the product page.
+      </Typography>
 
-        <textarea
-          className="form-control mb-3"
-          placeholder="From the Manufacturer Content"
-          onChange={(e) => setContent(e.target.value)}
-        ></textarea>
+      <TextField
+        multiline
+        rows={10}
+        fullWidth
+        placeholder={`Example:
+Xiaomi blends an immersive viewing experience with a bezel-less design,
+powerful speakers, and smart Android TV features for the whole family.`}
+        value={content}
+        onChange={e => setContent(e.target.value)}
+      />
 
-        <button onClick={save} className="btn btn-sm">
-          Save & Next
-        </button>
-
-      </div>
-
-    </div>
+      <Box sx={{ mt: 3, textAlign: "right" }}>
+        <Button
+          variant="contained"
+          onClick={saveManufacturerInfo}
+          disabled={loading}
+        >
+          Save & Continue →
+        </Button>
+      </Box>
+    </Box>
   );
 }
