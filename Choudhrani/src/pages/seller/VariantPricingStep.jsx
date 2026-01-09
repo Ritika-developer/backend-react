@@ -7,43 +7,48 @@ import {
   MenuItem,
   Divider
 } from "@mui/material";
-import axios from "axios";
 import { useProduct } from "../../services/ProductContext";
+import axiosInstance from "../../utils/axiosInstance";
+import "../../styles/VariantPricing.css"
 
 export default function VariantPricingStep({ onNext }) {
   const { productState } = useProduct();
+  const productId = productState.productId;
 
-  // 🔹 variants list from context
-  const variants = productState.variants || [];
-
-  // 🔹 selected variant
+  const [variants, setVariants] = useState([]);   // ✅ LOCAL STATE
   const [variantId, setVariantId] = useState("");
 
-  // 🔹 price form
   const [priceForm, setPriceForm] = useState({
     mrp: "",
     sellingPrice: ""
   });
 
-  // 🔹 discount form
   const [discountForm, setDiscountForm] = useState({
     discountType: "PERCENT",
     discountValue: ""
   });
 
-  // 🔹 pricing preview
   const [pricingPreview, setPricingPreview] = useState(null);
 
-  // 🔹 load pricing when variant changes
+  /* 🔹 LOAD VARIANTS FROM BACKEND (MAIN FIX) */
+  useEffect(() => {
+    if (!productId) return;
+
+    axiosInstance
+      .get(`/auth/products/${productId}/variants`)
+      .then(res => setVariants(res.data))
+      .catch(() => alert("Failed to load variants"));
+  }, [productId]);
+
+  /* 🔹 LOAD PRICING */
   useEffect(() => {
     if (!variantId) return;
-
     loadPricing();
   }, [variantId]);
 
   const loadPricing = async () => {
-    const res = await axios.get(
-      `http://localhost:8080/auth/variants/${variantId}/pricing`
+    const res = await axiosInstance.get(
+      `/auth/variants/${variantId}/pricing`
     );
 
     setPricingPreview(res.data);
@@ -61,45 +66,38 @@ export default function VariantPricingStep({ onNext }) {
     }
   };
 
-  // 🔹 save price
   const savePrice = async () => {
-    if (!variantId) return;
-
-    await axios.post(
-      `http://localhost:8080/auth/variants/${variantId}/pricing/price`,
+    await axiosInstance.post(
+      `/auth/variants/${variantId}/pricing/price`,
       {
         mrp: Number(priceForm.mrp),
         sellingPrice: Number(priceForm.sellingPrice)
       }
     );
-
     loadPricing();
   };
 
-  // 🔹 apply discount
   const saveDiscount = async () => {
-    if (!variantId) return;
-
-    await axios.post(
-      `http://localhost:8080/auth/variants/${variantId}/pricing/discount`,
+    await axiosInstance.post(
+      `/auth/variants/${variantId}/pricing/discount`,
       {
         discountType: discountForm.discountType,
         discountValue: Number(discountForm.discountValue)
       }
     );
-
     loadPricing();
   };
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
+    <Box className="pricing-container">
+      <Typography variant="h5" className="pricing-title" gutterBottom>
         Variant Pricing & Discount
       </Typography>
 
-      {/* 🔹 SELECT VARIANT */}
+      {/* ✅ VARIANT DROPDOWN NOW WORKS */}
       <TextField
         select
+        className="variant-select"
         label="Select Variant"
         value={variantId}
         onChange={e => setVariantId(e.target.value)}
@@ -113,20 +111,11 @@ export default function VariantPricingStep({ onNext }) {
         ))}
       </TextField>
 
-      {!variantId && (
-        <Typography color="text.secondary">
-          Please select a variant to set pricing
-        </Typography>
-      )}
-
       {variantId && (
         <>
-          {/* 🔹 PRICE SECTION */}
-          <Typography fontWeight="bold" sx={{ mt: 2 }}>
-            Base Pricing
-          </Typography>
+          <Typography className="pricing-section-title" fontWeight="bold">Base Pricing</Typography>
 
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+          <Box className="pricing-row" sx={{ display: "flex", gap: 2, mt: 2 }}>
             <TextField
               label="MRP"
               value={priceForm.mrp}
@@ -135,7 +124,6 @@ export default function VariantPricingStep({ onNext }) {
               }
               fullWidth
             />
-
             <TextField
               label="Selling Price"
               value={priceForm.sellingPrice}
@@ -149,22 +137,15 @@ export default function VariantPricingStep({ onNext }) {
             />
           </Box>
 
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            onClick={savePrice}
-          >
+          <Button className="pricing-btn" sx={{ mt: 2 }} variant="contained" onClick={savePrice}>
             Save Price
           </Button>
 
-          <Divider sx={{ my: 4 }} />
+          <Divider className="pricing-divider" sx={{ my: 4 }} />
 
-          {/* 🔹 DISCOUNT SECTION */}
-          <Typography fontWeight="bold">
-            Discount
-          </Typography>
+          <Typography className="pricing-section-title" fontWeight="bold">Discount</Typography>
 
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+          <Box  className="pricing-row" sx={{ display: "flex", gap: 2, mt: 2 }}>
             <TextField
               select
               label="Discount Type"
@@ -194,37 +175,19 @@ export default function VariantPricingStep({ onNext }) {
             />
           </Box>
 
-          <Button
-            variant="contained"
-            sx={{ mt: 2 }}
-            onClick={saveDiscount}
-          >
+          <Button className="pricing-btn discount-btn" sx={{ mt: 2 }} variant="contained" onClick={saveDiscount}>
             Apply Discount
           </Button>
 
-          {/* 🔹 PREVIEW */}
           {pricingPreview && (
-            <Box sx={{ mt: 4 }}>
-              <Typography variant="h6">
-                Pricing Preview
-              </Typography>
-
-              <Typography>MRP: ₹{pricingPreview.mrp}</Typography>
-              <Typography>
-                Selling Price: ₹{pricingPreview.sellingPrice}
-              </Typography>
-              <Typography>
-                Discount: ₹{pricingPreview.discount}
-              </Typography>
-
-              <Typography fontWeight="bold">
-                Final Price: ₹{pricingPreview.finalPrice}
-              </Typography>
-            </Box>
+            <Box className="pricing-preview" sx={{ mt: 4 }}>
+              <Typography variant="h6">Pricing Preview</Typography>
+ <Typography>
+        Final Price: <span>₹{pricingPreview.finalPrice}</span>
+      </Typography>            </Box>
           )}
 
-          {/* 🔹 CONTINUE */}
-          <Box sx={{ mt: 4 }}>
+          <Box className="pricing-footer" sx={{ mt: 4 }}>
             <Button variant="outlined" onClick={onNext}>
               Continue
             </Button>

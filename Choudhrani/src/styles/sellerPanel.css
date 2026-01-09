@@ -2,114 +2,160 @@
    CHOUDHRANI SELLER PANEL THEME
 ================================ */
 
-/* Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap");
 
-
-/* Layout Wrapper */
-.seller-panel {
-  display: flex;
-  min-height: 100vh;
-  background-color: #fbf8f3;
+:root {
+  --primary: #6b1a24;
+  --secondary: #b68d40;
+  --bg: #fbf8f3;
+  --text-dark: #3a1f1f;
 }
 
-/* Sidebar */
+/* ===============================
+   LAYOUT
+================================ */
+
+.seller-panel {
+  display: flex;
+  height: 100vh;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* ===============================
+   SIDEBAR (LEFT FIXED)
+================================ */
+
 .sidebar {
   width: 280px;
-  background-color: #6b1a24;
+  background: var(--primary);
   color: white;
-  padding: 25px 20px;
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
   font-family: "Poppins", sans-serif;
 }
 
-/* Sidebar Header */
+/* Sidebar Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+/* Header */
 .sidebar-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .sidebar-header h2 {
   font-family: "Playfair Display", serif;
-  font-size: 22px;
   letter-spacing: 2px;
-  border-bottom: 2px solid #b68d40;
+  font-size: 22px;
   padding-bottom: 12px;
+  border-bottom: 2px solid var(--secondary);
 }
 
-/* Sidebar Menu */
+/* Title */
+.sidebar-title {
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 18px;
+}
+
+/* ===============================
+   SIDEBAR MENU
+================================ */
+
 .sidebar-menu {
   list-style: none;
   padding: 0;
-  margin-top: 15px;
+  margin: 0;
 }
 
-.sidebar-menu li {
-  padding: 12px 15px;
-  margin-bottom: 12px;
+.sidebar-item {
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 14px;
   cursor: pointer;
-  border-radius: 12px;
   font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition: all 0.3s ease;
 }
 
-/* Hover Effect */
-.sidebar-menu li:hover {
-  background-color: #f5e6c8;
-  color: #6b1a24;
+/* Hover */
+.sidebar-item:hover {
+  background: var(--secondary);
+  color: white;
   font-weight: 600;
 }
 
-/* Active Step Highlight */
-.sidebar-menu li.active {
-  background-color: white;
-  color: #6b1a24;
+/* Active */
+.sidebar-item.active {
+  background: white;
+  color: var(--primary);
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
-/* Main Content Area */
+/* Disabled */
+.sidebar-item.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sidebar-item.disabled:hover {
+  background: transparent;
+  color: white;
+}
+
+/* Lock Icon */
+.lock {
+  font-size: 13px;
+}
+
+/* ===============================
+   MAIN CONTENT (RIGHT SCROLL)
+================================ */
+
 .main-content {
   flex: 1;
-  padding: 30px 35px;
+  padding: 32px 36px;
+  overflow-y: auto;
   font-family: "Poppins", sans-serif;
 }
 
-/* Content Card Container */
+/* ===============================
+   CONTENT CARD
+================================ */
+
 .create-product-container {
-  background-color: white;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  background: white;
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
 }
 
-/* Headers */
-.main-content h1,
-.main-content h2,
-.main-content h3 {
+/* Headings */
+.main-content h3,
+.main-content h4,
+.main-content h5 {
   font-family: "Playfair Display", serif;
-  color: #6b1a24;
-  letter-spacing: 1px;
+  color: var(--primary);
+  margin-bottom: 20px;
 }
 
-/* Buttons */
-.btn-sm {
-  background-color: #6b1a24;
-  color: white;
-  border: none;
-  padding: 8px 22px;
+/* Buttons (optional global style) */
+button {
   border-radius: 30px;
-  font-size: 13px;
-  letter-spacing: 1px;
-  transition: 0.3s;
 }
 
-.btn-sm:hover {
-  background-color: #b68d40;
-  color: white;
-}
 
-/* Cards inside steps */
-.card {
-  border-radius: 18px;
-  border: 1px solid #ead7b3;
-}

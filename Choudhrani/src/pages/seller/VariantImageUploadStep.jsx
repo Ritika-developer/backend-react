@@ -24,11 +24,10 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-import axios from "axios";
 import { useProduct } from "../../services/ProductContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 /* ---------------- Sortable Image Card ---------------- */
-
 function SortableImage({ image, onDelete, onSetPrimary }) {
   const {
     attributes,
@@ -47,24 +46,14 @@ function SortableImage({ image, onDelete, onSetPrimary }) {
     <Paper
       ref={setNodeRef}
       style={style}
-      sx={{
-        p: 1,
-        display: "flex",
-        alignItems: "center",
-        mb: 1
-      }}
+      sx={{ p: 1, display: "flex", alignItems: "center", mb: 1 }}
       {...attributes}
       {...listeners}
     >
       <img
         src={image.preview}
         alt=""
-        style={{
-          width: 80,
-          height: 80,
-          objectFit: "cover",
-          marginRight: 16
-        }}
+        style={{ width: 80, height: 80, objectFit: "cover", marginRight: 16 }}
       />
 
       <Box sx={{ flex: 1 }}>
@@ -87,7 +76,6 @@ function SortableImage({ image, onDelete, onSetPrimary }) {
 }
 
 /* ---------------- Main Component ---------------- */
-
 export default function VariantImageUploadStep({ onNext }) {
   const { productState } = useProduct();
 
@@ -95,16 +83,17 @@ export default function VariantImageUploadStep({ onNext }) {
   const [variantId, setVariantId] = useState("");
   const [images, setImages] = useState([]);
 
-  /* Fetch variants */
+  /* ✅ FETCH VARIANTS */
   useEffect(() => {
-    axios
-      .get(
-        `http://localhost:8080/auth/products/${productState.productId}/variants`
-      )
-      .then(res => setVariants(res.data));
+    if (!productState.productId) return;
+
+    axiosInstance
+      .get(`/auth/products/${productState.productId}/variants`)
+      .then(res => setVariants(res.data))
+      .catch(() => alert("Failed to load variants"));
   }, [productState.productId]);
 
-  /* Handle file select */
+  /* Select files */
   const handleFiles = (e) => {
     const files = Array.from(e.target.files);
 
@@ -143,7 +132,7 @@ export default function VariantImageUploadStep({ onNext }) {
     setImages(images.filter(img => img.id !== id));
   };
 
-  /* Upload to backend */
+  /* Upload */
   const uploadImages = async () => {
     if (!variantId || images.length === 0) {
       alert("Select variant and images");
@@ -153,12 +142,9 @@ export default function VariantImageUploadStep({ onNext }) {
     const formData = new FormData();
     images.forEach(img => formData.append("files", img.file));
 
-    await fetch(
-      `http://localhost:8080/auth/products/${productState.productId}/images?variantId=${variantId}`,
-      {
-        method: "POST",
-        body: formData
-      }
+    await axiosInstance.post(
+      `/auth/products/${productState.productId}/images?variantId=${variantId}`,
+      formData
     );
 
     alert("Images uploaded successfully");
@@ -171,31 +157,31 @@ export default function VariantImageUploadStep({ onNext }) {
         Variant Image Upload
       </Typography>
 
-      {/* Variant Select */}
+      {/* ✅ VARIANT DROPDOWN (FIXED) */}
       <Select
         fullWidth
         value={variantId}
         onChange={(e) => setVariantId(e.target.value)}
         sx={{ mb: 2 }}
+        displayEmpty
       >
+        <MenuItem value="" disabled>
+          Select Variant
+        </MenuItem>
+
         {variants.map(v => (
           <MenuItem key={v.id} value={v.id}>
-            {v.name}
+            {v.sku}   {/* 🔥 FIX: sku instead of name */}
           </MenuItem>
         ))}
       </Select>
 
-      {/* File Input */}
       <Button variant="outlined" component="label">
         Select Images
         <input hidden type="file" multiple onChange={handleFiles} />
       </Button>
 
-      {/* Sortable Images */}
-      <DndContext
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext
           items={images.map(i => i.id)}
           strategy={verticalListSortingStrategy}
@@ -213,11 +199,7 @@ export default function VariantImageUploadStep({ onNext }) {
         </SortableContext>
       </DndContext>
 
-      <Button
-        variant="contained"
-        sx={{ mt: 3 }}
-        onClick={uploadImages}
-      >
+      <Button variant="contained" sx={{ mt: 3 }} onClick={uploadImages}>
         Upload Images
       </Button>
     </Box>

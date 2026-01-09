@@ -1,0 +1,175 @@
+/* ===============================
+   CATEGORY STEP – CHOUDHRANI
+================================ */
+
+.category-step {
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 36px 40px;
+  max-width: 900px;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+.category-step h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 26px;
+  color: #6b1a24;
+  margin-bottom: 22px;
+}
+
+/* Sub heading */
+.category-step h4 {
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: #6b1a24;
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+
+/* ===============================
+   INPUT
+================================ */
+
+.category-input {
+  width: 260px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #ead7b3;
+
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.category-input:focus {
+  border-color: #b68d40;
+  box-shadow: 0 0 0 2px rgba(182, 141, 64, 0.25);
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+
+.preview-btn {
+  margin-top: 14px;
+  padding: 10px 22px;
+
+  background: #6b1a24;
+  color: white;
+
+  border: none;
+  border-radius: 24px;
+
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.preview-btn:hover {
+  background: #b68d40;
+}
+
+/* ===============================
+   BREADCRUMB
+================================ */
+/* ===============================
+   PREMIUM BREADCRUMB – CHOUDHRANI
+================================ */
+/* ===============================
+   CHOUDHRANI BREADCRUMB – FINAL
+================================ */
+
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+/* GROUP */
+.breadcrumb-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ITEM */
+.breadcrumb-item {
+  padding: 7px 18px;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+
+  background: #fdf7ef;
+  color: #6b1a24;
+
+  border: 1px solid #ead7b3;
+}
+
+/* SEPARATOR */
+.breadcrumb-separator {
+  font-size: 18px;
+  color: #b68d40;
+}
+
+/* ACTIVE */
+.breadcrumb-item.active {
+  background-color: #6b1a24 !important;
+  color: #ffffff !important;
+  border-color: #6b1a24 !important;
+  font-weight: 600;
+}
+
+
+/* SCROLLBAR HIDE (OPTIONAL) */
+.breadcrumb-container::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* ===============================
+   CONFIRM BUTTON (MUI override safe)
+================================ */
+
+.category-step button.MuiButton-contained {
+  background-color: #6b1a24 !important;
+  color: white !important;
+  padding: 10px 26px !important;
+  border-radius: 30px !important;
+  letter-spacing: 1px;
+}
+
+.category-step button.MuiButton-contained:hover {
+  background-color: #b68d40 !important;
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================ */
+
+@media (max-width: 768px) {
+  .category-step {
+    padding: 24px;
+  }
+
+  .category-input {
+    width: 100%;
+  }
+}
+
+
+/* 🔥 REMOVE BOOTSTRAP BREADCRUMB SLASH */
+.breadcrumb-item::before {
+  content: none !important;
+}

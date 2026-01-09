@@ -1,0 +1,73 @@
+/* Page wrapper */
+.product-info-container {
+  padding: 24px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+/* Title */
+.product-info-title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 24px;
+}
+
+/* Form fields spacing (optional wrapper) */
+.product-info-form {
+  max-width: 700px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* TextField label */
+.product-info-form .MuiInputLabel-root {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* TextField input */
+.product-info-form .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+/* Focused input */
+.product-info-form
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #1976d2;
+}
+
+/* Helper text */
+.product-info-form .MuiFormHelperText-root {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Submit button wrapper */
+.product-info-action {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Submit button */
+.product-info-btn {
+  padding: 10px 32px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  text-transform: none !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .product-info-form {
+    padding: 16px;
+  }
+
+  .product-info-action {
+    justify-content: center;
+  }
+}

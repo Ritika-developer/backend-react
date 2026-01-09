@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-
+import "../../styles/VariantStep.css"
 import {
   Box,
   Button,
@@ -20,7 +20,6 @@ export default function VariantStep({ onNext }) {
   const { productState, setProductState } = useProduct();
   const productId = productState.productId;
 
-  // ONLY ATTRIBUTES ATTACHED TO PRODUCT
   const [attributes, setAttributes] = useState([]);
   const [variants, setVariants] = useState([]);
 
@@ -31,21 +30,21 @@ export default function VariantStep({ onNext }) {
     stock: ""
   });
 
-  // LOAD PRODUCT-SPECIFIC ATTRIBUTES
-useEffect(() => {
-  if (!productId) return;
+  /* 🔹 LOAD PRODUCT ATTRIBUTES */
+  useEffect(() => {
+    if (!productId) return;
 
-  axiosInstance
-    .get(`/auth/products/${productId}/attributes`)
-    .then(res => setAttributes(res.data))
-    .catch(() => alert("Failed to load attributes"));
-}, [productId]);
-
+    axiosInstance
+      .get(`/auth/products/${productId}/attributes`)
+      .then(res => setAttributes(res.data))
+      .catch(() => alert("Failed to load attributes"));
+  }, [productId]);
 
   const handleFormChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  /* 🔹 CREATE VARIANT (FIXED) */
   const createVariant = async () => {
     if (!form.sku || !form.price || !form.stock) {
       alert("Fill all fields");
@@ -64,55 +63,54 @@ useEffect(() => {
       attributes: selectedAttributes
     };
 
-    const token = localStorage.getItem("token");
-
     try {
-      const res = await axios.post(
-        `http://localhost:8080/auth/products/${productId}/variants`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+      const res = await axiosInstance.post(
+        `/auth/products/${productId}/variants`,
+        payload
       );
 
-      setVariants((prev) => [...prev, payload]);
-      setProductState((prev) => ({
+      const savedVariant = res.data; // ✅ REAL VARIANT (with ID)
+
+      // UI table
+      setVariants(prev => [...prev, savedVariant]);
+
+      // CONTEXT (used in pricing / images)
+      setProductState(prev => ({
         ...prev,
-        variants: [...(prev.variants || []), payload]
+        variants: [...(prev.variants || []), savedVariant]
       }));
 
       setForm({ sku: "", price: "", stock: "" });
       setSelectedAttributes({});
     } catch (err) {
+      console.error(err.response?.data);
       alert("Variant creation failed");
     }
   };
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom>
+   <Box className="variant-container">
+      <Typography variant="h5" className="variant-title" gutterBottom>
         Create Variants
       </Typography>
 
-      {/* ATTRIBUTE DROPDOWNS */}
-      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-        {attributes.map((attr) => (
+      {/* ATTRIBUTES */}
+      <Box className="variant-attributes" sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+        {attributes.map(attr => (
           <TextField
             key={attr.id}
             select
             label={attr.name}
             value={selectedAttributes[attr.id] || ""}
-            onChange={(e) =>
-              setSelectedAttributes((prev) => ({
+            onChange={e =>
+              setSelectedAttributes(prev => ({
                 ...prev,
                 [attr.id]: Number(e.target.value)
               }))
             }
             sx={{ minWidth: 180 }}
           >
-            {attr.values.map((val) => (
+            {attr.values.map(val => (
               <MenuItem key={val.id} value={val.id}>
                 {val.value}
               </MenuItem>
@@ -122,25 +120,10 @@ useEffect(() => {
       </Box>
 
       {/* VARIANT FORM */}
-      <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
-        <TextField
-          label="SKU"
-          name="sku"
-          value={form.sku}
-          onChange={handleFormChange}
-        />
-        <TextField
-          label="Price"
-          name="price"
-          value={form.price}
-          onChange={handleFormChange}
-        />
-        <TextField
-          label="Stock"
-          name="stock"
-          value={form.stock}
-          onChange={handleFormChange}
-        />
+      <Box className="variant-form" sx={{ display: "flex", gap: 2, mt: 3 }}>
+        <TextField label="SKU" name="sku" value={form.sku} onChange={handleFormChange} />
+        <TextField label="Price" name="price" value={form.price} onChange={handleFormChange} />
+        <TextField label="Stock" name="stock" value={form.stock} onChange={handleFormChange} />
         <Button variant="contained" onClick={createVariant}>
           Add Variant
         </Button>
@@ -148,14 +131,14 @@ useEffect(() => {
 
       {/* VARIANT TABLE */}
       {variants.length > 0 && (
-        <Box sx={{ mt: 4 }}>
+        <Box className="variant-table-wrapper" sx={{ mt: 4 }}>
           <Typography variant="h6">Created Variants</Typography>
 
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell>SKU</TableCell>
-                {attributes.map((a) => (
+                {attributes.map(a => (
                   <TableCell key={a.id}>{a.name}</TableCell>
                 ))}
                 <TableCell>Price</TableCell>
@@ -164,17 +147,14 @@ useEffect(() => {
             </TableHead>
 
             <TableBody>
-              {variants.map((v, i) => (
-                <TableRow key={i}>
+              {variants.map(v => (
+                <TableRow key={v.id}>
                   <TableCell>{v.sku}</TableCell>
-                  {attributes.map((attr) => {
-                    const valId = v.attributes[attr.id];
-                    const val = attr.values.find((x) => x.id === valId);
-                    return (
-                      <TableCell key={attr.id}>
-                        {val?.value || "-"}
-                      </TableCell>
+                  {attributes.map(attr => {
+                    const val = attr.values.find(
+                      x => x.id === v.attributes[attr.id]
                     );
+                    return <TableCell key={attr.id}>{val?.value}</TableCell>;
                   })}
                   <TableCell>{v.price}</TableCell>
                   <TableCell>{v.stock}</TableCell>
@@ -186,7 +166,7 @@ useEffect(() => {
       )}
 
       {variants.length > 0 && (
-        <Box sx={{ mt: 4, textAlign: "right" }}>
+        <Box className="variant-footer" sx={{ mt: 4, textAlign: "right" }}>
           <Button variant="contained" onClick={onNext}>
             Continue
           </Button>

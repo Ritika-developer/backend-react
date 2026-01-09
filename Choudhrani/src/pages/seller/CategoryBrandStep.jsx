@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
 import { useProduct } from "../../services/ProductContext";
 import { Box, Button } from "@mui/material";
-
+import "../../styles/CategoryBrandStep.css"
 export default function CategoryBrandStep({ onNext }) {
 
   // 🔹 LOCAL INPUT STATE (category id typed by user)
@@ -65,53 +65,59 @@ export default function CategoryBrandStep({ onNext }) {
   };
 
   return (
-    <div>
+    <div className="category-step">
+
 
       <h3>Select Category</h3>
 
       {/* Category ID input */}
-      <input
-        type="text"
-        placeholder="Category ID"
-        value={categoryIdInput}
-        onChange={(e) => setCategoryIdInput(e.target.value)}
-      />
+   <input
+  className="category-input"
+  type="text"
+  placeholder="Category ID"
+  value={categoryIdInput}
+  onChange={(e) => setCategoryIdInput(e.target.value)}
+/>
+
 
       <br /><br />
 
-      <button onClick={fetchBreadcrumb}>
-        Preview Breadcrumb
-      </button>
+     <button className="preview-btn" onClick={fetchBreadcrumb}>
+  Preview Breadcrumb
+</button>
+
 
       {loading && <p>Loading...</p>}
+
+
 
       {/* Breadcrumb Preview */}
       {breadcrumb.length > 0 && (
         <>
           <h4>Breadcrumb Preview</h4>
 
-          <div>
-            {breadcrumb.map((cat, index) => (
-              <span
-                key={cat.id}
-                style={{
-                  marginRight: "8px",
-                  padding: "6px",
-                  border: "1px solid black",
-                  background:
-                    index === breadcrumb.length - 1
-                      ? "#1976d2"
-                      : "#eee",
-                  color:
-                    index === breadcrumb.length - 1
-                      ? "white"
-                      : "black"
-                }}
-              >
-                {cat.name}
-              </span>
-            ))}
-          </div>
+  <div className="breadcrumb-container">
+  {breadcrumb.map((cat, index) => (
+    <div className="breadcrumb-group" key={cat.id}>
+      <span
+        className={`breadcrumb-item ${
+          index === breadcrumb.length - 1 ? "active" : ""
+        }`}
+      >
+        {cat.name}
+      </span>
+
+      {index !== breadcrumb.length - 1 && (
+        <span className="breadcrumb-separator">›</span>
+      )}
+    </div>
+  ))}
+</div>
+
+
+
+        
+
 
           <Box sx={{ mt: 4 }}>
             <Button variant="contained" onClick={handleConfirm}>

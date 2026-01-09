@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../../styles/brandStep.css"
 import {
   Box,
   Typography,
@@ -47,56 +48,49 @@ export default function BrandStep({ onNext }) {
   };
 
   return (
-    <Box>
+<Box className="brand-step-container">
 
-      <Typography variant="h5" gutterBottom>
-        Select Brand
-      </Typography>
+  <Typography variant="h5" className="brand-step-title">
+    Select Brand
+  </Typography>
 
-      <Grid container spacing={2}>
-        {brands.map((brand) => (
-          <Grid item xs={12} md={4} key={brand.id}>
-            <Card
-              onClick={() => setSelectedBrand(brand)}
-              sx={{
-                cursor: "pointer",
-                border:
-                  selectedBrand?.id === brand.id
-                    ? "2px solid #1976d2"
-                    : "1px solid #ddd"
-              }}
-            >
-              <CardMedia
-                component="img"
-                height="120"
-                image={brand.logoUrl}
-                alt={brand.name}
-                sx={{ objectFit: "contain", p: 2 }}
-              />
-
-              <CardContent>
-                <Typography
-                  align="center"
-                  fontWeight="bold"
-                >
-                  {brand.name}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-
-      {/* 🔒 CONFIRM BRAND – DO NOT CHANGE (IMAGE SAME) */}
-      <Box sx={{ mt: 4 }}>
-        <Button
-          variant="contained"
-          onClick={handleConfirm}
+  <Grid container spacing={2}>
+    {brands.map((brand) => (
+      <Grid item xs={12} md={4} key={brand.id}>
+        <Card
+          onClick={() => setSelectedBrand(brand)}
+          className={`brand-card ${
+            selectedBrand?.id === brand.id ? "selected" : ""
+          }`}
         >
-          Confirm Brand
-        </Button>
-      </Box>
+          <CardMedia
+            component="img"
+            image={brand.logoUrl}
+            alt={brand.name}
+            className="brand-logo"
+          />
 
-    </Box>
+          <CardContent>
+            <Typography className="brand-name">
+              {brand.name}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Grid>
+    ))}
+  </Grid>
+
+  <Box className="brand-confirm-wrapper">
+    <Button
+      variant="contained"
+      className="brand-confirm-btn"
+      onClick={handleConfirm}
+    >
+      Confirm Brand
+    </Button>
+  </Box>
+
+</Box>
+
   );
 }

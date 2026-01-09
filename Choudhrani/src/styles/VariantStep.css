@@ -1,0 +1,164 @@
+/* ===============================
+   CHOUDHRANI VARIANT STEP
+   Royal • Premium • Ethnic
+================================ */
+
+.variant-container {
+  background: linear-gradient(180deg, #fff7f4, #ffffff);
+  padding: 28px;
+  border-radius: 14px;
+  border: 1px solid #f1d6cf;
+}
+
+/* ---------- TITLE ---------- */
+
+.variant-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #6b1f1a; /* CHOUDHRANI MAROON */
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.variant-title::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, #c89b3c, #e6c77b);
+  display: block;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+/* ---------- ATTRIBUTES ---------- */
+
+.variant-attributes {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.variant-attributes .MuiTextField-root {
+  min-width: 180px;
+  background: #fff;
+}
+
+.variant-attributes label {
+  color: #7a2d26;
+  font-weight: 600;
+}
+
+/* ---------- VARIANT FORM ---------- */
+
+.variant-form {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.variant-form .MuiTextField-root {
+  min-width: 170px;
+  background: #fff;
+}
+
+/* ADD VARIANT BUTTON */
+.variant-form button {
+  height: 56px;
+  padding: 0 26px;
+  font-weight: 700;
+  text-transform: none;
+  background: linear-gradient(135deg, #6b1f1a, #8c2f28);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(107, 31, 26, 0.3);
+}
+
+.variant-form button:hover {
+  background: linear-gradient(135deg, #8c2f28, #6b1f1a);
+}
+
+/* ---------- TABLE ---------- */
+
+.variant-table-wrapper {
+  margin-top: 36px;
+}
+
+.variant-table-wrapper h6 {
+  font-weight: 700;
+  color: #6b1f1a;
+  margin-bottom: 12px;
+}
+
+/* TABLE STYLE */
+.variant-table-wrapper table {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.variant-table-wrapper thead {
+  background: linear-gradient(135deg, #6b1f1a, #8c2f28);
+}
+
+.variant-table-wrapper th {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.variant-table-wrapper td {
+  font-size: 14px;
+  color: #4b2b28;
+  font-weight: 500;
+}
+
+/* Zebra rows */
+.variant-table-wrapper tbody tr:nth-child(even) {
+  background: #fff4f1;
+}
+
+/* ---------- CONTINUE BUTTON ---------- */
+
+.variant-footer {
+  margin-top: 34px;
+  text-align: right;
+}
+
+.variant-footer button {
+  padding: 12px 36px;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: none;
+  border-radius: 12px;
+  background: linear-gradient(to right, #c89b3c, #e6c77b);
+  color: #4b2b28;
+  box-shadow: 0 6px 18px rgba(200, 155, 60, 0.4);
+}
+
+.variant-footer button:hover {
+  transform: translateY(-1px);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+  .variant-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .variant-form button {
+    width: 100%;
+  }
+
+  .variant-attributes {
+    flex-direction: column;
+  }
+
+  .variant-footer {
+    text-align: center;
+  }
+}

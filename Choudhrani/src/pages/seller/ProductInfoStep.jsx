@@ -5,8 +5,9 @@ import {
   TextField,
   Typography
 } from "@mui/material";
-import axios from "axios";
+import "../../styles/ProductInfoStep.css"
 import { useProduct } from "../../services/ProductContext";
+import axiosInstance from "../../utils/axiosInstance";
 
 export default function ProductInfoStep({ onNext }) {
 
@@ -35,7 +36,7 @@ export default function ProductInfoStep({ onNext }) {
     }
 
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         "http://localhost:8080/auth/products",
         {
           name: form.name,
@@ -60,50 +61,60 @@ export default function ProductInfoStep({ onNext }) {
   };
 
   return (
-    <Box>
+<Box className="product-info-container">
 
-      <Typography variant="h5" gutterBottom>
-        Product Information
-      </Typography>
+  <Typography
+    variant="h5"
+    className="product-info-title"
+  >
+    Product Information
+  </Typography>
 
-      <TextField
-        label="Product Name"
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        fullWidth
-        sx={{ mb: 3 }}
-      />
+  <Box className="product-info-form">
 
-      <TextField
-        label="Slug (URL-friendly)"
-        name="slug"
-        value={form.slug}
-        onChange={handleChange}
-        helperText="URL friendly name (e.g. samsung-led-tv)"
-        fullWidth
-        sx={{ mb: 3 }}
-      />
+    <TextField
+      label="Product Name"
+      name="name"
+      value={form.name}
+      onChange={handleChange}
+      fullWidth
+      sx={{ mb: 3 }}
+    />
 
-      <TextField
-        label="Product Description"
-        name="description"
-        value={form.description}
-        onChange={handleChange}
-        multiline
-        rows={4}
-        fullWidth
-        sx={{ mb: 4 }}
-      />
+    <TextField
+      label="Slug (URL-friendly)"
+      name="slug"
+      value={form.slug}
+      onChange={handleChange}
+      helperText="URL friendly name (e.g. samsung-led-tv)"
+      fullWidth
+      sx={{ mb: 3 }}
+    />
 
-      {/* 🔒 SAME AS IMAGE */}
+    <TextField
+      label="Product Description"
+      name="description"
+      value={form.description}
+      onChange={handleChange}
+      multiline
+      rows={4}
+      fullWidth
+      sx={{ mb: 4 }}
+    />
+
+    <Box className="product-info-action">
       <Button
         variant="contained"
+        className="product-info-btn"
         onClick={handleSubmit}
       >
         Save & Continue
       </Button>
-
     </Box>
+
+  </Box>
+
+</Box>
+
   );
 }
