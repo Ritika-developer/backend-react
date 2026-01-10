@@ -19,7 +19,8 @@ import Cart from "./pages/Carts";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
-
+import ProductList from "./pages/Products/ProductList";
+import ProductEdit from "./pages/Products/ProductEdit";
 
 /* routes */
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -70,6 +71,9 @@ export default function App() {
 
     
 <Route path="/seller-product-create" element={<SellerPanel />} />
+<Route path="/seller/products" element={<ProductList />} />
+<Route path="/seller/products/edit/:productId" element={<ProductEdit />} />
+
     </Routes>
     </>
   );
