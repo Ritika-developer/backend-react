@@ -133,23 +133,37 @@ export default function VariantImageUploadStep({ onNext }) {
   };
 
   /* Upload */
-  const uploadImages = async () => {
-    if (!variantId || images.length === 0) {
-      alert("Select variant and images");
-      return;
+const uploadImages = async () => {
+  if (!variantId || images.length === 0) {
+    alert("Select variant and images");
+    return;
+  }
+
+  const formData = new FormData();
+
+  images.forEach((img, index) => {
+    formData.append("files", img.file);
+    formData.append("orders", index); // ✅ REQUIRED
+  });
+
+  // 🔥 find primary image index
+  const primaryIndex = images.findIndex(img => img.isPrimary);
+  formData.append("primaryIndex", primaryIndex === -1 ? 0 : primaryIndex);
+
+  await axiosInstance.post(
+    `/auth/products/${productState.productId}/images?variantId=${variantId}`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
     }
+  );
 
-    const formData = new FormData();
-    images.forEach(img => formData.append("files", img.file));
+  alert("Images uploaded successfully");
+  onNext();
+};
 
-    await axiosInstance.post(
-      `/auth/products/${productState.productId}/images?variantId=${variantId}`,
-      formData
-    );
-
-    alert("Images uploaded successfully");
-    onNext();
-  };
 
   return (
     <Box>

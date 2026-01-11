@@ -19,8 +19,7 @@ import Cart from "./pages/Carts";
 import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
-import ProductList from "./pages/Products/ProductList";
-import ProductEdit from "./pages/Products/ProductEdit";
+import ProductDetailPage from "./pages/ProductDetailPage"; 
 
 /* routes */
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -52,7 +51,6 @@ export default function App() {
       {/* 🌐 MAIN WEBSITE */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
-        <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
@@ -71,8 +69,9 @@ export default function App() {
 
     
 <Route path="/seller-product-create" element={<SellerPanel />} />
-<Route path="/seller/products" element={<ProductList />} />
-<Route path="/seller/products/edit/:productId" element={<ProductEdit />} />
+<Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/products" element={<Products />} />
+
 
     </Routes>
     </>

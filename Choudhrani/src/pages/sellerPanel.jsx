@@ -9,10 +9,7 @@ const canAccessStep = (stepIndex, productState) => {
   if (stepIndex > 0 && !productState.categoryId) return false;
   if (stepIndex > 1 && !productState.brandId) return false;
   if (stepIndex > 2 && !productState.productId) return false;
-  if (
-    stepIndex > 4 &&
-    (!productState.variants || productState.variants.length === 0)
-  )
+  if (stepIndex > 4 &&(!productState.variants || productState.variants.length === 0) )
     return false;
 
   return true;
@@ -33,7 +30,8 @@ export default function SellerPanel() {
     "Specifications",
     "Manufacturer Info",
     "Variant Images",
-    "Product Images"
+    "Product Images",
+   " bus khatam bhai"
   ];
 
   return (

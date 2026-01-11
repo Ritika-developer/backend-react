@@ -1,95 +1,47 @@
-import "../styles/products.css";
+import { useEffect, useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
+import ProductCard from "../components/ProductCart";
+import "../styles/product-list.css";
+
+export default function ProductListPage() {
+  
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      // ✅ USER API
 
 
-const products = [
-  {
-    id: 1,
-    name: "Royal Banarasi Silk Saree",
-    price: "₹12,999",
-    image:
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-  {
-    id: 2,
-    name: "Elegant Kanjeevaram Saree",
-    price: "₹15,499",
-    image:
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-  {
-    id: 3,
-    name: "Designer Bridal Saree",
-    price: "₹22,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-  {
-    id: 4,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-   {
-    id: 5,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  }, {
-    id: 6,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  }, {
-    id: 7,
-    name: "sarees",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  }, {
-    id: 8,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  }, {
-    id: 9,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  }, {
-    id: 10,
-    name: "Handloom Cotton Saree",
-    price: "₹5,999",
-    image:
-     "https://images.unsplash.com/photo-1618354691373-d851c5c3a990",
-  },
-];
+      const res = await axiosInstance.get("/auth/products");
+      setProducts(res.data);
+    } catch (err) {
+      alert("Failed to load products");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default function Products() {
+  if (loading) {
+    return <div className="loading">Loading products...</div>;
+  }
+
   return (
-    <>
-     
+    <div className="product-list-page">
+      <h2 className="page-title">All Products</h2>
 
-      <div className="products-page">
-        <h2>Our Royal Collection</h2>
-
-        <div className="product-grid">
-          {products.map((p) => (
-            <div key={p.id} className="product-card">
-              <img src={p.image} alt={p.name} />
-              <h3>{p.name}</h3>
-              <p className="price">{p.price}</p>
-              <button>Add to Cart</button>
-            </div>
-          ))}
-        </div>
+      <div className="product-grid">
+        {products.map((product) => (
+          <ProductCard
+            key={product.productId}
+            product={product}
+          />
+        ))}
       </div>
-     
-    
-    </>
+    </div>
   );
 }

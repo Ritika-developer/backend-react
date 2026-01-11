@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../utils/axiosInstance";
-import "../../styles/VariantStep.css"
+
 import {
   Box,
   Button,
@@ -35,8 +35,8 @@ export default function VariantStep({ onNext }) {
     if (!productId) return;
 
     axiosInstance
-      .get(`/auth/products/${productId}/attributes`)
-      .then(res => setAttributes(res.data))
+      .get(`/auth/products/${productId}/variants`)
+      .then(res => setVariants(res.data))
       .catch(() => alert("Failed to load attributes"));
   }, [productId]);
 
@@ -69,8 +69,7 @@ export default function VariantStep({ onNext }) {
         payload
       );
 
-      const savedVariant = res.data; // ✅ REAL VARIANT (with ID)
-
+        const savedVariant = res.data;
       // UI table
       setVariants(prev => [...prev, savedVariant]);
 
@@ -89,13 +88,13 @@ export default function VariantStep({ onNext }) {
   };
 
   return (
-   <Box className="variant-container">
-      <Typography variant="h5" className="variant-title" gutterBottom>
+    <Box>
+      <Typography variant="h5" gutterBottom>
         Create Variants
       </Typography>
 
       {/* ATTRIBUTES */}
-      <Box className="variant-attributes" sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
         {attributes.map(attr => (
           <TextField
             key={attr.id}
@@ -120,7 +119,7 @@ export default function VariantStep({ onNext }) {
       </Box>
 
       {/* VARIANT FORM */}
-      <Box className="variant-form" sx={{ display: "flex", gap: 2, mt: 3 }}>
+      <Box sx={{ display: "flex", gap: 2, mt: 3 }}>
         <TextField label="SKU" name="sku" value={form.sku} onChange={handleFormChange} />
         <TextField label="Price" name="price" value={form.price} onChange={handleFormChange} />
         <TextField label="Stock" name="stock" value={form.stock} onChange={handleFormChange} />
@@ -131,7 +130,7 @@ export default function VariantStep({ onNext }) {
 
       {/* VARIANT TABLE */}
       {variants.length > 0 && (
-        <Box className="variant-table-wrapper" sx={{ mt: 4 }}>
+        <Box sx={{ mt: 4 }}>
           <Typography variant="h6">Created Variants</Typography>
 
           <Table>
@@ -166,7 +165,7 @@ export default function VariantStep({ onNext }) {
       )}
 
       {variants.length > 0 && (
-        <Box className="variant-footer" sx={{ mt: 4, textAlign: "right" }}>
+        <Box sx={{ mt: 4, textAlign: "right" }}>
           <Button variant="contained" onClick={onNext}>
             Continue
           </Button>
