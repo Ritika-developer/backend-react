@@ -1,0 +1,99 @@
+/* .variants {
+  margin-top: 10px;
+}
+
+.variant-btn {
+  padding: 6px 12px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.variant-btn.active {
+  border-color: #b89b5e;
+  background: #f3efe6;
+}
+.variant-section {
+  margin-top: 10px;
+}
+
+.variant-title {
+  font-size: 15px;
+  margin-bottom: 6px;
+} */
+
+/* 
+
+.variant-section h4 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.variant-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.variant-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--ch-border);
+  background: white;
+  cursor: pointer;
+}
+.variant-btn.active {
+  border-color: var(--ch-gold);
+  color: var(--ch-primary);
+} */
+.variant-section {
+  margin-top: 18px;
+}
+
+/* Header */
+.variant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.variant-header h4 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ch-text);
+}
+
+.variant-guide {
+  font-size: 13px;
+  color: var(--ch-primary);
+  cursor: pointer;
+}
+
+/* Options */
+.variant-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.variant-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--ch-border);
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 4px;
+  color: var(--ch-text);
+  transition: all 0.2s ease;
+}
+
+.variant-btn:hover {
+  border-color: var(--ch-primary);
+}
+
+.variant-btn.active {
+  border-color: var(--ch-gold);
+  color: var(--ch-primary);
+  font-weight: 500;
+}

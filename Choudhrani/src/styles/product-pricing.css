@@ -1,0 +1,19 @@
+.price {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+.mrp {
+  margin-left: 8px;
+  color: var(--ch-muted);
+  text-decoration: line-through;
+}
+.discount {
+  margin-left: 8px;
+  color: var(--ch-gold);
+  font-weight: 500;
+}
+.tax-text {
+  font-size: 12px;
+  color: var(--ch-muted);
+}

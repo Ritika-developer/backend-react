@@ -162,3 +162,45 @@
     text-align: center;
   }
 }
+
+.variant-step {
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.step-title {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.attr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.divider {
+  margin: 24px 0;
+}
+
+.variant-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 16px;
+  align-items: center;
+}
+
+.variant-table {
+  margin-top: 24px;
+}
+
+.variant-table h6 {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.continue-wrap {
+  margin-top: 24px;
+  text-align: right;
+}

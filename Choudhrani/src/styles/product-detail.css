@@ -1,0 +1,39 @@
+.product-page {
+  padding: 24px;
+  background: #faf8f4;
+}
+
+.breadcrumb {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.product-layout {
+    display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.product-left {
+  position: sticky;
+  top: 80px;
+}
+
+.product-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 6px;
+}
+
+@media (max-width: 768px) {
+  .product-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .product-left {
+    position: static;
+  }
+}

@@ -1,56 +1,104 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
-import ProductImageGallery from "../components/ProductImageGallery";
+
+import ProductBreadcrumb from "../components/product/ProductBreadcrumb";
+import ProductHeader from "../components/product/ProductHeader";
+import ProductPricing from "../components/product/ProductPricing";
+import ProductVariants from "../components/product/ProductVariants";
+import ProductBuyBox from "../components/product/ProductBuyBox";
+import ProductTabs from "../components/product/ProductTabs";
+import ProductImageGallery from "../components/product/ProductImageGallery";
+
+import "../styles/product-detail.css";
 
 export default function ProductDetailPage() {
+  
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
+  const [selectedVariant, setSelectedVariant] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-   if(id) loadProduct();
-  }, [id
-  ]);
+    if (id) {
+      setLoading(true);
+      loadProduct();
+    }
+  }, [id]);
 
   const loadProduct = async () => {
     try {
-      // ✅ USER PRODUCT PAGE API
-       console.log("Fetching product id:", id);
-      const res = await axiosInstance.get(
-        `/api/products/${id}/page`
-      );
-
-      console.log("API RESPONSE:", res.data); // 🔥 IMPORTANT
-      setProduct(res.data);
-    } catch (err) {
-       console.error("API ERROR:", err.response?.data || err.message);
-      alert("Failed to load product");
       
+      const res = await axiosInstance.get(`/api/products/${id}/page`);
+      setProduct(res.data);
+      setSelectedVariant(res.data.variants?.[0] || null);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load product");
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <h2>Loading...</h2>;
-  if (!product) return <h2>Product not found</h2>;
+  if (loading) return <h3>Loading...</h3>;
+  if (!product) return <h3>Product not found</h3>;
+console.log("VARIANTS 👉", product.variants);
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h1>{product.name}</h1>
-      <p>{product.brandName}</p>
+    <>
+   
 
-      {/* ✅ IMAGE GALLERY */}
-      <ProductImageGallery images={product.images || []} />
+    <div className="product-page">
 
-      <h3>Description</h3>
-      <p>{product.description}</p>
+      <ProductBreadcrumb product={product} />
 
-      <h3>Price</h3>
-      <p>
-        ₹{product.variants?.[0]?.price || "N/A"}
-      </p>
+      <div className="product-layout">
+
+        {/* LEFT – Sticky Images */}
+        <div className="product-left">
+          <ProductImageGallery
+            images={
+              selectedVariant?.images?.length
+                ? selectedVariant.images
+                : product.images
+            }
+          />
+        </div>
+
+        {/* RIGHT – Scrollable Content */}
+        <div className="product-right">
+          <ProductHeader product={product} />
+
+          {/* Rating */}
+      {/* <ProductRating rating={product.rating} /> */}
+
+          <ProductPricing variant={selectedVariant} />
+
+          <ProductVariants
+          type="color"
+            variants={product.variants}
+            selected={selectedVariant}
+            onSelect={setSelectedVariant}
+          />
+
+            {/* Size */}
+      <ProductVariants
+      type="size"
+        variants={product.variants}
+        selected={selectedVariant}
+        onSelect={setSelectedVariant}
+      />
+
+
+          <ProductBuyBox variant={selectedVariant} />
+        </div>
+
+      </div>
+
+      <ProductTabs product={product} />
     </div>
+    </>
   );
 }
+

@@ -1,0 +1,106 @@
+/* .buy-box {
+  border: 1px solid #eee;
+  padding: 18px;
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.in-stock {
+  color: green;
+}
+
+.out-stock {
+  color: red;
+} */
+/* 
+.add-cart {
+  width: 100%;
+  padding: 12px;
+  background: #b89b5e;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.buy-now {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  background: #2e2e2e;
+  color: white;
+  border: none;
+  cursor: pointer;
+} */
+/* 
+.add-cart {
+  background: #fff;
+  border: 1px solid #000;
+}
+
+.buy-now {
+  background: #000;
+  color: #fff;
+}
+
+.buy-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.buy-btn {
+  flex: 1;
+  padding: 14px;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+} */
+
+
+
+
+
+
+
+
+.buy-box {
+  background: var(--ch-bg);
+  border: 1px solid var(--ch-border);
+  padding: 18px;
+  border-radius: 10px;
+}
+.in-stock {
+  color: green;
+  font-size: 14px;
+}
+
+.out-stock {
+  color: red;
+  font-size: 14px;
+}
+
+.buy-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+.add-cart {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid var(--ch-primary);
+  background: white;
+  color: var(--ch-primary);
+}
+.buy-now {
+  flex: 1;
+  padding: 14px;
+  background: var(--ch-primary);
+  color: white;
+  border: none;
+}
+.delivery {
+  font-size: 13px;
+  color: var(--ch-muted);
+  margin-top: 12px;
+}

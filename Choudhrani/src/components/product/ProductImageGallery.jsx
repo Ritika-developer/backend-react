@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/product-gallery.css";
+import "../../styles/product-gallery.css"
 
 export default function ProductImageGallery({ images = [] }) {
 
@@ -8,6 +8,11 @@ export default function ProductImageGallery({ images = [] }) {
 
   const [selected, setSelected] = useState(primary);
 
+    /* ✅ DEFINE IT HERE */
+  const isTouchDevice =
+    typeof window !== "undefined" &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+
   useEffect(() => {
     setSelected(primary);
   }, [images]);
@@ -15,7 +20,9 @@ export default function ProductImageGallery({ images = [] }) {
   if (!images.length) {
     return <img src="/no-image.png" alt="No image" />;
   }
-
+  const handleSelect = (img) => {
+    setSelected(img);
+  };
   return (
     <div className="gallery-wrapper">
       <div className="gallery-thumbs">
@@ -29,7 +36,12 @@ export default function ProductImageGallery({ images = [] }) {
                 ? "thumb active"
                 : "thumb"
             }
-            onClick={() => setSelected(img)}
+             onMouseEnter={
+              !isTouchDevice ? () => handleSelect(img) : undefined
+            }
+            onClick={
+              isTouchDevice ? () => handleSelect(img) : undefined
+            }
           />
         ))}
       </div>

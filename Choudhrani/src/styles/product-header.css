@@ -1,0 +1,23 @@
+.product-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ch-text);
+}
+.brand-name {
+  color: var(--ch-muted);
+  margin-top: 4px;
+}
+.brand-name span {
+  color: var(--ch-primary);
+  font-weight: 500;
+}
+.rating {
+  font-size: 14px;
+  margin-top: 6px;
+  color: #444;
+}
+.reviews {
+  margin-left: 6px;
+  color: var(--ch-muted);
+}
+

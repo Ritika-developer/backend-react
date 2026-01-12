@@ -1,0 +1,13 @@
+.product-tabs {
+  margin-top: 48px;
+}
+
+.specs {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specs td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ddd;
+}
