@@ -21,7 +21,18 @@ export default function Login() {
 
     try {
       const res = await loginUser({ email: value, password });
-      localStorage.setItem("token", res.data);
+      localStorage.setItem("token", res.data.token);
+      localStorage.getItem("token")
+
+          // 👤 USER INFO
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        name: res.data.name,
+        email: res.data.email
+      })
+    );
+
       navigate("/products");
     } catch (err) {
       setInfo(err.response?.data || "Invalid credentials");

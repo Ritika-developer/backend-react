@@ -2,6 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
 import AOS from "aos";
 import "../src/index.css"
+import { CartProvider } from "./services/CartContext";
+
+
 /* layouts */
 import AuthLayout from "./layouts/AuthLayout";
 import MainLayout from "./layouts/MainLayout";
@@ -36,6 +39,7 @@ export default function App() {
 
   return (
     <>
+      <CartProvider>
     <Routes>
 
       {/* 🔐 AUTH PAGES */}
@@ -51,6 +55,8 @@ export default function App() {
       {/* 🌐 MAIN WEBSITE */}
       <Route element={<MainLayout />}>
         <Route path="/" element={<Home />} />
+         <Route path="/products" element={<Products />} />
+    <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
@@ -69,11 +75,12 @@ export default function App() {
 
     
 <Route path="/seller-product-create" element={<SellerPanel />} />
-<Route path="/products/:id" element={<ProductDetailPage />} />
-        <Route path="/products" element={<Products />} />
+{/* <Route path="/products/:id" element={<ProductDetailPage />} />
+        <Route path="/products" element={<Products />} /> */}
 
 
     </Routes>
+    </CartProvider>
     </>
   );
 }

@@ -1,10 +1,13 @@
 
 
 .product-list-page {
-  padding: 24px;
+  padding: 80px 24px 24px 24px;
   background: #faf8f4;
 }
 
+.product-list-page h2 {
+text-align: center;
+}
 .page-title {
   font-size: 28px;
   margin-bottom: 20px;

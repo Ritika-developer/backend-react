@@ -14,7 +14,15 @@ export default function GoogleLoginButton() {
         { idtoken: idToken }
       );
 
-      localStorage.setItem("token", res.data);
+      localStorage.setItem("token", res.data.token);
+        // 👤 USER INFO
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        name: res.data.name,
+        email: res.data.email
+      })
+    );
       navigate("/products");
     } catch (e) {
       alert("Google login failed");

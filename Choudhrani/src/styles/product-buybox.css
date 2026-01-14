@@ -69,6 +69,7 @@
   border: 1px solid var(--ch-border);
   padding: 18px;
   border-radius: 10px;
+  display: block;
 }
 .in-stock {
   color: green;
@@ -103,4 +104,10 @@
   font-size: 13px;
   color: var(--ch-muted);
   margin-top: 12px;
+}
+
+.add-cart,
+.buy-now {
+  display: inline-block;
+  padding: 10px;
 }

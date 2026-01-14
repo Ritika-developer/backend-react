@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import OfferStrip from "../pages/OfferStrip";
 import Heritage from "./Heritage";
+import { useCart } from "../services/CartContext";
+
 
 export default function Home() {
-
+ const { addToCart } = useCart();
 
 const items = [
   "Bridal Heritage",
@@ -177,7 +179,19 @@ const items = [
           <div className={`product-img men-${i}`}></div>
           <h6>Royal Sherwani</h6>
           <span className="price">₹28,000</span>
-          <button className="add-cart">Add to Cart</button>
+           <button
+            className="add-cart"
+            onClick={(e) => {
+              e.stopPropagation(); // 🔥 IMPORTANT
+              addToCart({
+                id: `men-${i}`,          // unique id
+                name: "Royal Sherwani",
+                price: 28000
+              });
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     ))}
@@ -196,7 +210,19 @@ const items = [
               <div className={`product-img p-${i}`}></div>
               <h6>Regal Silk Saree</h6>
               <span className="price">₹19,000</span>
-              <button className="add-cart">Add to Cart</button>
+              <button
+            className="add-cart"
+            onClick={(e) => {
+              e.stopPropagation(); // 🔥 IMPORTANT
+              addToCart({
+                id: `men-${i}`,          // unique id
+                name: "Royal Sherwani",
+                price: 28000
+              });
+            }}
+          >
+            Add to Cart
+          </button>
             </div>
           </div>
         ))}

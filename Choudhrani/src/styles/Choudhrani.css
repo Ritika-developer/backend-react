@@ -21,6 +21,7 @@ body {
 
 .home-page {
   background: #fbf8f3;
+   margin-top: 60px;
 }
 
 .container {
@@ -413,7 +414,10 @@ section {
 .p-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354512/signature-collection3_ll6em9.png"); }
 .p-4 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354509/signature-collection2_ne95wo.png"); }
 
-
+.men-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137751/feqtmmgwmtancvavfyag.webp");}
+.men-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137776/pyrn8ep4cuztx8y9dyjr.png");}
+.men-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137751/feqtmmgwmtancvavfyag.webp");}
+.men-4 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137776/pyrn8ep4cuztx8y9dyjr.png");}
 /* =================================================
    10. WEDDING SECTION
 ================================================= */

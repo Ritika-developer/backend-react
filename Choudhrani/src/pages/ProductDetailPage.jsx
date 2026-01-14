@@ -76,22 +76,25 @@ console.log("VARIANTS 👉", product.variants);
           <ProductPricing variant={selectedVariant} />
 
           <ProductVariants
-          type="color"
             variants={product.variants}
             selected={selectedVariant}
             onSelect={setSelectedVariant}
           />
 
             {/* Size */}
-      <ProductVariants
+      {/* <ProductVariants
       type="size"
         variants={product.variants}
         selected={selectedVariant}
         onSelect={setSelectedVariant}
-      />
+      /> */}
 
 
-          <ProductBuyBox variant={selectedVariant} />
+         <ProductBuyBox
+  product={product}
+  variant={selectedVariant}
+/>
+
         </div>
 
       </div>
