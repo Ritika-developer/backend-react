@@ -1,97 +1,55 @@
-// import React, { createContext, useContext, useEffect, useState } from "react";
 
+
+
+
+// import { createContext, useContext, useState, useMemo } from "react";
+// import axiosInstance from "../utils/axiosInstance"
 // const CartContext = createContext();
 
-// export const CartProvider = ({ children }) => {
+// export function CartProvider({ children }) {
 //   const [cartItems, setCartItems] = useState([]);
+  
 
-//   /* LOAD CART */
-//   useEffect(() => {
-//     const saved = localStorage.getItem("cart");
-//     if (saved) {
-//       setCartItems(JSON.parse(saved));
-//     }
-//   }, []);
+//   const addToCart = (productId, variantId, qty = 1) => {
+//     setCartItems(prevItems => {
+//       const index = prevItems.findIndex(
+//         item =>
+//           item.productId === productId &&
+//           item.variantId === variantId
+//       );
 
-//   /* SAVE CART */
-//   useEffect(() => {
-//     localStorage.setItem("cart", JSON.stringify(cartItems));
-//   }, [cartItems]);
-
-//   /* ADD TO CART */
-//   const addToCart = (product) => {
-//     setCartItems(prev => {
-//       const existing = prev.find(item => item.id === product.id);
-
-//       if (existing) {
-//         return prev.map(item =>
-//           item.id === product.id
-//             ? { ...item, quantity: item.quantity + 1 }
-//             : item
-//         );
+//       if (index !== -1) {
+//         // ✅ quantity increase (NEW ARRAY)
+//         const updated = [...prevItems];
+//         updated[index] = {
+//           ...updated[index],
+//           quantity: updated[index].quantity + qty
+//         };
+//         return updated;
 //       }
 
-//       return [...prev, { ...product, quantity: 1 }];
+//       // ✅ new item
+//       return [
+//         ...prevItems,
+//         { productId, variantId, quantity: qty }
+//       ];
 //     });
 //   };
 
-//   /* INCREASE */
-//   const increaseQty = (id) => {
-//     setCartItems(prev =>
-//       prev.map(item =>
-//         item.id === id
-//           ? { ...item, quantity: item.quantity + 1 }
-//           : item
-//       )
+//   // 🔥 TOTAL COUNT (quantity sum)
+//   const cartCount = useMemo(() => {
+//     return cartItems.reduce(
+//       (total, item) => total + item.quantity,
+//       0
 //     );
-//   };
-
-//   /* DECREASE */
-//   const decreaseQty = (id) => {
-//     setCartItems(prev =>
-//       prev
-//         .map(item =>
-//           item.id === id
-//             ? { ...item, quantity: item.quantity - 1 }
-//             : item
-//         )
-//         .filter(item => item.quantity > 0)
-//     );
-//   };
-
-//   /* REMOVE */
-//   const removeFromCart = (id) => {
-//     setCartItems(prev => prev.filter(item => item.id !== id));
-//   };
-
-//   /* TOTAL COUNT */
-//   const cartCount = cartItems.reduce(
-//     (sum, item) => sum + item.quantity,
-//     0
-//   );
-
-//   /* TOTAL PRICE */
-//   const totalPrice = cartItems.reduce(
-//     (sum, item) => sum + item.price * item.quantity,
-//     0
-//   );
+//   }, [cartItems]);
 
 //   return (
-//     <CartContext.Provider
-//       value={{
-//         cartItems,
-//         cartCount,
-//         totalPrice,
-//         addToCart,
-//         increaseQty,
-//         decreaseQty,
-//         removeFromCart
-//       }}
-//     >
+//     <CartContext.Provider value={{ cartItems, addToCart, cartCount }}>
 //       {children}
 //     </CartContext.Provider>
 //   );
-// };
+// }
 
 // export const useCart = () => useContext(CartContext);
 
@@ -107,117 +65,91 @@
 
 
 
-//working
-// import { createContext, useContext, useEffect, useState } from "react";
-// import axios from "axios";
 
+
+
+
+
+
+
+
+// import { createContext, useContext, useState, useMemo,useEffect } from "react";
+// import axiosInstance from "../utils/axiosInstance"
 // const CartContext = createContext();
 
 // export function CartProvider({ children }) {
 //   const [cartItems, setCartItems] = useState([]);
-//   const [cartCount, setCartCount] = useState(0);
-//   const [totalPrice, setTotalPrice] = useState(0);
-
-//   const user = JSON.parse(localStorage.getItem("user"));
-
-//   const API = "http://localhost:8080/auth/cart";
-
-//   /* ================= LOAD CART ================= */
+  
+//   // 🔥 LOAD CART FROM BACKEND
 //   const loadCart = async () => {
-//     if (!user) return;
-
-//     const res = await axios.get(`${API}/${user.id}`);
-//     setCartItems(res.data);
-
-//     calculateTotals(res.data);
+//     try {
+//       const res = await axiosInstance.get("/auth/cart");
+//       console.log("CART API RESPONSE:", res.data); // 🔍 DEBUG
+//       setCartItems(res.data);
+//     } catch (err) {
+//       console.error("Error loading cart", err);
+//     }
 //   };
 
-//   /* ================= CART COUNT ================= */
-//   const loadCartCount = async () => {
-//     if (!user) return;
-
-//     const res = await axios.get(`${API}/count/${user.id}`);
-//     setCartCount(res.data);
-//   };
-
-//   /* ================= ADD TO CART ================= */
-//   const addToCart = async (productId, variantId, quantity = 1) => {
-//     if (!user) return alert("Please login");
-
-//     await axios.post(`${API}/add`, {
-//       userId: user.id,
-//       productId,
-//       variantId,
-//       quantity
-//     });
-
-//     loadCart();
-//     loadCartCount();
-//   };
-
-//   /* ================= INCREASE QTY ================= */
-// const increaseQty = async (cartItemId) => {
-//   const item = cartItems.find(i => i.cartItemId === cartItemId);
-//   if (!item) return;
-
-//   await axios.post(`${API}/add`, {
-//     userId: user.id,
-//     productId: item.productId,   // ✅ Long
-//     variantId: item.variantId,   // ✅ Long
-//     quantity: 1
-//   });
-
-//   loadCart();
-//   loadCount();
-// };
-
-
-//   /* ================= DECREASE QTY ================= */
-//   const decreaseQty = async (cartItemId) => {
-//     await axios.put(`${API}/decrease/${cartItemId}`);
-//     loadCart();
-//     loadCartCount();
-//   };
-
-//   /* ================= REMOVE ================= */
-//   const removeFromCart = async (cartItemId) => {
-//     await axios.delete(`${API}/remove/${cartItemId}`);
-//     loadCart();
-//     loadCartCount();
-//   };
-
-//   /* ================= TOTAL ================= */
-//   const calculateTotals = (items) => {
-//     let total = 0;
-//     let count = 0;
-
-//     items.forEach(item => {
-//       total += item.price * item.quantity;
-//       count += item.quantity;
-//     });
-
-//     setTotalPrice(total);
-//     setCartCount(count);
-//   };
-
-//   /* ================= INIT ================= */
+//   // 👇 page refresh / app load par cart aayega
 //   useEffect(() => {
 //     loadCart();
-//     loadCartCount();
 //   }, []);
 
+//   // ➖ decrease
+//   const decreaseQty = async (cartItemId) => {
+//     await axiosInstance.put(`/cart/decrease/${cartItemId}`);
+//     loadCart();
+//   };
+
+//   // ❌ remove
+//   const removeItem = async (cartItemId) => {
+//     await axiosInstance.delete(`/cart/remove/${cartItemId}`);
+//     loadCart();
+//   };
+
+//   // 🧹 clear
+//   const clearCart = async () => {
+//     await axiosInstance.delete("/cart/clear");
+//     setCartItems([]);
+//   };
+
+//   const addToCart = (productId, variantId, qty = 1) => {
+//     setCartItems(prevItems => {
+//       const index = prevItems.findIndex(
+//         item =>
+//           item.productId === productId &&
+//           item.variantId === variantId
+//       );
+
+//       if (index !== -1) {
+//         // ✅ quantity increase (NEW ARRAY)
+//         const updated = [...prevItems];
+//         updated[index] = {
+//           ...updated[index],
+//           quantity: updated[index].quantity + qty
+//         };
+//         return updated;
+//       }
+
+//       // ✅ new item
+//       return [
+//         ...prevItems,
+//         { productId, variantId, quantity: qty }
+//       ];
+//     });
+//   };
+
+//   // 🔥 TOTAL COUNT (quantity sum)
+//   const cartCount = useMemo(() => {
+//     return cartItems.reduce(
+//       (total, item) => total + item.quantity,
+//       0
+//     );
+//   }, [cartItems]);
+
 //   return (
-//     <CartContext.Provider
-//       value={{
-//         cartItems,
-//         cartCount,
-//         totalPrice,
-//         addToCart,
-//         increaseQty,
-//         decreaseQty,
-//         removeFromCart
-//       }}
-//     >
+//     <CartContext.Provider value={{ cartItems, addToCart, cartCount ,decreaseQty,removeItem,clearCart}}>
 //       {children}
 //     </CartContext.Provider>
 //   );
@@ -248,107 +180,97 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
+// src/services/CartContext.jsx
 import { createContext, useContext, useEffect, useState } from "react";
-import axiosInstance from "../utils/axiosInstance";
+import axios from "../utils/axiosInstance";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const userId = 1; // 🔴 replace with logged-in user id
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
 
-  const userId = Number(localStorage.getItem("userId")) ; // ya auth context
-
-  // ---------------- GET CART ----------------
-  const fetchCart = async () => {
-    if (!userId) return;
-    const res = await axiosInstance.get(`/auth/cart/${userId}`);
+  // 🔁 LOAD CART
+  const loadCart = async () => {
+    const res = await axios.get(`/auth/cart/${userId}`);
     setCartItems(res.data);
   };
 
-  // ---------------- COUNT ----------------
-  const fetchCount = async () => {
-    if (!userId) return;
-    const res = await axiosInstance.get(`/auth/cart/count/${userId}`);
+  // 🔢 LOAD COUNT
+  const loadCount = async () => {
+    const res = await axios.get(`/auth/cart/count/${userId}`);
     setCartCount(res.data);
   };
 
-  // ---------------- ADD ----------------
-  // const addToCart = async ({ productId, variantId, quantity = 1 }) => {
-  //   await axiosInstance.post("/auth/cart/add", {
-  //     userId,
-  //     productId,
-  //     variantId,
-  //     quantity
-  //   });
-  //   fetchCart();
-  //   fetchCount();
-  // };
+  // ➕ ADD TO CART
+  const addToCart = async (productId, variantId, quantity = 1) => {
+    await axios.post("/auth/cart/add", {
+    //   userId,
+    //   productId,
+    //   variantId,
+    //   quantity
+    // });
 
 
-
-
-
-
-  const addToCart = async ({ productId, variantId, quantity = 1 }) => {
-  console.log("ADD TO CART CLICKED");
-  console.log("USER ID:", userId);
-  console.log("PRODUCT ID:", productId);
-  console.log("VARIANT ID:", variantId);
-
-  if (!userId || !productId || !variantId) {
-    console.error("❌ Missing data, aborting add to cart");
-    return;
-  }
-
-  await axiosInstance.post("/auth/cart/add", {
-    userId,
-    productId,
-    variantId,
-    quantity
+        userId: 1,          // 🔴 logged in user id
+    productId: (productId),
+    variantId: (variantId),
+    quantity : quantity
   });
 
-  console.log("✅ ADD API SUCCESS");
+    await loadCart();
+    await loadCount();
+  };
 
-  await fetchCount();
-  await fetchCart();
+
+//   console.log("ADD TO CART PAYLOAD", {
+//   userId: 1,
+//   productId,
+//   variantId,
+//   quantity
+// });
+
+  // ➖ DECREASE
+  const decreaseQty = async (cartItemId) => {
+    await axios.put(`/auth/cart/decrease/${cartItemId}`);
+    loadCart();
+    loadCount();
+  };
+
+  // ❌ REMOVE
+  const removeItem = async (cartItemId) => {
+    await axios.delete(`/auth/cart/remove/${cartItemId}`);
+    loadCart();
+    loadCount();
+  };
+
+
+  // 🧹 CLEAR CART
+const clearCart = async () => {
+  await axios.delete(`/auth/cart/clear/${userId}`);
+  setCartItems([]);
+  setCartCount(0);
 };
 
-  // ---------------- DECREASE ----------------
-  const decreaseQty = async (cartItemId) => {
-    await axiosInstance.put(`/auth/cart/decrease/${cartItemId}`);
-    fetchCart();
-    fetchCount();
-  };
 
-  // ---------------- REMOVE ----------------
-  const removeItem = async (cartItemId) => {
-    await axiosInstance.delete(`/auth/cart/remove/${cartItemId}`);
-    fetchCart();
-    fetchCount();
-  };
 
-  // ---------------- CLEAR ----------------
-  const clearCart = async () => {
-    await axiosInstance.delete(`/auth/cart/clear/${userId}`);
-    setCartItems([]);
-    setCartCount(0);
-  };
+const loadSummary = async () => {
+  const res = await axios.get(`/auth/cart/summary/${userId}`);
+  return res.data;
+};
+
+const increaseQty = async (cartItemId) => {
+  await axios.put(`/auth/cart/increase/${cartItemId}`);
+  loadCart();
+  loadCount();
+};
+
 
   useEffect(() => {
-    fetchCart();
-    fetchCount();
-  }, [userId]);
+    loadCart();
+    loadCount();
+  }, []);
 
   return (
     <CartContext.Provider
@@ -358,7 +280,10 @@ export const CartProvider = ({ children }) => {
         addToCart,
         decreaseQty,
         removeItem,
-        clearCart
+        clearCart,
+        increaseQty,
+        loadSummary
+
       }}
     >
       {children}

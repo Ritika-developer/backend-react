@@ -202,11 +202,11 @@ export default function ProductBuyBox({ product, variant }) {
       return;
     }
 
-   addToCart({
-  productId: product.id,
-  variantId: variant.id,
-  quantity: 1
-});
+   addToCart(
+  product.id,
+  variant.id,
+   1
+);
   };
 
   return (

@@ -12,34 +12,40 @@ export default function Login() {
   const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    setLoading(true);
-    setInfo("");
+const handleLogin = async () => {
+  setLoading(true);
+  setInfo("");
 
-    let value = identifier.trim();
-    if (/^\d{10}$/.test(value)) value = "+91" + value;
+  let value = identifier.trim();
+  if (/^\d{10}$/.test(value)) value = "+91" + value;
 
-    try {
-      const res = await loginUser({ email: value, password });
-      localStorage.setItem("token", res.data.token);
-      localStorage.getItem("token")
+  try {
+    const res = await loginUser({ email: value, password });
 
-          // 👤 USER INFO
+    console.log("LOGIN RESPONSE:", res.data);
+
+    // ✅ SAVE DATA
+    localStorage.setItem("userId", String(res.data.id));
+    localStorage.setItem("token", res.data.token);
     localStorage.setItem(
       "user",
       JSON.stringify({
+        id: res.data.id,
         name: res.data.name,
         email: res.data.email
       })
     );
 
-      navigate("/products");
-    } catch (err) {
-      setInfo(err.response?.data || "Invalid credentials");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // ✅ ONLY ONE NAVIGATION
+    navigate("/products");
+
+  } catch (err) {
+    setInfo(err.response?.data || "Invalid credentials");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <>

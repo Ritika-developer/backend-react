@@ -111,3 +111,19 @@
   display: inline-block;
   padding: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+.buy-box .add-cart {
+  opacity: 1 !important;
+  position: static !important;
+  transform: none !important;
+}

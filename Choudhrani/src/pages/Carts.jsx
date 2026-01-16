@@ -1,100 +1,82 @@
-// import {
-//   Box,
-//   Typography,
-//   Button,
-//   Divider,
-//   IconButton
-// } from "@mui/material";
-// import AddIcon from "@mui/icons-material/Add";
-// import RemoveIcon from "@mui/icons-material/Remove";
-// import DeleteIcon from "@mui/icons-material/Delete";
+
+
 // import { useCart } from "../services/CartContext";
+// import "../styles/cart.css";
 
 // export default function CartPage() {
+ 
+
 //   const {
 //     cartItems,
-//     totalPrice,
-//     increaseQty,
 //     decreaseQty,
-//     removeFromCart
+//     removeItem,
+//     clearCart
 //   } = useCart();
 
+//   if (cartItems.length === 0) {
+    
+//     return <h2 style={{ textAlign: "center" }}>🛒 Cart is empty</h2>;
+//   }
+
 //   return (
-//     <Box sx={{ maxWidth: 900, mx: "auto", mt: 10 }}>
-//       <Typography variant="h5" gutterBottom>
-//         My Cart
-//       </Typography>
+//     <div style={{ maxWidth: "800px", margin: "auto",paddingTop:"80px" }}>
+//       <h2>My Cart</h2>
 
-//       {cartItems.length === 0 && (
-//         <Typography>Your cart is empty</Typography>
-//       )}
+//    {cartItems.map((item, index) => {
+//   console.log("CART ITEM FULL DATA 👉", item); // 🔥 YAHI LINE
 
-//       {cartItems.map(item => (
-//         <Box
-//           key={item.cartItemId}
-//           sx={{
-//             display: "flex",
-//             justifyContent: "space-between",
-//             alignItems: "center",
-//             p: 2,
-//             mb: 2,
-//             border: "1px solid #ddd",
-//             borderRadius: 2
+//   return (
+//     <div
+//       key={item.cartItemId || index}
+//       style={{
+//         display: "flex",
+//         alignItems: "center",
+//         gap: "16px",
+//         borderBottom: "1px solid #ddd",
+//         padding: "12px 0"
+//       }}
+//     >
+//       <img
+//         src={item.imageUrl || "/no-image.png"}
+//         alt={item.productName}
+//         width="80"
+//       />
+
+//      <div style={{ flex: 1 }}>
+//   <h4>{item.productName}</h4>
+//   <p>₹ {item.price && item.price > 0 ? item.price : "N/A"}</p>
+//   <p>Quantity: {item.quantity}</p>
+// </div>
+
+
+//       <button onClick={() => decreaseQty(item.cartItemId)}>−</button>
+
+//       <button
+//         onClick={() => removeItem(item.cartItemId)}
+//         style={{ color: "red" }}
+//       >
+//         Remove
+//       </button>
+//     </div>
+//   );
+// })}
+
+
+//       {/* CLEAR CART */}
+//       <div style={{ marginTop: "20px" }}>
+//         <button
+//           onClick={clearCart}
+//           style={{
+//             background: "red",
+//             color: "white",
+//             padding: "10px 20px",
+//             border: "none"
 //           }}
 //         >
-//           {/* PRODUCT INFO */}
-//           <Box>
-//             <Typography fontWeight="bold">
-//               {item.productName}
-//             </Typography>
-//             <Typography color="text.secondary">
-//               ₹{item.price} × {item.quantity}
-//             </Typography>
-//             <Typography fontWeight="bold">
-//               Subtotal: ₹{item.price * item.quantity}
-//             </Typography>
-//           </Box>
-
-//           {/* QUANTITY CONTROLS */}
-//           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-//             <IconButton onClick={() =>decreaseQty(item.cartItemId)}>
-//               <RemoveIcon />
-//             </IconButton>
-
-//             <Typography>{item.quantity}</Typography>
-
-//             <IconButton onClick={() => increaseQty(item.cartItemId)}>
-//               <AddIcon />
-//             </IconButton>
-
-//             <IconButton
-//               color="error"
-//               onClick={() =>removeFromCart(item.cartItemId)}
-//             >
-//               <DeleteIcon />
-//             </IconButton>
-//           </Box>
-//         </Box>
-//       ))}
-
-//       {cartItems.length > 0 && (
-//         <>
-//           <Divider sx={{ my: 3 }} />
-
-//           <Typography variant="h6">
-//             Total Amount: ₹{totalPrice}
-//           </Typography>
-
-//           <Button
-//             variant="contained"
-//             fullWidth
-//             sx={{ mt: 2 }}
-//           >
-//             Checkout
-//           </Button>
-//         </>
-//       )}
-//     </Box>
+//           Clear Cart
+//         </button>
+//       </div>
+//     </div>
 //   );
 // }
 
@@ -106,79 +88,100 @@
 
 
 
-
-
-
 import { useCart } from "../services/CartContext";
+import { useEffect, useState } from "react";
+import "../styles/cart.css";
 
 export default function CartPage() {
+
   const {
     cartItems,
+    increaseQty,
     decreaseQty,
     removeItem,
-    clearCart
+    clearCart,
+    loadSummary
   } = useCart();
 
+  const [summary, setSummary] = useState(null);
+
+  useEffect(() => {
+    loadSummary().then(setSummary);
+  }, [cartItems]);
+
   if (cartItems.length === 0) {
-    return <h2 style={{ textAlign: "center" }}>🛒 Cart is empty</h2>;
+    return <h2 className="empty-cart">🛒 Cart is empty</h2>;
   }
 
   return (
-    <div style={{ maxWidth: "800px", margin: "auto" }}>
-      <h2>My Cart</h2>
+    <div className="cart-container">
 
-      {cartItems.map(item => (
-        <div
-          key={item.cartItemId}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            borderBottom: "1px solid #ddd",
-            padding: "12px 0"
-          }}
-        >
-          <img
-            src={item.imageUrl}
-            alt={item.productName}
-            width="80"
-          />
+      {/* LEFT */}
+      <div className="cart-left">
+        {cartItems.map(item => (
+          <div className="cart-item" key={item.cartItemId}>
 
-          <div style={{ flex: 1 }}>
-            <h4>{item.productName}</h4>
-            <p>₹ {item.price}</p>
-            <p>Quantity: {item.quantity}</p>
+            <img src={item.imageUrl || "/no-image.png"} />
+
+            <div className="cart-info">
+              <h4>{item.productName}</h4>
+              <p className="price">₹ {item.price}</p>
+
+              <div className="qty-box">
+                <button onClick={() => decreaseQty(item.cartItemId)}>−</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => increaseQty(item.cartItemId)}>+</button>
+              </div>
+
+              <button
+                className="remove"
+                onClick={() => removeItem(item.cartItemId)}
+              >
+                Remove
+              </button>
+            </div>
           </div>
+        ))}
+      </div>
 
-          {/* DECREASE */}
-          <button onClick={() => decreaseQty(item.cartItemId)}>
-            −
-          </button>
+      {/* RIGHT */}
+      <div className="cart-summary">
+        <h3>Order Summary</h3>
 
-          {/* REMOVE */}
-          <button
-            onClick={() => removeItem(item.cartItemId)}
-            style={{ color: "red" }}
-          >
-            Remove
-          </button>
-        </div>
-      ))}
+        {summary && (
+          <>
+            <p>Subtotal: <span>₹{summary.subtotal}</span></p>
+            <p>Discount: <span>−₹{summary.discount}</span></p>
+            <hr />
+            <h4>Total: ₹{summary.total}</h4>
+          </>
+        )}
 
-      {/* CLEAR CART */}
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={clearCart}
-          style={{
-            background: "red",
-            color: "white",
-            padding: "10px 20px",
-            border: "none"
-          }}
-        >
+        <button className="checkout-btn">
+          Proceed to Checkout
+        </button>
+
+        <button className="clear-btn" onClick={clearCart}>
           Clear Cart
         </button>
       </div>
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
