@@ -1,10 +1,3 @@
-// export default function ProductBreadcrumb({ product }) {
-//   return (
-//     <div className="breadcrumb">
-//       Home / {product.categoryName} / {product.name}
-//     </div>
-//   );
-// }
 
 import { Link } from "react-router-dom";
 import "../../styles/product-breadcrumb.css";

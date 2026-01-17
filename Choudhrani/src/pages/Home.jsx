@@ -75,25 +75,7 @@ const items = [
 
         </section>
 
-
 <Heritage/>
-      {/* HERITAGE */}
-
-        {/* <section className="heritage container">
-      <div className="row align-items-center">
-        <div className="col-md-5" data-aos="fade-right">
-          <h2>Our Heritage</h2>
-          <p>
-            CHOUDHRANI celebrates generations of Indian women,
-            their rituals, emotions, and royal elegance.
-          </p>
-          <Link to="/products" className="small-btn">Explore More</Link>
-        </div>
-        <div className="col-md-7 heritage-img" data-aos="fade-left"></div>
-      </div>
-    </section> */}
-
-
 
 {/* MEN'S WEAR */}
 <section className="mens-section container">
@@ -238,20 +220,6 @@ const items = [
       </div>
     </section>
 
-  
-
-      {/* <Reviews /> */}
-       {/* <section className="stories container">
-      <h2 className="section-title" data-aos="fade-up">Her Stories</h2>
-      <div className="story-box" data-aos="fade-up">
-        <div className="story-img"></div>
-        <blockquote>
-          “I wore CHOUDHRANI on my daughter’s wedding.
-          It felt like tradition wrapped in love.”
-        </blockquote>
-        <button className="small-btn mt-3">View Her Story</button>
-      </div>
-    </section> */}
 
 {/*  <Instagram /> */}
  <section className="instagram container">

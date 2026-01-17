@@ -11,6 +11,7 @@ import ProductTabs from "../components/product/ProductTabs";
 import ProductImageGallery from "../components/product/ProductImageGallery";
 
 import "../styles/product-detail.css";
+import { useWishlist } from "../services/WishlistContext";
 
 export default function ProductDetailPage() {
   
@@ -19,6 +20,7 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [loading, setLoading] = useState(true);
+const { addToWishlist, removeFromWishlist } = useWishlist();
 
   useEffect(() => {
     if (id) {
@@ -88,6 +90,17 @@ console.log("VARIANTS 👉", product.variants);
         selected={selectedVariant}
         onSelect={setSelectedVariant}
       /> */}
+<button
+  type="button"
+  onClick={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToWishlist(product.id);
+  }}
+>
+  ❤️ Add to Wishlist
+</button>
+
 
 
          <ProductBuyBox

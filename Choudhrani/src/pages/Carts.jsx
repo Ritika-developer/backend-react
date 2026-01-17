@@ -88,8 +88,34 @@
 
 
 
+// import { useCart } from "../services/CartContext";
+// import { useEffect, useState } from "react";
+// import "../styles/cart.css";
+
+// export default function CartPage() {
+
+//   const {
+//     cartItems,
+//     increaseQty,
+//     decreaseQty,
+//     removeItem,
+//     clearCart,
+//     loadSummary
+//   } = useCart();
+
+//   const [summary, setSummary] = useState(null);
+
+//   useEffect(() => {
+//     loadSummary().then(setSummary);
+//   }, [cartItems]);
+
+//   if (cartItems.length === 0) {
+//     return <h2 className="empty-cart">🛒 Cart is empty</h2>;
+//   }
 import { useCart } from "../services/CartContext";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "../utils/axiosInstance";
 import "../styles/cart.css";
 
 export default function CartPage() {
@@ -104,10 +130,22 @@ export default function CartPage() {
   } = useCart();
 
   const [summary, setSummary] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadSummary().then(setSummary);
   }, [cartItems]);
+
+  const handleCheckout = async () => {
+    try {
+      await axios.post("/auth/checkout/1");
+      clearCart();
+      navigate("/orders");
+    } catch (err) {
+      console.error("CHECKOUT ERROR", err);
+      alert("Checkout failed");
+    }
+  };
 
   if (cartItems.length === 0) {
     return <h2 className="empty-cart">🛒 Cart is empty</h2>;
@@ -157,9 +195,13 @@ export default function CartPage() {
           </>
         )}
 
-        <button className="checkout-btn">
-          Proceed to Checkout
-        </button>
+<button
+  className="checkout-btn"
+  onClick={handleCheckout}
+>
+  Proceed to Checkout
+</button>
+
 
         <button className="clear-btn" onClick={clearCart}>
           Clear Cart

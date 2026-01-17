@@ -1,0 +1,35 @@
+.checkout-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.checkout-btn {
+  padding: 12px 20px;
+  background: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.checkout-btn:disabled {
+  background: #95a5a6;
+}
+
+.order-card {
+  border: 1px solid #ddd;
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+.status {
+  color: green;
+  font-weight: bold;
+}
+
+.empty {
+  text-align: center;
+  margin-top: 60px;
+}

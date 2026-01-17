@@ -1,159 +1,113 @@
+// // src/services/CartContext.jsx
+// import { createContext, useContext, useEffect, useState } from "react";
+// import axios from "../utils/axiosInstance";
 
-
-
-
-// import { createContext, useContext, useState, useMemo } from "react";
-// import axiosInstance from "../utils/axiosInstance"
 // const CartContext = createContext();
 
-// export function CartProvider({ children }) {
+// export const CartProvider = ({ children }) => {
+//   const userId = 1; // 🔴 replace with logged-in user id
 //   const [cartItems, setCartItems] = useState([]);
-  
+//   const [cartCount, setCartCount] = useState(0);
 
-//   const addToCart = (productId, variantId, qty = 1) => {
-//     setCartItems(prevItems => {
-//       const index = prevItems.findIndex(
-//         item =>
-//           item.productId === productId &&
-//           item.variantId === variantId
-//       );
-
-//       if (index !== -1) {
-//         // ✅ quantity increase (NEW ARRAY)
-//         const updated = [...prevItems];
-//         updated[index] = {
-//           ...updated[index],
-//           quantity: updated[index].quantity + qty
-//         };
-//         return updated;
-//       }
-
-//       // ✅ new item
-//       return [
-//         ...prevItems,
-//         { productId, variantId, quantity: qty }
-//       ];
-//     });
-//   };
-
-//   // 🔥 TOTAL COUNT (quantity sum)
-//   const cartCount = useMemo(() => {
-//     return cartItems.reduce(
-//       (total, item) => total + item.quantity,
-//       0
-//     );
-//   }, [cartItems]);
-
-//   return (
-//     <CartContext.Provider value={{ cartItems, addToCart, cartCount }}>
-//       {children}
-//     </CartContext.Provider>
-//   );
-// }
-
-// export const useCart = () => useContext(CartContext);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { createContext, useContext, useState, useMemo,useEffect } from "react";
-// import axiosInstance from "../utils/axiosInstance"
-// const CartContext = createContext();
-
-// export function CartProvider({ children }) {
-//   const [cartItems, setCartItems] = useState([]);
-  
-//   // 🔥 LOAD CART FROM BACKEND
+//   // 🔁 LOAD CART
 //   const loadCart = async () => {
-//     try {
-//       const res = await axiosInstance.get("/auth/cart");
-//       console.log("CART API RESPONSE:", res.data); // 🔍 DEBUG
-//       setCartItems(res.data);
-//     } catch (err) {
-//       console.error("Error loading cart", err);
-//     }
+//     const res = await axios.get(`/auth/cart/${userId}`);
+//     setCartItems(res.data);
 //   };
 
-//   // 👇 page refresh / app load par cart aayega
+//   // 🔢 LOAD COUNT
+//   const loadCount = async () => {
+//     const res = await axios.get(`/auth/cart/count/${userId}`);
+//     setCartCount(res.data);
+//   };
+
+//   // ➕ ADD TO CART
+//   const addToCart = async (productId, variantId, quantity = 1) => {
+//     await axios.post("/auth/cart/add", {
+//     //   userId,
+//     //   productId,
+//     //   variantId,
+//     //   quantity
+//     // });
+
+
+//         userId: 1,          // 🔴 logged in user id
+//     productId: (productId),
+//     variantId: (variantId),
+//     quantity : quantity
+//   });
+
+//     await loadCart();
+//     await loadCount();
+//   };
+
+
+// //   console.log("ADD TO CART PAYLOAD", {
+// //   userId: 1,
+// //   productId,
+// //   variantId,
+// //   quantity
+// // });
+
+//   // ➖ DECREASE
+//   const decreaseQty = async (cartItemId) => {
+//     await axios.put(`/auth/cart/decrease/${cartItemId}`);
+//     loadCart();
+//     loadCount();
+//   };
+
+//   // ❌ REMOVE
+//   const removeItem = async (cartItemId) => {
+//     await axios.delete(`/auth/cart/remove/${cartItemId}`);
+//     loadCart();
+//     loadCount();
+//   };
+
+
+//   // 🧹 CLEAR CART
+// const clearCart = async () => {
+//   await axios.delete(`/auth/cart/clear/${userId}`);
+//   setCartItems([]);
+//   setCartCount(0);
+// };
+
+
+
+// const loadSummary = async () => {
+//   const res = await axios.get(`/auth/cart/summary/${userId}`);
+//   return res.data;
+// };
+
+// const increaseQty = async (cartItemId) => {
+//   await axios.put(`/auth/cart/increase/${cartItemId}`);
+//   loadCart();
+//   loadCount();
+// };
+
+
 //   useEffect(() => {
 //     loadCart();
+//     loadCount();
 //   }, []);
 
-//   // ➖ decrease
-//   const decreaseQty = async (cartItemId) => {
-//     await axiosInstance.put(`/cart/decrease/${cartItemId}`);
-//     loadCart();
-//   };
-
-//   // ❌ remove
-//   const removeItem = async (cartItemId) => {
-//     await axiosInstance.delete(`/cart/remove/${cartItemId}`);
-//     loadCart();
-//   };
-
-//   // 🧹 clear
-//   const clearCart = async () => {
-//     await axiosInstance.delete("/cart/clear");
-//     setCartItems([]);
-//   };
-
-//   const addToCart = (productId, variantId, qty = 1) => {
-//     setCartItems(prevItems => {
-//       const index = prevItems.findIndex(
-//         item =>
-//           item.productId === productId &&
-//           item.variantId === variantId
-//       );
-
-//       if (index !== -1) {
-//         // ✅ quantity increase (NEW ARRAY)
-//         const updated = [...prevItems];
-//         updated[index] = {
-//           ...updated[index],
-//           quantity: updated[index].quantity + qty
-//         };
-//         return updated;
-//       }
-
-//       // ✅ new item
-//       return [
-//         ...prevItems,
-//         { productId, variantId, quantity: qty }
-//       ];
-//     });
-//   };
-
-//   // 🔥 TOTAL COUNT (quantity sum)
-//   const cartCount = useMemo(() => {
-//     return cartItems.reduce(
-//       (total, item) => total + item.quantity,
-//       0
-//     );
-//   }, [cartItems]);
-
 //   return (
-//     <CartContext.Provider value={{ cartItems, addToCart, cartCount ,decreaseQty,removeItem,clearCart}}>
+//     <CartContext.Provider
+//       value={{
+//         cartItems,
+//         cartCount,
+//         addToCart,
+//         decreaseQty,
+//         removeItem,
+//         clearCart,
+//         increaseQty,
+//         loadSummary
+
+//       }}
+//     >
 //       {children}
 //     </CartContext.Provider>
 //   );
-// }
+// };
 
 // export const useCart = () => useContext(CartContext);
 
@@ -180,96 +134,116 @@
 
 
 
-// src/services/CartContext.jsx
+
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "../utils/axiosInstance";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const userId = 1; // 🔴 replace with logged-in user id
   const [cartItems, setCartItems] = useState([]);
   const [cartCount, setCartCount] = useState(0);
 
-  // 🔁 LOAD CART
+  /* 🔹 GET LOGGED IN USER ID */
+  const getUserId = () => {
+    return localStorage.getItem("userId");
+  };
+
+  /* 🔁 LOAD CART */
   const loadCart = async () => {
-    const res = await axios.get(`/auth/cart/${userId}`);
-    setCartItems(res.data);
+    const userId = getUserId();
+    if (!userId) {
+      setCartItems([]);
+      return;
+    }
+
+    try {
+      const res = await axios.get(`/auth/cart/${userId}`);
+      setCartItems(res.data);
+    } catch (err) {
+      console.error("LOAD CART ERROR", err);
+    }
   };
 
-  // 🔢 LOAD COUNT
+  /* 🔢 LOAD COUNT */
   const loadCount = async () => {
-    const res = await axios.get(`/auth/cart/count/${userId}`);
-    setCartCount(res.data);
+    const userId = getUserId();
+    if (!userId) {
+      setCartCount(0);
+      return;
+    }
+
+    try {
+      const res = await axios.get(`/auth/cart/count/${userId}`);
+      setCartCount(res.data);
+    } catch (err) {
+      console.error("LOAD COUNT ERROR", err);
+    }
   };
 
-  // ➕ ADD TO CART
+  /* ➕ ADD TO CART */
   const addToCart = async (productId, variantId, quantity = 1) => {
+    const userId = getUserId();
+    if (!userId) return;
+
     await axios.post("/auth/cart/add", {
-    //   userId,
-    //   productId,
-    //   variantId,
-    //   quantity
-    // });
+      userId,
+      productId,
+      variantId,
+      quantity,
+    });
 
-
-        userId: 1,          // 🔴 logged in user id
-    productId: (productId),
-    variantId: (variantId),
-    quantity : quantity
-  });
-
-    await loadCart();
-    await loadCount();
+    loadCart();
+    loadCount();
   };
 
-
-//   console.log("ADD TO CART PAYLOAD", {
-//   userId: 1,
-//   productId,
-//   variantId,
-//   quantity
-// });
-
-  // ➖ DECREASE
+  /* ➖ DECREASE QTY */
   const decreaseQty = async (cartItemId) => {
     await axios.put(`/auth/cart/decrease/${cartItemId}`);
     loadCart();
     loadCount();
   };
 
-  // ❌ REMOVE
+  /* ➕ INCREASE QTY */
+  const increaseQty = async (cartItemId) => {
+    await axios.put(`/auth/cart/increase/${cartItemId}`);
+    loadCart();
+    loadCount();
+  };
+
+  /* ❌ REMOVE ITEM */
   const removeItem = async (cartItemId) => {
     await axios.delete(`/auth/cart/remove/${cartItemId}`);
     loadCart();
     loadCount();
   };
 
+  /* 🧹 CLEAR CART */
+  const clearCart = async () => {
+    const userId = getUserId();
+    if (!userId) return;
 
-  // 🧹 CLEAR CART
-const clearCart = async () => {
-  await axios.delete(`/auth/cart/clear/${userId}`);
-  setCartItems([]);
-  setCartCount(0);
-};
+    await axios.delete(`/auth/cart/clear/${userId}`);
+    setCartItems([]);
+    setCartCount(0);
+  };
 
+  /* 📊 CART SUMMARY */
+  const loadSummary = async () => {
+    const userId = getUserId();
+    if (!userId) return null;
 
+    const res = await axios.get(`/auth/cart/summary/${userId}`);
+    return res.data;
+  };
 
-const loadSummary = async () => {
-  const res = await axios.get(`/auth/cart/summary/${userId}`);
-  return res.data;
-};
-
-const increaseQty = async (cartItemId) => {
-  await axios.put(`/auth/cart/increase/${cartItemId}`);
-  loadCart();
-  loadCount();
-};
-
-
+  /* 🔁 LOAD ON APP START */
   useEffect(() => {
-    loadCart();
-    loadCount();
+    const token = localStorage.getItem("token");
+    if (token) {
+      loadCart();
+      loadCount();
+    }
   }, []);
 
   return (
@@ -279,11 +253,10 @@ const increaseQty = async (cartItemId) => {
         cartCount,
         addToCart,
         decreaseQty,
+        increaseQty,
         removeItem,
         clearCart,
-        increaseQty,
-        loadSummary
-
+        loadSummary,
       }}
     >
       {children}

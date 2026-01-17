@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import AOS from "aos";
 import "../src/index.css"
 import { CartProvider } from "./services/CartContext";
-
+import { WishlistProvider } from "./services/WishlistContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 /* layouts */
 import AuthLayout from "./layouts/AuthLayout";
@@ -19,11 +21,12 @@ import EmailOtpVerify from "./pages/EmailOtpVerify";
 import PhoneOtpVerify from "./pages/PhoneOtpVerify";
 import Products from "./pages/Products";
 import Cart from "./pages/Carts";
-import Orders from "./pages/Orders";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import ProductDetailPage from "./pages/ProductDetailPage"; 
-
+import WishlistPage from "./pages/WishlistPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrdersPage from "./pages/OrdersPage";
 /* routes */
 import ProtectedRoute from "./routes/ProtectedRoute";
 
@@ -40,6 +43,7 @@ export default function App() {
   return (
     <>
       <CartProvider>
+         <WishlistProvider>
     <Routes>
 
       {/* 🔐 AUTH PAGES */}
@@ -58,9 +62,10 @@ export default function App() {
          <Route path="/products" element={<Products />} />
     <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
-
+ <Route path="/wishlist" element={<WishlistPage />} />
+ <Route path="/checkout" element={<CheckoutPage />} />
+<Route path="/orders" element={<OrdersPage />} />
         {/* 🔒 PROTECTED */}
         <Route
           path="/dashboard"
@@ -80,7 +85,9 @@ export default function App() {
 
 
     </Routes>
+    </WishlistProvider>
     </CartProvider>
+     <ToastContainer position="top-right" autoClose={2000} />
     </>
   );
 }

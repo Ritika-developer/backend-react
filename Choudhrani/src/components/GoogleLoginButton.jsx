@@ -15,10 +15,12 @@ export default function GoogleLoginButton() {
       );
 
       localStorage.setItem("token", res.data.token);
+        localStorage.setItem("userId", String(res.data.id));
         // 👤 USER INFO
     localStorage.setItem(
       "user",
       JSON.stringify({
+        id: res.data.id,
         name: res.data.name,
         email: res.data.email
       })
