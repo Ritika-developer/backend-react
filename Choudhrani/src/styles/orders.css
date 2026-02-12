@@ -1,29 +1,65 @@
 .orders-page {
-  min-height: 100vh;
-  background: #fffaf2;
-  padding: 40px 30px;
+  max-width: 1000px;
+  margin: auto;
 }
 
-.orders-page h2 {
-  font-family: "Playfair Display", serif;
-  color: #6b0f1a;
-  margin-bottom: 25px;
+.orders-title {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
 }
 
+.empty {
+  text-align: center;
+  margin-top: 60px;
+  color: gray;
+}
+
+/* CARD */
 .order-card {
   background: white;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-  transition: transform 0.2s ease;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-.order-card:hover {
-  transform: translateY(-4px);
+/* header */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
 }
 
 .status {
-  color: #8a6d3b;
-  font-weight: 500;
+  background: #7a1c1c;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* items */
+.order-item {
+  display: flex;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.order-item img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-info h5 {
+  margin: 0;
+}
+
+.item-info p {
+  margin: 4px 0;
 }

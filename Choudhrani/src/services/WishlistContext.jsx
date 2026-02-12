@@ -1,90 +1,20 @@
+
+
+
 // import { createContext, useContext, useEffect, useState } from "react";
 // import axios from "../utils/axiosInstance";
+// import { toast } from "react-toastify";
 
 // const WishlistContext = createContext();
 
 // export const WishlistProvider = ({ children }) => {
 //   const [wishlistCount, setWishlistCount] = useState(0);
 
-//   const loadWishlistCount = async () => {
-//     try {
-//       const res = await axios.get("/auth/wishlist/1"); // 👈 userId = 1
-//       setWishlistCount(res.data.length);
-//     } catch (err) {
-//       console.error("WISHLIST COUNT ERROR", err);
-//     }
-//   };
+//   const getUserId = () => localStorage.getItem("userId");
 
-//   const addToWishlist = async (productId) => {
-//     await axios.post("/auth/wishlist/add", {
-//       userId: 1,
-//       productId
-//     });
-//     loadWishlistCount();
-//   };
-
-//   const removeFromWishlist = async (productId) => {
-//     await axios.delete(
-//       `/auth/wishlist/remove?userId=1&productId=${productId}`
-//     );
-//     loadWishlistCount();
-//   };
-
-// useEffect(() => {
-//   const token = localStorage.getItem("token");
-//   if (token) {
-//     loadWishlistCount();
-//   }
-// }, []);
-
-
-//   return (
-//     <WishlistContext.Provider
-//       value={{
-//         wishlistCount,
-//         addToWishlist,
-//         removeFromWishlist,
-//         loadWishlistCount
-//       }}
-//     >
-//       {children}
-//     </WishlistContext.Provider>
-//   );
-// };
-
-// export const useWishlist = () => useContext(WishlistContext);
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { createContext, useContext, useEffect, useState } from "react";
-// import axios from "../utils/axiosInstance";
-
-// const WishlistContext = createContext();
-
-// export const WishlistProvider = ({ children }) => {
-//   const [wishlistCount, setWishlistCount] = useState(0);
-
-//   /* 🔹 GET LOGGED IN USER ID */
-//   const getUserId = () =>  localStorage.getItem("userId");
-//   ;
-
-//   /* 🔹 LOAD WISHLIST COUNT */
 //   const loadWishlistCount = async () => {
 //     const userId = getUserId();
-//     if (!userId) {
-//       setWishlistCount(0);
-//       return;
-//     }
+//     if (!userId) return;
 
 //     try {
 //       const res = await axios.get(`/auth/wishlist/${userId}`);
@@ -94,20 +24,22 @@
 //     }
 //   };
 
-//   /* ❤️ ADD TO WISHLIST */
 //   const addToWishlist = async (productId) => {
 //     const userId = getUserId();
-//     if (!userId) return;
+//     if (!userId) {
+//       toast.info("Please login to save wishlist");
+//       return;
+//     }
 
 //     await axios.post("/auth/wishlist/add", {
-//       userId,
+//       userId: Number(userId),
 //       productId,
 //     });
 
+//     toast.success("❤️ Added to wishlist");
 //     loadWishlistCount();
 //   };
 
-//   /* ❌ REMOVE FROM WISHLIST */
 //   const removeFromWishlist = async (productId) => {
 //     const userId = getUserId();
 //     if (!userId) return;
@@ -116,15 +48,12 @@
 //       `/auth/wishlist/remove?userId=${userId}&productId=${productId}`
 //     );
 
+//     toast.info("Removed from wishlist");
 //     loadWishlistCount();
 //   };
 
-//   /* 🔁 LOAD COUNT ON APP START */
 //   useEffect(() => {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       loadWishlistCount();
-//     }
+//     loadWishlistCount();
 //   }, []);
 
 //   return (
@@ -158,14 +87,6 @@
 
 
 
-
-
-
-
-
-
-
-
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "../utils/axiosInstance";
 import { toast } from "react-toastify";
@@ -173,26 +94,35 @@ import { toast } from "react-toastify";
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
+  const [wishlistIds, setWishlistIds] = useState([]);
   const [wishlistCount, setWishlistCount] = useState(0);
 
   const getUserId = () => localStorage.getItem("userId");
 
-  const loadWishlistCount = async () => {
+  /* 🔹 LOAD FULL LIST */
+  const loadWishlist = async () => {
     const userId = getUserId();
     if (!userId) return;
 
     try {
       const res = await axios.get(`/auth/wishlist/${userId}`);
-      setWishlistCount(res.data.length);
+
+      // backend returns list of products
+      const ids = res.data.map((item) => item.productId || item.id);
+
+      setWishlistIds(ids);
+      setWishlistCount(ids.length);
     } catch (err) {
-      console.error("WISHLIST COUNT ERROR", err);
+      console.error("WISHLIST ERROR", err);
+
     }
   };
 
+  /* ❤️ ADD */
   const addToWishlist = async (productId) => {
     const userId = getUserId();
     if (!userId) {
-      toast.info("Please login to save wishlist");
+      toast.info("Please login first");
       return;
     }
 
@@ -202,9 +132,12 @@ export const WishlistProvider = ({ children }) => {
     });
 
     toast.success("❤️ Added to wishlist");
-    loadWishlistCount();
+
+    setWishlistIds((prev) => [...prev, productId]);
+    setWishlistCount((prev) => prev + 1);
   };
 
+  /* ❌ REMOVE */
   const removeFromWishlist = async (productId) => {
     const userId = getUserId();
     if (!userId) return;
@@ -213,21 +146,27 @@ export const WishlistProvider = ({ children }) => {
       `/auth/wishlist/remove?userId=${userId}&productId=${productId}`
     );
 
-    toast.info("Removed from wishlist");
-    loadWishlistCount();
+    toast.info("Removed");
+
+    setWishlistIds((prev) => prev.filter((id) => id !== productId));
+    setWishlistCount((prev) => prev - 1);
   };
 
+  /* ⭐ IMPORTANT (for toggle button) */
+  const isInWishlist = (productId) => wishlistIds.includes(productId);
+
   useEffect(() => {
-    loadWishlistCount();
+    loadWishlist();
   }, []);
 
   return (
     <WishlistContext.Provider
       value={{
+        wishlistIds,
         wishlistCount,
         addToWishlist,
         removeFromWishlist,
-        loadWishlistCount,
+        isInWishlist,
       }}
     >
       {children}

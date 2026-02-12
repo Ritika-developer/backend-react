@@ -12,6 +12,8 @@ import ProductImageGallery from "../components/product/ProductImageGallery";
 
 import "../styles/product-detail.css";
 import { useWishlist } from "../services/WishlistContext";
+// import ReviewSection from "../components/reviews/ReviewSection";
+ import ReviewForm from "../components/reviews/ReviewForm";
 
 export default function ProductDetailPage() {
   
@@ -20,7 +22,8 @@ export default function ProductDetailPage() {
   const [product, setProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [loading, setLoading] = useState(true);
-const { addToWishlist, removeFromWishlist } = useWishlist();
+// const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+// const isWishlisted = isInWishlist(product.id);
 
   useEffect(() => {
     if (id) {
@@ -46,6 +49,7 @@ const { addToWishlist, removeFromWishlist } = useWishlist();
   if (loading) return <h3>Loading...</h3>;
   if (!product) return <h3>Product not found</h3>;
 console.log("VARIANTS 👉", product.variants);
+
 
   return (
     <>
@@ -113,8 +117,31 @@ console.log("VARIANTS 👉", product.variants);
       </div>
 
       <ProductTabs product={product} />
+
+<div style={{ marginTop: "50px" }}>
+ <ReviewForm productId={product.id} />
+ {/* {product?.id && (
+  <ReviewForm productId={product.id} />
+)} */}
+
+</div>
+{/* <ReviewForm productId={1} /> */}
+
     </div>
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

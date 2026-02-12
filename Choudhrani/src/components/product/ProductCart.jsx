@@ -3,51 +3,43 @@ import { useNavigate } from "react-router-dom";
 import "../../styles/product-card.css";
 import { useCart } from "../../services/CartContext";
 import { useWishlist } from "../../services/WishlistContext";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 export default function ProductCard({ product }) {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-const { addToWishlist, removeFromWishlist } = useWishlist();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   if (!product) return null;
 
- const handleAddToCart = (e) => {
-  e.stopPropagation();
+  const isWishlisted = isInWishlist(product.id);
 
-  if (product.variants && product.variants.length >= 1) {
-    addToCart(
-      product.id,                 // ✅ Long
-      product.variants[0].id,     // ✅ Long
-      1
-    );
-    return;
-  }
+  /* ⭐ CLEAN + SIMPLE */
+  const handleAddToCart = (e) => {
+    e.stopPropagation();
 
-  addToCart(
-    product.id,
-    null,
-    1
-  );
-};
+    addToCart(product.id, null, 1);
+  };
 
   return (
     <div
       className="product-card"
-      onClick={() => navigate(`/products/${product.id}`)} // ONLY CARD CLICK
+      onClick={() => navigate(`/products/${product.id}`)}
     >
-{/* ❤️ WISHLIST HEART */}
-<button
-  className="wishlist-btn"
-  onClick={(e) => {
-    e.stopPropagation(); // 🔥 stop card navigation
-    addToWishlist(product.id);
-  }}
->
-  ❤️
-</button>
+      {/* ❤️ Wishlist */}
+      <button
+        className="wishlist-btn"
+        onClick={(e) => {
+          e.stopPropagation();
+          isWishlisted
+            ? removeFromWishlist(product.id)
+            : addToWishlist(product.id);
+        }}
+      >
+        {isWishlisted ? <FaHeart color="red" /> : <FaRegHeart />}
+      </button>
 
-
-
+      {/* IMAGE */}
       <div className="product-image-wrapper">
         <img
           src={product.imageUrl || "/no-image.png"}
@@ -56,20 +48,54 @@ const { addToWishlist, removeFromWishlist } = useWishlist();
         />
       </div>
 
+      {/* INFO */}
       <div className="product-info">
         <h4 className="product-name">{product.name}</h4>
         <p className="product-brand">{product.brandName || "Brand"}</p>
- <div className="product-price">
-    ₹ {product.price}
-</div>
 
+        <div className="product-price">₹ {product.price}</div>
+
+        {/* ⭐ Button moved inside info for better layout */}
+        <button
+          className="add-cart-btn"
+          disabled={product.stock === 0}
+          onClick={handleAddToCart}
+        >
+          {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
+        </button>
       </div>
-
-      {/* ✅ ADD TO CART */}
-      <button className="add-cart-btn" onClick={handleAddToCart}>
-        Add to Cart
-      </button>
-
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

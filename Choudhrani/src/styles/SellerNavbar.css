@@ -91,6 +91,73 @@ body {
   color: #3a1f1f;
 }
 
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: #3a1f1f;
+  cursor: pointer;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.seller-navbar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: #fff;
+  border-bottom: 1px solid #e7d8c6;
+}
+
+/* LEFT SIDE */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* 👈 spacing control */
+}
+
+/* MENU BUTTON */
+.menu-btn {
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b1a24; /* Choudhrani theme */
+}
+
+.menu-btn svg {
+  font-size: 26px;
+}
+
+/* BRAND DOT */
+/* .brand-dot {
+  width: 8px;
+  height: 8px;
+  background: #6b1a24;
+  border-radius: 50%;
+} */
+
+/* BRAND TEXT */
+.navbar-left h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #6b1a24;
+  margin: 0;
+}
+
+/* RIGHT SIDE */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 /* ===============================
    MOBILE RESPONSIVE
 ================================ */

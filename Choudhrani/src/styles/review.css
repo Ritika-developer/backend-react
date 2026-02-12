@@ -1,0 +1,106 @@
+.review-section {
+  background: #faf6ef;
+  padding: 40px;
+  border-radius: 16px;
+  font-family: "Segoe UI";
+}
+
+.summary {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #7a5c28;
+}
+
+.review-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.review-form textarea {
+  width: 100%;
+  height: 80px;
+  margin-top: 10px;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.review-form button {
+  background: #b48b2e;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.review-card {
+  background: white;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+.review-text {
+  margin: 10px 0;
+}
+
+.star {
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.filled {
+  color: #f4b400;
+}
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+}
+
+.pagination .active {
+  background: #b48b2e;
+  color: white;
+}
+
+.review-card {
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.review-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.review-actions button {
+  margin-left: 6px;
+  border: none;
+  background: #eee;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.review-actions button:hover {
+  background: #b48b2e;
+  color: white;
+}
