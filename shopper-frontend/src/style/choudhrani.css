@@ -1,0 +1,545 @@
+/* =================================================
+   1. GOOGLE FONTS
+================================================= */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500&display=swap");
+
+
+/* =================================================
+   2. GLOBAL RESET & BASE
+================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f6f1eb;
+  color: #3a1f1f;
+}
+
+.home-page {
+  background: #fbf8f3;
+   margin-top: 60px;
+}
+
+.container {
+  max-width: 1140px;
+}
+
+
+/* =================================================
+   3. GLOBAL SECTION SPACING
+================================================= */
+section {
+  padding: 90px 0;
+}
+
+/* section-specific fine tuning */
+.heritage,
+.collections,
+.products {
+  padding-top: 80px;
+}
+
+.instagram {
+  padding-bottom: 80px;
+}
+
+.stories {
+  padding-bottom: 0;
+}
+
+
+/* =================================================
+   4. COMMON TYPOGRAPHY
+================================================= */
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #6b1a24;
+}
+
+.section-title::before,
+.section-title::after {
+  content: "";
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: #d6c2a4;
+  vertical-align: middle;
+  margin: 0 12px;
+}
+
+
+/* =================================================
+   5. BUTTONS
+================================================= */
+.hero-btn {
+  display: inline-block;
+  background: #efe1c2;
+  color: #6b1a24;
+  padding: 12px 32px;
+  font-size: 13px;
+  border-radius: 30px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: #6b1a24;
+  color: #e8d6b0;
+}
+
+.small-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: #6b1a24;
+  color: #fff;
+  padding: 10px 24px;
+  font-size: 12px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+
+
+/* =================================================
+   6. HERO SECTION
+================================================= */
+
+.hero-section {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding-top: 80px;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  background-size: cover;
+  background-position: top;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.slide-women {
+  background-image:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.15)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png");
+}
+
+.slide-men {
+  background-image:
+    linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.15)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767629916/offerstripmen_swg5r0.png");
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  max-width: 520px;
+  margin-left: 10%;
+  padding-bottom: 80px;
+  color: #fff;
+}
+
+.hero-text h1 {
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.hero-text p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 26px;
+}
+
+
+/* =================================================
+   7. HERITAGE SECTION
+================================================= */
+
+.heritage {
+  /* background: linear-gradient(135deg, #fbf8f3, #f3e8d8); */
+  background: linear-gradient(135deg, #f3e8d8);
+ margin: 20px 0px;
+}
+/* 
+.heritage h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  margin-bottom: 18px;
+} */
+
+.heritage h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 36px;
+  margin-bottom: 18px;
+
+  background: linear-gradient(
+    180deg,
+    #c9a227 0%,
+    #f0c96b 30%,
+    #d8a23a 60%,
+    #8d5f16 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* .heritage p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+} */
+ .heritage p {
+  font-size: 15px;
+  line-height: 2;
+  color: #3a1f1f;
+  max-width: 460px;
+}
+.heritage-img::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(107,26,36,0.15);
+  border-radius:12px;
+}
+
+
+/* .heritage-img {
+  height: 320px;
+  background:
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767353076/our-heritage_ruef7t.png")
+    center / cover no-repeat;
+  border-radius: 4px;
+} */
+
+.heritage-img {
+  height: 340px;
+  background:
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767353076/our-heritage_ruef7t.png")
+    center / cover no-repeat;
+  border-radius: 12px;
+  border: 2px solid #d4af37;        /* subtle gold border */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+
+/* ===============================
+   MEN'S WEAR
+================================ */
+.mens-section {
+  padding-top: 80px;
+  padding-bottom: 0;
+}
+
+.mens-image {
+  height: 420px;
+  background:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.1)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767629916/offerstripmen_swg5r0.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  
+}
+
+.mens-text h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b1a24;
+  margin-bottom: 18px;
+ 
+}
+
+.mens-text{
+ margin-left: 0px;
+}
+.mens-text p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+  margin-bottom: 26px;
+}
+
+/* ===============================
+   WOMEN'S WEAR
+================================ */
+.womens-section {
+  padding-top: 80px;
+  padding-bottom: 0;
+}
+
+.womens-image {
+  height: 420px;
+  background:
+    linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.1)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+}
+
+.womens-text h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 34px;
+  color: #6b1a24;
+  margin-bottom: 18px;
+}
+
+.womens-text p {
+  font-size: 14px;
+  line-height: 1.9;
+  max-width: 420px;
+  margin-bottom: 26px;
+}
+
+
+/* =================================================
+   8. COLLECTIONS
+================================================= */
+.collection-card {
+  position: relative;
+  background: #fff;
+  padding: 16px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+}
+
+.collection-img {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+}
+
+.collection-card h5 {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  font-family: "Playfair Display", serif;
+  font-size: 18px;
+  color: #f5f4f4;
+  text-shadow: 0 2px 6px rgba(0,0,0,.6);
+}
+
+/* collection images */
+.img-0 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767351732/weddingimg2_h9phkw.png"); }
+.img-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354509/signature-collection2_ne95wo.png"); }
+.img-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767355024/wedding_f78zs9.png"); }
+.img-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354517/signature-collection4_vrwhb5.png"); }
+
+
+/* =================================================
+   9. PRODUCTS
+================================================= */
+.product-card {
+  background: #fff;
+  border: 1px solid #eadfce;
+  padding: 16px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  box-shadow: 0 18px 35px rgba(0,0,0,.12);
+}
+
+.product-img {
+  height: 260px;
+  background-size: cover;
+  background-position: top;
+  border-radius: 4px;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .product-img {
+  transform: scale(1.03);
+}
+
+.product-card h6 {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.price {
+  font-size: 13px;
+  color: #6b1a24;
+}
+
+.add-cart {
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  background: #6b1a24;
+  color: #fff;
+  border: none;
+  padding: 8px 20px;
+  font-size: 12px;
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.product-card:hover .add-cart {
+  opacity: 1;
+}
+
+/* product images */
+.p-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767356138/new-arrival1_xpeze0.png"); }
+.p-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767356140/new-arrival2_hxlm9w.png"); }
+.p-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354512/signature-collection3_ll6em9.png"); }
+.p-4 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767354509/signature-collection2_ne95wo.png"); }
+
+.men-1 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137751/feqtmmgwmtancvavfyag.webp");}
+.men-2 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137776/pyrn8ep4cuztx8y9dyjr.png");}
+.men-3 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137751/feqtmmgwmtancvavfyag.webp");}
+.men-4 { background-image: url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1768137776/pyrn8ep4cuztx8y9dyjr.png");}
+/* =================================================
+   10. WEDDING SECTION
+================================================= */
+.wedding-section {
+  height: 80vh;
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.25)),
+    url("https://res.cloudinary.com/dzbhmkmbg/image/upload/v1767355024/wedding_f78zs9.png")
+    top / cover no-repeat;
+  display: flex;
+  align-items: center;
+  padding-left: 250px;
+  color: #fff;
+}
+
+.wedding-text h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+}
+
+.wedding-text p {
+  margin: 16px 0 26px;
+}
+
+
+/* =================================================
+   12. INSTAGRAM
+================================================= */
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+}
+
+.insta-img {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.insta-img:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+
+
+/* ===== INSTAGRAM IMAGES ===== */
+.i-1 {
+  background-image: url("insta2.jpg");
+}
+
+.i-2 {
+  background-image: url("insta2.jpg");
+}
+
+.i-3 {
+  background-image: url("insta3.jpg");
+}
+
+.i-4 {
+  background-image: url("2.jpg");
+}
+
+.i-5 {
+  background-image: url("3.jpg");
+}
+
+.i-6 {
+  background-image: url("homepageimage1.jpg");
+}
+
+/* Common Instagram image styling */
+.insta-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.insta-img:hover {
+  transform: scale(1.05);
+  opacity: 0.85;
+}
+
+
+/* =================================================
+   13. MOBILE
+================================================= */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 16px;
+  }
+
+  .hero-text {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .hero-text h1 {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 26px;
+  }
+
+  .insta-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .story-box {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .wedding-section {
+    padding-left: 20px;
+  }
+}

@@ -1,31 +1,85 @@
-// // src/pages/Login.jsx
-// import { useState } from "react";
-// import { loginUser } from "../api/authApi";
-// import "../styles/sareeTheme.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authController } from "../controllers/authController";
+import { useCart } from "../services/CartContext";
+export default function Login() {
+  const [data, setData] = useState({ identifier: "", password: "" });
+   const { cartCount } = useCart();
+      const { loadCartCount } = useCart();
+  const navigate = useNavigate();
 
-// export default function Login() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
+  const submit = async () => {
+    try {
+      const token = await authController.login(data);
+      localStorage.setItem("token", token);
+      
+    let roles = [];
+       try {
+      const payloadBase64 = token.split(".")[1];
+      const decoded = JSON.parse(atob(payloadBase64));
 
-//   const handleLogin = async () => {
-//     try {
-//       const res = await loginUser({ email, password });
-//       localStorage.setItem("token", res.data);
-//       alert("Login successful");
-//     } catch {
-//       alert("Invalid credentials");
-//     }
-//   };
+      if (decoded.userId) localStorage.setItem("userId", decoded.userId);
+      if (decoded.username) localStorage.setItem("username", decoded.username);
+      if (decoded.sub) localStorage.setItem("email", decoded.sub);
 
-//   return (
-//     <div className="auth-box">
-//       <h2>Login</h2>
+  if (decoded.roles && Array.isArray(decoded.roles)) {
+        roles = decoded.roles;
+        localStorage.setItem("roles", JSON.stringify(roles));
+        
+  }
 
-//       <input placeholder="Email / Username / Phone" onChange={(e) => setEmail(e.target.value)} />
-//       <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
 
-//       <button onClick={handleLogin}>Login</button>
-//     </div>
-//   );
-// }
+    } catch (e) {
+      console.warn("JWT decode failed");
+    }
+     await loadCartCount();
+      // alert("Login successful"+" "+roles);
 
+if (roles.includes("SUPER_ADMIN") || roles.includes("ADMIN")) {
+      navigate("/admin");
+    } else if (roles.includes("SELLER")) {
+      navigate("/admin/sellerpannel");
+    } else {
+     
+      navigate("/");
+    }
+
+     
+    } catch (err) {
+      alert("Invalid credentials");
+    }
+  };
+
+  return (
+    <div className="container mt-5 col-md-4">
+      <h3 className="text-center mb-3">Login</h3>
+
+      <input
+        className="form-control mb-2"
+        placeholder="Email / Phone / Username"
+        onChange={e => setData({ ...data, identifier: e.target.value })}
+      />
+
+      <input
+        type="password"
+        className="form-control mb-1"
+        placeholder="Password"
+        onChange={e => setData({ ...data, password: e.target.value })}
+      />
+
+      {/* Forgot Password Link */}
+      <div className="text-end mb-3">
+        <button
+          className="btn btn-link p-0"
+          onClick={() => navigate("/forgot-password")}
+        >
+          Forgot Password?
+        </button>
+      </div>
+
+      <button className="btn btn-primary w-100" onClick={submit}>
+        Login
+      </button>
+    </div>
+  );
+}

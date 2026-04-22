@@ -1,38 +1,48 @@
-// // src/pages/Register.jsx
-// import { useState } from "react";
-// import { registerUser } from "../api/authApi";
-// import "../styles/sareeTheme.css";
+import { useState } from "react";
+import { authController } from "../controllers/authController";
+import { useNavigate } from "react-router-dom";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
-// export default function Register() {
-//   const [form, setForm] = useState({
-//     email: "",
-//     password: "",
-//     username: "",
-//     phone: ""
-//   });
+export default function Register() {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    username: "",
+    phone: ""
+  });
 
-//   const handleChange = (e) =>
-//     setForm({ ...form, [e.target.name]: e.target.value });
+  const navigate = useNavigate();
 
-//   const handleRegister = async () => {
-//     try {
-//       const res = await registerUser(form);
-//       alert(res.data);
-//     } catch (err) {
-//       alert("Registration failed");
-//     }
-//   };
+  const submit = async () => {
+    await authController.register(user);
+    alert("Registered successfully. Verify OTPs.");
+    navigate("/verify-email");
+  };
 
-//   return (
-//     <div className="auth-box">
-//       <h2>Create Account</h2>
+  return (
+    <div className="container mt-5 col-md-4">
+      <h3 className="text-center mb-3">Register</h3>
 
-//       <input name="email" placeholder="Email" onChange={handleChange} />
-//       <input name="username" placeholder="Username" onChange={handleChange} />
-//       <input name="phone" placeholder="Phone" onChange={handleChange} />
-//       <input name="password" type="password" placeholder="Password" onChange={handleChange} />
+      <input className="form-control mb-2" placeholder="Email"
+        onChange={e => setUser({ ...user, email: e.target.value })} />
 
-//       <button onClick={handleRegister}>Register</button>
-//     </div>
-//   );
-// }
+      <input type="password" className="form-control mb-2" placeholder="Password"
+        onChange={e => setUser({ ...user, password: e.target.value })} />
+
+      <input className="form-control mb-2" placeholder="Username"
+        onChange={e => setUser({ ...user, username: e.target.value })} />
+
+      <input className="form-control mb-3" placeholder="Phone"
+        onChange={e => setUser({ ...user, phone: e.target.value })} />
+
+      <button className="btn btn-primary w-100 mb-3" onClick={submit}>
+        Register
+      </button>
+
+      <hr />
+
+      {/* ✅ GOOGLE REGISTER / LOGIN */}
+      <GoogleLoginButton />
+    </div>
+  );
+}

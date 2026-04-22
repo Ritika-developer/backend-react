@@ -2,15 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
+import { ProductProvider } from "./services/ProductContext";
+import { CartProvider } from "./services/CartContext";
+import { WishlistProvider } from "./services/WishlistContext"; // ✅ ADD THIS
 
-// bootstrap + aos css
 import "bootstrap/dist/css/bootstrap.min.css";
-import "aos/dist/aos.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <WishlistProvider> {/* ✅ WRAP HERE */}
+      <CartProvider>
+        <ProductProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ProductProvider>
+      </CartProvider>
+    </WishlistProvider>
   </React.StrictMode>
 );

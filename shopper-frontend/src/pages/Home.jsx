@@ -1,15 +1,95 @@
+// import { useNavigate } from "react-router-dom";
+
+// export default function Home() {
+//   const navigate = useNavigate();
+
+//   return (
+//     <div className="container-fluid bg-light p-4">
+
+//       {/* Hero */}
+//       <div className="bg-primary text-white p-5 rounded mb-4 text-center">
+//         <h1>Welcome to ShopKart</h1>
+//         <p>India's trusted online shopping destination</p>
+//         <button
+//           className="btn btn-warning fw-bold"
+//           onClick={() => navigate("/products")}
+//         >
+//           Shop Now
+//         </button>
+//       </div>
+
+//       {/* Categories */}
+//       <div className="row text-center mb-4">
+//         {["Mobiles", "Electronics", "Fashion"].map(c => (
+//           <div
+//             key={c}
+//             className="col-md"
+//             style={{ cursor: "pointer" }}
+//             onClick={() => navigate("/products")}
+//           >
+//             <div className="card shadow-sm p-3">
+//               <h6>{c}</h6>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Products */}
+//       <h4 className="mb-3">Deals for You</h4>
+//       <div className="row">
+//         {[1,2,3,4].map(id => (
+//           <div key={id} className="col-md-3 mb-4">
+//             <div
+//               className="card shadow-sm h-100"
+//               style={{ cursor: "pointer" }}
+//               onClick={() => navigate(`/product/${id}`)}
+//             >
+//               <div className="card-body text-center">
+//                 <div className="bg-secondary mb-3" style={{height:120}} />
+//                 <h6>Product Name</h6>
+//                 <p className="fw-bold text-success">₹999</p>
+//               </div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../styles/home.css";
-import OfferStrip from "../components/OfferStrip";
+// import OfferStrip from "../pages/OfferStrip";
+// import Heritage from "./Heritage";
+import { useCart } from "../services/CartContext";
+import "../style/choudhrani.css"
 
 export default function Home() {
-  const items = [
-    "Bridal Heritage",
-    "Banarasi Silk",
-    "Festive Classics",
-    "Everyday Grace",
-  ];
+ const { addToCart } = useCart();
+
+const items = [
+  "Bridal Heritage",
+  "Banarasi Silk",
+  "Festive Classics",
+  "Everyday Grace",
+ 
+];
+
   const slides = [
     {
       type: "women",
@@ -36,11 +116,11 @@ export default function Home() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-
   return (
     <>
-       
-      <div className="home-page">
+
+   
+<div className="home-page">
 
 
         {/* HERO SLIDER */}
@@ -69,6 +149,7 @@ export default function Home() {
 
         </section>
 
+{/* <Heritage/> */}
 
 {/* MEN'S WEAR */}
 <section className="mens-section container">
@@ -140,7 +221,8 @@ export default function Home() {
         ))}
       </div>
     </section>
-<OfferStrip />
+
+{/* <OfferStrip /> */}
 
 {/* MEN PRODUCTS */}
 <section className="products container text-center">
@@ -153,13 +235,24 @@ export default function Home() {
           <div className={`product-img men-${i}`}></div>
           <h6>Royal Sherwani</h6>
           <span className="price">₹28,000</span>
-          <button className="add-cart">Add to Cart</button>
+           <button
+            className="add-cart"
+            onClick={(e) => {
+              e.stopPropagation(); // 🔥 IMPORTANT
+              addToCart({
+                id: `men-${i}`,          // unique id
+                name: "Royal Sherwani",
+                price: 28000
+              });
+            }}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     ))}
   </div>
 </section>
-
 
 
 {/* NEW ARRIVALS */}
@@ -173,7 +266,19 @@ export default function Home() {
               <div className={`product-img p-${i}`}></div>
               <h6>Regal Silk Saree</h6>
               <span className="price">₹19,000</span>
-              <button className="add-cart">Add to Cart</button>
+              <button
+            className="add-cart"
+            onClick={(e) => {
+              e.stopPropagation(); // 🔥 IMPORTANT
+              addToCart({
+                id: `men-${i}`,          // unique id
+                name: "Royal Sherwani",
+                price: 28000
+              });
+            }}
+          >
+            Add to Cart
+          </button>
             </div>
           </div>
         ))}
@@ -189,7 +294,6 @@ export default function Home() {
       </div>
     </section>
 
-  
 
 {/*  <Instagram /> */}
  <section className="instagram container">

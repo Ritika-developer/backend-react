@@ -20,7 +20,7 @@ const handleLogin = async () => {
   if (/^\d{10}$/.test(value)) value = "+91" + value;
 
   try {
-    const res = await loginUser({ email: value, password });
+    const res = await loginUser({ identifier: value, password });
 
     console.log("LOGIN RESPONSE:", res.data);
 
