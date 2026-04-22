@@ -33,12 +33,7 @@ export default function Dashboard() {
         <Grid item xs={12} sm={6} md={4}><StatCard title="Total Bookings" value={stats.totalBookings} /></Grid>
         <Grid item xs={12} sm={6} md={4}><StatCard title="Total Users" value={stats.totalUsers} /></Grid>
         <Grid item xs={12} sm={6} md={4}><StatCard title="Total Revenue" value={`₹${stats.totalRevenue}`} /></Grid>
-        <Grid item xs={12}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6">Welcome</Typography>
-            <Typography color="text.secondary">Your admin panel is connected with backend successfully.</Typography>
-          </Paper>
-        </Grid>
+        
       </Grid>
     </>
   );

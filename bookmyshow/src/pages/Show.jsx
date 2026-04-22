@@ -1,62 +1,17 @@
-// import React, { useEffect, useState } from "react";
-// import API from "../services/api";
-
-// function Shows() {
-
-//   const [shows, setShows] = useState([]);
-
-//   useEffect(() => {
-
-//     API.get("/shows")
-//       .then(res => {
-//         setShows(res.data);
-//       })
-//       .catch(err => console.log(err));
-
-//   }, []);
-
-//   return (
-
-//     <div className="container mt-4">
-
-//       <h2>Available Shows</h2>
-
-//       {shows.map(show => (
-
-//         <div key={show.id} className="card p-3 mb-3">
-
-//           <h5>{show.movie.title}</h5>
-
-//           <p>Theatre: {show.theatre.name}</p>
-
-//           <p>Date: {show.showDate}</p>
-
-//           <p>Time: {show.showTime}</p>
-
-//          <a href="/seats" className="btn btn-danger">
-// Select Seats
-// </a>
-
-//         </div>
-
-//       ))}
-
-//     </div>
-
-//   );
-
-// }
-
-// export default Shows;
-
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import API from "../services/api";
 import { useParams, Link } from "react-router-dom";
+
+import {
+  Box,
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  Grid,
+  Button,
+  Chip
+} from "@mui/material";
 
 function Shows() {
 
@@ -68,7 +23,6 @@ function Shows() {
     API.get("/shows")
       .then(res => {
 
-        // filter shows for selected movie
         const filtered = res.data.filter(
           show => show.movie.id == movieId
         );
@@ -82,31 +36,104 @@ function Shows() {
 
   return (
 
-    <div className="container mt-4">
+    <Box sx={{ background:"#0f0f0f", minHeight:"100vh", py:4 }}>
 
-      <h2>Available Shows</h2>
+      <Container maxWidth="md">
 
-      {shows.map(show => (
+        {/* HEADER */}
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight:"700",
+            mb:3,
+            textAlign:"center",
+            background:"linear-gradient(90deg,#ff1744,#ff9100)",
+            WebkitBackgroundClip:"text",
+            color:"transparent"
+          }}
+        >
+          🎬 Available Shows
+        </Typography>
 
-        <div key={show.id} className="card p-3 mb-3">
+        {/* NO SHOWS */}
+        {shows.length === 0 && (
+          <Typography sx={{ color:"#aaa", textAlign:"center" }}>
+            😢 No shows available
+          </Typography>
+        )}
 
-          <h5>{show.movie.title}</h5>
+        <Grid container spacing={3}>
 
-          <p>Theatre: {show.theatre.name}</p>
+          {shows.map(show => (
 
-          <p>Date: {show.showDate}</p>
+            <Grid item xs={12} key={show.id}>
 
-          <p>Time: {show.showTime}</p>
+              <Card
+                sx={{
+                  background:"#1c1c1c",
+                  color:"white",
+                  borderRadius:"16px",
+                  transition:"0.3s",
+                  "&:hover":{
+                    transform:"translateY(-5px)",
+                    boxShadow:"0 10px 25px rgba(0,0,0,0.6)"
+                  }
+                }}
+              >
 
-         <Link to={`/seats/${show.id}`} className="btn btn-danger">
-Select Seats
-</Link>
+                <CardContent>
 
-        </div>
+                  {/* MOVIE NAME */}
+                  <Typography variant="h6" sx={{ fontWeight:"600" }}>
+                    {show.movie.title}
+                  </Typography>
 
-      ))}
+                  {/* THEATRE */}
+                  <Typography sx={{ color:"#aaa", mb:2 }}>
+                    📍 {show.theatre.name}
+                  </Typography>
 
-    </div>
+                  {/* DATE + TIME */}
+                  <Box sx={{ display:"flex", gap:1, mb:2, flexWrap:"wrap" }}>
+
+                    <Chip
+                      label={show.showDate}
+                      sx={{ background:"#2a2a2a", color:"white" }}
+                    />
+
+                    <Chip
+                      label={show.showTime}
+                      sx={{ background:"#ff1744", color:"white" }}
+                    />
+
+                  </Box>
+
+                  {/* BUTTON */}
+                  <Button
+                    component={Link}
+                    to={`/seats/${show.id}`}
+                    variant="contained"
+                    sx={{
+                      background:"#ff1744",
+                      "&:hover":{background:"#e6003c"}
+                    }}
+                  >
+                    Select Seats
+                  </Button>
+
+                </CardContent>
+
+              </Card>
+
+            </Grid>
+
+          ))}
+
+        </Grid>
+
+      </Container>
+
+    </Box>
 
   );
 

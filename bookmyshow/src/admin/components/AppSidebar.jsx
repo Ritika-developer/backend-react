@@ -34,8 +34,8 @@ const items = [
   { text: "Shows", icon: <ScheduleIcon />, path: "/admin/shows" },
   { text: "Seats", icon: <EventSeatIcon />, path: "/admin/seats" },
   { text: "Bookings", icon: <BookOnlineIcon />, path: "/admin/bookings" },
-  { text: "Users", icon: <PeopleIcon />, path: "/admin/users" },
-  { text: "Payments", icon: <PaymentsIcon />, path: "/admin/payments" },
+  // { text: "Users", icon: <PeopleIcon />, path: "/admin/users" },
+  // { text: "Payments", icon: <PaymentsIcon />, path: "/admin/payments" },
 ];
 
 export default function AppSidebar() {

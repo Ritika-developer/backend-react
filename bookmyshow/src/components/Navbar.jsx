@@ -264,7 +264,9 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import PersonIcon from "@mui/icons-material/Person";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../services/api";   // 🔥 IMPORTANT
 
@@ -472,49 +474,78 @@ useEffect(() => {
       {/* MENU */}
       <List>
 
-        <ListItem
-          button
-          component={Link}
-          to="/"
-          onClick={toggleDrawer}
-          sx={{
-            "&:hover": { background: "#ff1744" },
-            transition: "0.3s"
-          }}
-        >
-          <HomeIcon sx={{ mr: 2 }} />
-          <ListItemText primary="Home" />
-        </ListItem>
+  <ListItem
+    button
+    component={Link}
+    to="/"
+    onClick={toggleDrawer}
+    sx={{ "&:hover": { background: "#ff1744" } }}
+  >
+    <HomeIcon sx={{ mr: 2 }} />
+    <ListItemText primary="Home" />
+  </ListItem>
 
-        <ListItem
-          button
-          component={Link}
-          to="/movies"
-          onClick={toggleDrawer}
-          sx={{
-            "&:hover": { background: "#ff1744" }
-          }}
-        >
-          <MovieIcon sx={{ mr: 2 }} />
-          <ListItemText primary="Movies" />
-        </ListItem>
+  <ListItem
+    button
+    component={Link}
+    to="/movies"
+    onClick={toggleDrawer}
+    sx={{ "&:hover": { background: "#ff1744" } }}
+  >
+    <MovieIcon sx={{ mr: 2 }} />
+    <ListItemText primary="Movies" />
+  </ListItem>
 
-        {user?.role === "ADMIN" && (
-          <ListItem
-            button
-            component={Link}
-            to="/admin"
-            onClick={toggleDrawer}
-            sx={{
-              "&:hover": { background: "#ff1744" }
-            }}
-          >
-            <AdminPanelSettingsIcon sx={{ mr: 2 }} />
-            <ListItemText primary="Admin Panel" />
-          </ListItem>
-        )}
+  {/* 🔥 NEW FEATURES */}
 
-      </List>
+  <ListItem
+    button
+    component={Link}
+    to="/my-bookings"
+    onClick={toggleDrawer}
+    sx={{ "&:hover": { background: "#ff1744" } }}
+  >
+    <ConfirmationNumberIcon sx={{ mr: 2 }} />
+    <ListItemText primary="My Bookings" />
+  </ListItem>
+
+  <ListItem
+    button
+    component={Link}
+    to="/my-tickets"
+    onClick={toggleDrawer}
+    sx={{ "&:hover": { background: "#ff1744" } }}
+  >
+    <ReceiptLongIcon sx={{ mr: 2 }} />
+    <ListItemText primary="My Tickets" />
+  </ListItem>
+
+  <ListItem
+    button
+    component={Link}
+    to="/profile"
+    onClick={toggleDrawer}
+    sx={{ "&:hover": { background: "#ff1744" } }}
+  >
+    <PersonIcon sx={{ mr: 2 }} />
+    <ListItemText primary="Profile" />
+  </ListItem>
+
+  {/* ADMIN */}
+  {user?.role === "ADMIN" && (
+    <ListItem
+      button
+      component={Link}
+      to="/admin"
+      onClick={toggleDrawer}
+      sx={{ "&:hover": { background: "#ff1744" } }}
+    >
+      <AdminPanelSettingsIcon sx={{ mr: 2 }} />
+      <ListItemText primary="Admin Panel" />
+    </ListItem>
+  )}
+
+</List>
 
     </Box>
 

@@ -1,164 +1,86 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API from "../services/api";
 
-function Ticket() {
+function MyTicket() {
   const location = useLocation();
+  const navigate = useNavigate();
+
   const params = new URLSearchParams(location.search);
+const bookingId = Number(params.get("bookingId"));
 
-  const showId = params.get("show");
-  const seatsParam = params.get("seats");
-  const amount = params.get("amount");
-  const method = params.get("method");
-
-  const selectedSeats = seatsParam ? seatsParam.split(",") : [];
-
-  const [show, setShow] = useState(null);
+  const [booking, setBooking] = useState(null);
   const [loading, setLoading] = useState(true);
-
+useEffect(() => {
+  console.log("URL:", window.location.href);
+  console.log("Raw bookingId:", params.get("bookingId"));
+  console.log("Final bookingId:", bookingId);
+}, []);
   useEffect(() => {
-    loadShow();
-  }, [showId]);
+    loadBooking();
+  }, [bookingId]);
 
-  const loadShow = async () => {
+  const loadBooking = async () => {
     try {
-      if (!showId) {
-        setLoading(false);
-        return;
-      }
+    if (!bookingId || isNaN(bookingId)) return;
 
-      const res = await API.get(`/shows/${showId}`);
-      setShow(res.data);
-    } catch (error) {
-      console.log("Ticket show fetch error:", error);
+      const res = await API.get(`/bookings/${bookingId}`);
+      setBooking(res.data);
+    } catch (err) {
+      console.log("Error loading ticket:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const bookingId = Math.floor(Math.random() * 90000) + 10000;
-
-  if (!showId || selectedSeats.length === 0) {
-    return (
-      <div
-        style={{
-          minHeight: "100vh",
-          background: "#0f0f0f",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "22px",
-        }}
-      >
-        Invalid ticket details
-      </div>
-    );
+  if (!bookingId) {
+    return <h2 style={{ color: "white" }}>Invalid Ticket ❌</h2>;
   }
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #0f0f0f, #1a1a1a)",
-        color: "white",
-        padding: "40px 20px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "750px",
-          margin: "0 auto",
-          background: "#181818",
-          borderRadius: "18px",
-          overflow: "hidden",
-          boxShadow: "0 15px 35px rgba(0,0,0,0.4)",
-          border: "1px solid rgba(255,255,255,0.08)",
-        }}
-      >
-        <div
-          style={{
-            padding: "25px",
-            background: "linear-gradient(90deg,#ff1744,#ff9100)",
-            color: "white",
-            textAlign: "center",
-            fontWeight: "bold",
-            fontSize: "30px",
-            letterSpacing: "1px",
-          }}
-        >
-          Your Ticket 🎟
-        </div>
+    <div style={{ minHeight: "100vh", background: "#111", color: "white", padding: "30px" }}>
+      <div style={{ maxWidth: "700px", margin: "auto", background: "#1c1c1c", padding: "30px", borderRadius: "15px" }}>
+        
+        <h1 style={{ textAlign: "center", color: "#ff1744" }}>🎟 My Ticket</h1>
 
         {loading ? (
-          <div style={{ padding: "30px", textAlign: "center" }}>
-            Loading ticket...
-          </div>
+          <p>Loading...</p>
         ) : (
-          <div style={{ padding: "30px" }}>
-            <h2 style={{ marginBottom: "20px", color: "#ff9100" }}>
-              {show?.movie?.title || "Movie Name"}
-            </h2>
+          <>
+            <h2>{booking?.show?.movie?.title}</h2>
 
-            <div
+            <p><b>Theatre:</b> {booking?.show?.theatre?.name}</p>
+            <p><b>Date:</b> {booking?.show?.showDate}</p>
+            <p><b>Time:</b> {booking?.show?.showTime}</p>
+
+            <p><b>Seats:</b> {booking?.seatNumber}</p>
+            <p><b>Amount:</b> ₹{booking?.amount}</p>
+
+            <p><b>Status:</b> {booking?.status}</p>
+
+            <hr />
+
+            <p><b>Booking ID:</b> {booking?.id}</p>
+
+            <button
+              onClick={() => navigate("/")}
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: "18px",
-                marginBottom: "25px",
+                marginTop: "20px",
+                padding: "10px 20px",
+                background: "#ff1744",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer"
               }}
             >
-              <div
-                style={{
-                  background: "#222",
-                  padding: "18px",
-                  borderRadius: "12px",
-                }}
-              >
-                <p><strong>Theatre:</strong> {show?.theatre?.name || "N/A"}</p>
-                <p><strong>Screen:</strong> {show?.screen || "N/A"}</p>
-                <p><strong>Date:</strong> {show?.showDate || "N/A"}</p>
-                <p><strong>Time:</strong> {show?.showTime || "N/A"}</p>
-              </div>
-
-              <div
-                style={{
-                  background: "#222",
-                  padding: "18px",
-                  borderRadius: "12px",
-                }}
-              >
-                <p><strong>Seats:</strong> {selectedSeats.join(", ")}</p>
-                <p><strong>Total Seats:</strong> {selectedSeats.length}</p>
-                <p><strong>Amount Paid:</strong> ₹{amount || 0}</p>
-                <p><strong>Payment Method:</strong> {method || "N/A"}</p>
-              </div>
-            </div>
-
-            <div
-              style={{
-                background: "#111",
-                border: "1px dashed #666",
-                borderRadius: "14px",
-                padding: "20px",
-                textAlign: "center",
-              }}
-            >
-              <h3 style={{ marginBottom: "10px", color: "#4caf50" }}>
-                Booking Confirmed
-              </h3>
-              <p style={{ marginBottom: "8px" }}>
-                <strong>Booking ID:</strong> {bookingId}
-              </p>
-              <p style={{ color: "#bbb", margin: 0 }}>
-                Please show this ticket at the theatre entrance.
-              </p>
-            </div>
-          </div>
+              Go Home
+            </button>
+          </>
         )}
       </div>
     </div>
   );
 }
 
-export default Ticket;
+export default MyTicket;

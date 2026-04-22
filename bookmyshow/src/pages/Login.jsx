@@ -32,6 +32,8 @@ export default function Login() {
     // ✅ Login success
     localStorage.setItem("user", JSON.stringify(res.data));
 
+        localStorage.setItem("userId", res.data.id);
+        
     if (res.data.role === "ADMIN") {
       navigate("/admin");
     } else {

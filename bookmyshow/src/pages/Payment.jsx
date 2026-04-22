@@ -120,25 +120,54 @@ function Payment() {
   const ticketPrice = show?.ticketPrice || 0;
   const totalAmount = ticketPrice * selectedSeats.length;
 
-  const handlePayment = async () => {
-    if (!showId || selectedSeats.length === 0) {
-      alert("Show or seats missing");
+
+const handlePayment = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      alert("User not logged in ❌");
       return;
     }
 
-    try {
-      setProcessing(true);
+    setProcessing(true);
 
-      navigate(
-        `/ticket?show=${showId}&seats=${selectedSeats.join(",")}&amount=${totalAmount}&method=${paymentMethod}`
-      );
-    } catch (error) {
-      console.log("Payment error:", error);
-      alert("Payment failed");
-    } finally {
-      setProcessing(false);
-    }
-  };
+    // 🔹 1. Create Booking
+    const bookingData = {
+      user: { id: Number(userId) },
+      show: { id: Number(showId) },
+      seatNumber: selectedSeats.join(","),
+      bookingTime: new Date().toISOString(),
+      bookingDate: new Date().toISOString().split("T")[0],
+      amount: totalAmount,
+      status: "CONFIRMED"
+    };
+
+    const bookingRes = await API.post("/bookings/create", bookingData);
+
+    console.log("Booking saved:", bookingRes.data);
+
+    // 🔥 2. SAVE PAYMENT (IMPORTANT)
+   await API.post("/payments", {
+  booking: { id: bookingRes.data.id }, // ✅ FIXED
+  amount: totalAmount,
+  status: "SUCCESS",
+  paymentMethod: paymentMethod, // ✅ FIXED
+  transactionId: "TXN" + Date.now()
+});
+
+    alert("Payment Successful 🎉");
+
+    // 🔹 3. Redirect
+    navigate(`/ticket?bookingId=${bookingRes.data.id}`);
+
+  } catch (error) {
+    console.log("Payment error:", error);
+    alert("Payment failed ❌");
+  } finally {
+    setProcessing(false);
+  }
+};
 
   if (!showId || selectedSeats.length === 0) {
     return (

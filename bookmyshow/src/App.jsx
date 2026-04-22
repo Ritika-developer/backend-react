@@ -341,7 +341,10 @@ import Movies from "./pages/Movie";
 import Shows from "./pages/Show";
 import Seats from "./pages/Seats";
 import Payment from "./pages/Payment";
-import Ticket from "./pages/ticket";
+import MyBooking from "./pages/MyBooking";
+import Ticket from "./pages/Ticket";
+import MyTicket from "./pages/MyTickets";
+import Profile from "./pages/Profile";
 
 import AdminLayout from "./admin/components/AdminLayout";
 import AdminDashboard from "./admin/pages/Dashboard";
@@ -349,8 +352,8 @@ import MoviesPage from "./admin/pages/MoviePage";
 import ShowsPage from "./admin/pages/ShowPage";
 import TheatresPage from "./admin/pages/TheatresPage";
 import BookingsPage from "./admin/pages/BookingPage";
-import UsersPage from "./admin/pages/UsersPage";
-import PaymentsPage from "./admin/pages/PaymentsPage";
+// import UsersPage from "./admin/pages/UsersPage";
+// import PaymentsPage from "./admin/pages/PaymentsPage";
 import SeatsPage from "./admin/pages/SeatsPage";
 
 import Login from "./pages/Login";
@@ -368,7 +371,10 @@ function UserLayout({ city, setCity }) {
         <Route path="/shows/:movieId" element={<Shows />} />
         <Route path="/seats/:showId" element={<Seats />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/my-bookings" element={<MyBooking />} />
         <Route path="/ticket" element={<Ticket />} />
+        <Route path="/my-tickets" element={<MyTicket />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
@@ -393,8 +399,6 @@ function App() {
           <Route path="theatres" element={<TheatresPage />} />
           <Route path="shows" element={<ShowsPage />} />
           <Route path="bookings" element={<BookingsPage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="payments" element={<PaymentsPage />} />
           <Route path="seats" element={<SeatsPage />} />
         </Route>
 
